@@ -1,0 +1,169 @@
+:root {
+  --bg: #0c1424;
+  --panel: #121d2e;
+  --panel-alt: #17263f;
+  --border: #2b3d5f;
+  --primary: #f3b65f;
+  --primary-strong: #dd9342;
+  --text: #edf3ff;
+  --muted: #adc2e7;
+  --success: #7ae0b0;
+  --shadow: rgba(7, 12, 22, 0.3);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: linear-gradient(180deg, #0a1120 0%, #111c2b 100%);
+  color: var(--text);
+}
+
+.app-shell { max-width: 1080px; margin: 0 auto; padding: 32px 20px 48px; }
+.page-header { margin-bottom: 28px; }
+h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
+.subtitle { max-width: 760px; color: var(--muted); font-size: 1.05rem; line-height: 1.6; margin-top: 12px; }
+
+.panel {
+  background: rgba(18, 29, 46, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 16px 35px var(--shadow);
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.controls-panel { display: flex; flex-direction: column; gap: 12px; }
+.controls-panel label { font-size: 0.95rem; color: var(--muted); }
+.controls-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+
+.pool-panel-header { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 16px; }
+.pool-panel-header h2 { margin: 0; font-size: 1.4rem; }
+.pool-count { color: var(--muted); font-size: 0.9rem; font-weight: 500; }
+.pool-header-actions { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.rules-tooltip { position: relative; }
+.rules-tooltip-content {
+  display: none;
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(320px, calc(100vw - 48px));
+  padding: 14px 16px;
+  color: var(--text);
+  background: #0d1729;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 14px 30px var(--shadow);
+  line-height: 1.5;
+}
+.rules-tooltip:hover .rules-tooltip-content,
+.rules-tooltip:focus-within .rules-tooltip-content { display: block; }
+.rules-tooltip-content ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); }
+.pool-collapse-button[aria-expanded="false"] svg { transform: rotate(180deg); }
+
+.editor-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+.route-editor { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: start; gap: 14px; }
+.dungeon-card { min-width: 0; border: 1px solid var(--border); background: rgba(12, 20, 36, 0.65); border-radius: 12px; padding: 16px; }
+.dungeon-card[draggable="true"] { cursor: grab; }
+.dungeon-card.is-dragging { opacity: 0.45; cursor: grabbing; }
+.dungeon-card.is-drop-target { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+.dungeon-card-topline, .dungeon-edit-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.dungeon-card-topline h3, .dungeon-edit-heading h3 { margin: 0; color: var(--text); font-size: 1.05rem; }
+.dungeon-card a, .route-step a { color: inherit; text-decoration-color: var(--primary); text-underline-offset: 3px; }
+.dungeon-card a:hover, .route-step a:hover { color: var(--primary); }
+.dungeon-card-meta { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
+.card-icon-actions, .card-edit-actions { display: flex; align-items: center; gap: 8px; }
+.card-edit-actions { justify-content: space-between; margin-top: 14px; }
+.icon-button { display: inline-grid; place-items: center; width: 40px; min-width: 40px; height: 40px; padding: 9px; border: 1px solid var(--border); border-radius: 10px; background: rgba(132, 146, 176, 0.12); color: var(--text); }
+.icon-button svg { width: 20px; height: 20px; fill: currentColor; }
+.icon-button.danger-icon { color: #ff9c9c; }
+.icon-button:hover { background: rgba(132, 146, 176, 0.25); }
+.dungeon-card-quests { list-style: none; margin: 8px 0 0; padding: 0; border-top: 1px solid rgba(255, 255, 255, 0.07); }
+.card-quest-details { margin-top: 12px; }
+.card-quest-details summary { color: var(--muted); cursor: pointer; font-size: 0.85rem; }
+.dungeon-card-dependencies { padding-top: 8px; color: var(--text); font-size: 0.88rem; }
+.dungeon-card-dependencies p { margin: 4px 0; }
+.dungeon-card-dependencies strong { color: var(--muted); }
+.dungeon-card-quests li { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; color: var(--text); font-size: 0.88rem; }
+.dungeon-card-quests li[draggable="true"] { cursor: grab; }
+.dungeon-card-quests li.is-quest-dragging { opacity: 0.45; cursor: grabbing; }
+.dungeon-card-quests li.is-quest-drop-target { background: rgba(243, 182, 95, 0.12); outline: 1px solid var(--primary); }
+.dungeon-card-quests li + li { border-top: 1px solid rgba(255, 255, 255, 0.04); }
+.dungeon-card-quests span { flex: 0 0 auto; color: var(--muted); }
+.dungeon-card.is-editing { grid-column: 1 / -1; border-color: rgba(243, 182, 95, 0.65); background: rgba(23, 38, 63, 0.92); }
+.dungeon-edit-heading { align-items: center; margin-bottom: 14px; }
+.dungeon-header { display: flex; gap: 14px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 12px; }
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+.field-group label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.dungeon-name-field, .dungeon-url-field, .dungeon-range-field, .dungeon-monster-xp-field { flex: 1 1 180px; }
+.dungeon-dependency-field { flex: 1 1 260px; }
+.dependency-search { margin-bottom: 6px; }
+.quest-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.quest-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; padding: 12px; border: 1px solid var(--border); border-radius: 8px; }
+.quest-row[draggable="true"] { cursor: grab; }
+.quest-row.is-quest-dragging { opacity: 0.45; cursor: grabbing; }
+.quest-row.is-quest-drop-target { background: rgba(243, 182, 95, 0.12); outline: 1px solid var(--primary); }
+.quest-field, .quest-id-field { flex: 1 1 200px; }
+.quest-level-field, .quest-xp-field { flex: 0 1 120px; }
+
+input, textarea {
+  width: min(220px, 100%);
+  border: 1px solid var(--border);
+  background: #0d1729;
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1.05rem;
+  padding: 12px 14px;
+}
+select {
+  min-width: 130px;
+  border: 1px solid var(--border);
+  background: #0d1729;
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1rem;
+  padding: 12px 14px;
+}
+select[multiple] { width: min(100%, 340px); min-height: 76px; padding: 6px 8px; }
+.start-mode-field { flex: 0 1 150px; }
+.start-value-field { flex: 0 1 220px; }
+.faction-field { flex: 0 1 180px; }
+.quest-faction-field { flex: 0 1 150px; }
+.faction-status { margin: 2px 0 0; color: var(--muted); font-size: 0.86rem; }
+textarea { width: 100%; min-height: 220px; font-family: "Consolas", "Courier New", monospace; line-height: 1.5; }
+button { border: none; border-radius: 10px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%); color: #1a1208; cursor: pointer; font-size: 1rem; font-weight: 700; padding: 12px 18px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+button:hover { transform: translateY(-1px); box-shadow: 0 12px 22px rgba(221, 147, 66, 0.28); }
+.secondary-button { background: rgba(132, 146, 176, 0.18); border: 1px solid var(--border); color: var(--text); }
+
+.summary-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+.stat-card { background: var(--panel-alt); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.stat-card.highlight { background: rgba(122, 224, 176, 0.08); border-color: rgba(122, 224, 176, 0.4); }
+.stat-label { display: block; color: var(--muted); font-size: 0.78rem; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+.stat-card strong { font-size: clamp(1.25rem, 2vw, 1.8rem); }
+.section-header h2 { margin: 0 0 16px; font-size: 1.4rem; }
+.route-section-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.route-section-header h2 { margin-bottom: 0; }
+.route-output, .reasons-output { display: flex; flex-direction: column; gap: 14px; }
+.route-panel { scroll-margin-top: 20px; }
+.route-step, .reason-item { border: 1px solid var(--border); background: rgba(16, 24, 36, 0.95); border-radius: 12px; padding: 16px 18px; }
+.route-step h3, .reason-item h3 { margin: 0 0 10px; color: var(--primary); font-size: 1.15rem; }
+.route-step p, .reason-item p { margin: 6px 0; color: var(--muted); line-height: 1.5; }
+.route-step ul { margin: 10px 0 0; padding-left: 18px; color: var(--text); }
+.route-step li + li { margin-top: 6px; }
+.empty-state { color: var(--muted); margin: 0; }
+
+@media (max-width: 640px) {
+  .app-shell { padding-left: 14px; padding-right: 14px; }
+  .panel { padding: 16px; }
+  .controls-row, .quest-row, .dungeon-header, .editor-actions { flex-direction: column; align-items: stretch; }
+  input, select, button { width: 100%; }
+  select[multiple] { width: 100%; }
+  .pool-panel-header { align-items: flex-start; }
+  #add-dungeon-top-btn, #export-pool-btn, #import-pool-btn { width: auto; }
+  .dungeon-card-quests li { flex-direction: column; gap: 3px; }
+  .card-icon-actions { flex: 0 0 auto; }
+  .icon-button { width: 40px; }
+}

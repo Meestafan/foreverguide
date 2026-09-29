@@ -1,0 +1,943 @@
+[
+  {
+    "name": "The Hall of Thanes",
+    "url": "https://www.wowhead.com/forever/guide/dungeons-overview-locations-details#hall-of-thanes",
+    "levelRange": "13-18",
+    "minLevel": 13,
+    "maxLevel": 18,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Important Heirlooms",
+        "questLevel": 10,
+        "xp": 4600,
+        "faction": "Both",
+        "questId": 96403
+      },
+      {
+        "name": "The Restless Dead",
+        "questLevel": 10,
+        "xp": 3550,
+        "faction": "Alliance",
+        "questId": 96394
+      },
+      {
+        "name": "Old Ironforge Incursion",
+        "questLevel": 9,
+        "xp": 4950,
+        "faction": "Alliance",
+        "questId": 96393
+      },
+      {
+        "name": "The Treaty of Understanding",
+        "questLevel": 9,
+        "xp": 3900,
+        "faction": "Alliance",
+        "questId": 98423
+      },
+      {
+        "name": "An Ancient Grudge",
+        "questLevel": 10,
+        "xp": 3550,
+        "faction": "Both",
+        "questId": 96395
+      }
+    ]
+  },
+  {
+    "name": "Ruins of Lordaeron",
+    "levelRange": "15-20",
+    "minLevel": 15,
+    "maxLevel": 20,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Abominable Creatures",
+        "questLevel": 16,
+        "xp": 6200,
+        "faction": "Alliance",
+        "questId": 95250
+      },
+      {
+        "name": "Bloodied Insignia",
+        "questLevel": 16,
+        "xp": 9750,
+        "faction": "Alliance",
+        "questId": 95195
+      },
+      {
+        "name": "Crest of Lordaeron",
+        "questLevel": 16,
+        "xp": 8300,
+        "faction": "Alliance",
+        "questId": 95189
+      },
+      {
+        "name": "Crest of Lordaeron",
+        "questLevel": 16,
+        "xp": 8300,
+        "faction": "Horde",
+        "questId": 95204
+      },
+      {
+        "name": "Remember That I Love You",
+        "questLevel": 15,
+        "xp": 180,
+        "faction": "Both",
+        "questId": 92415
+      }
+    ]
+  },
+  {
+    "name": "Wailing Caverns",
+    "levelRange": "15-25",
+    "minLevel": 15,
+    "maxLevel": 25,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "The Glowing Shard",
+        "questLevel": 15,
+        "xp": 7700,
+        "faction": "Both",
+        "questId": 6981
+      },
+      {
+        "name": "Deviate Hides",
+        "questLevel": 13,
+        "xp": 4650,
+        "faction": "Both",
+        "questId": 1486
+      },
+      {
+        "name": "Deviate Eradication",
+        "questLevel": 15,
+        "xp": 5950,
+        "faction": "Both",
+        "questId": 1487
+      },
+      {
+        "name": "Serpentbloom",
+        "questLevel": 14,
+        "xp": 4950,
+        "faction": "Horde",
+        "questId": 962
+      },
+      {
+        "name": "Trouble at the Docks",
+        "questLevel": 14,
+        "xp": 3900,
+        "faction": "Both",
+        "questId": 1490
+      }
+    ]
+  },
+  {
+    "name": "Deadmines",
+    "levelRange": "17-26",
+    "minLevel": 17,
+    "maxLevel": 26,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Collecting Memories",
+        "questLevel": 14,
+        "xp": 1350,
+        "faction": "Alliance",
+        "questId": 168
+      },
+      {
+        "name": "Red Silk Bandanas",
+        "questLevel": 14,
+        "xp": 4700,
+        "faction": "Alliance",
+        "questId": 214
+      },
+      {
+        "name": "Oh Brother...",
+        "questLevel": 15,
+        "xp": 1550,
+        "faction": "Alliance",
+        "questId": 167
+      },
+      {
+        "name": "Underground Assault",
+        "questLevel": 15,
+        "xp": 5800,
+        "faction": "Alliance",
+        "questId": 2040
+      },
+      {
+        "name": "The Defias Brotherhood",
+        "questLevel": 14,
+        "xp": 9750,
+        "faction": "Alliance",
+        "questId": 166
+      },
+      {
+        "name": "The Unsent Letter",
+        "questLevel": 16,
+        "xp": 3250,
+        "faction": "Alliance",
+        "questId": 373
+      }
+    ]
+  },
+  {
+    "name": "Blackfathom Deeps",
+    "levelRange": "24-32",
+    "minLevel": 24,
+    "maxLevel": 32,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Knowledge in the Deeps",
+        "questLevel": 10,
+        "xp": 10300,
+        "faction": "Alliance",
+        "questId": 971
+      },
+      {
+        "name": "Researching the Corruption",
+        "questLevel": 18,
+        "xp": 2400,
+        "faction": "Alliance",
+        "questId": 1275
+      },
+      {
+        "name": "Twilight Falls",
+        "questLevel": 20,
+        "xp": 9550,
+        "faction": "Alliance",
+        "questId": 78925
+      },
+      {
+        "name": "In Search of Thaelrid",
+        "questLevel": 18,
+        "xp": 9000,
+        "faction": "Both",
+        "questId": 1198
+      },
+      {
+        "name": "Blackfathom Villainy",
+        "questLevel": 18,
+        "xp": 12400,
+        "faction": "Alliance",
+        "questId": 1200
+      }
+    ]
+  },
+  {
+    "name": "Stockades",
+    "levelRange": "24-30",
+    "minLevel": 24,
+    "maxLevel": 30,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "The Stockade Riots",
+        "questLevel": 16,
+        "xp": 7500,
+        "faction": "Alliance",
+        "questId": 391
+      },
+      {
+        "name": "Quell the Uprising",
+        "questLevel": 22,
+        "xp": 8500,
+        "faction": "Alliance",
+        "questId": 387
+      },
+      {
+        "name": "What Comes Around...",
+        "questLevel": 22,
+        "xp": 6400,
+        "faction": "Alliance",
+        "questId": 386
+      },
+      {
+        "name": "The Fury Runs Deep",
+        "questLevel": 25,
+        "xp": 2750,
+        "faction": "Alliance",
+        "questId": 378
+      },
+      {
+        "name": "The Color of Blood",
+        "questLevel": 22,
+        "xp": 8500,
+        "faction": "Alliance",
+        "questId": 388
+      },
+      {
+        "name": "Crime and Punishment",
+        "questLevel": 22,
+        "xp": 6700,
+        "faction": "Alliance",
+        "questId": 377
+      }
+    ]
+  },
+  {
+    "name": "Gnomeregan",
+    "levelRange": "29-38",
+    "minLevel": 29,
+    "maxLevel": 38,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Save Techbot's Brain!",
+        "questLevel": 20,
+        "xp": 6900,
+        "faction": "Alliance",
+        "questId": 2922
+      },
+      {
+        "name": "Gnogaine",
+        "questLevel": 20,
+        "xp": 5700,
+        "faction": "Alliance",
+        "questId": 2924
+      },
+      {
+        "name": "The Only Cure is More Green Glow",
+        "questLevel": 20,
+        "xp": 6350,
+        "faction": "Alliance",
+        "questId": 2962
+      },
+      {
+        "name": "Gyrodrillmatic Excavationators",
+        "questLevel": 20,
+        "xp": 6350,
+        "faction": "Alliance",
+        "questId": 2926
+      },
+      {
+        "name": "Essential Artificials",
+        "questLevel": 24,
+        "xp": 3050,
+        "faction": "Alliance",
+        "questId": 2928
+      },
+      {
+        "name": "Data Rescue",
+        "questLevel": 25,
+        "xp": 3650,
+        "faction": "Alliance",
+        "questId": 2930
+      },
+      {
+        "name": "The Grand Betrayal",
+        "questLevel": 25,
+        "xp": 2750,
+        "faction": "Alliance",
+        "questId": 2929
+      },
+      {
+        "name": "A Fine Mess",
+        "questLevel": 20,
+        "xp": 9200,
+        "faction": "Both",
+        "questId": 2904
+      },
+      {
+        "name": "The Sparklematic 5200!",
+        "questLevel": 25,
+        "xp": 2450,
+        "faction": "Both",
+        "questId": 2927
+      },
+      {
+        "name": "Grime-Encrusted Ring",
+        "questLevel": 28,
+        "xp": 2700,
+        "faction": "Both",
+        "questId": 2945
+      }
+    ]
+  },
+  {
+    "name": "Razorfen Kraul",
+    "levelRange": "29-38",
+    "minLevel": 29,
+    "maxLevel": 38,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Blueleaf Tubers",
+        "questLevel": 20,
+        "xp": 7900,
+        "faction": "Both",
+        "questId": 1221
+      },
+      {
+        "name": "Willix the Importer",
+        "questLevel": 22,
+        "xp": 11450,
+        "faction": "Both",
+        "questId": 1144
+      },
+      {
+        "name": "Mortality Wanes",
+        "questLevel": 25,
+        "xp": 3050,
+        "faction": "Both",
+        "questId": 895
+      }
+    ]
+  },
+  {
+    "name": "Razorfen Downs",
+    "levelRange": "37-47",
+    "minLevel": 37,
+    "maxLevel": 47,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "A Host of Evil",
+        "questLevel": 28,
+        "xp": 3450,
+        "faction": "Both",
+        "questId": 6626
+      },
+      {
+        "name": "Scourge of the Downs",
+        "questLevel": 32,
+        "xp": 290,
+        "faction": "Both",
+        "questId": 3523
+      },
+      {
+        "name": "Extinguishing the Idol",
+        "questLevel": 32,
+        "xp": 4250,
+        "faction": "Both",
+        "questId": 3525
+      },
+      {
+        "name": "Bring the Light",
+        "questLevel": 39,
+        "xp": 4300,
+        "faction": "Alliance",
+        "questId": 6624
+      }
+    ]
+  },
+  {
+    "name": "Scarlet Monastery",
+    "levelRange": "26-45",
+    "minLevel": 26,
+    "maxLevel": 45,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Mythology of the Titans",
+        "questLevel": 28,
+        "xp": 3550,
+        "faction": "Alliance",
+        "questId": 1050
+      },
+      {
+        "name": "In the Name of the Light",
+        "questLevel": 34,
+        "xp": 4700,
+        "faction": "Alliance",
+        "questId": 1053
+      }
+    ]
+  },
+  {
+    "name": "Uldaman",
+    "levelRange": "40-45",
+    "minLevel": 40,
+    "maxLevel": 45,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Reclaimed Treasures",
+        "questLevel": 33,
+        "xp": 3600,
+        "faction": "Alliance",
+        "questId": 1360
+      },
+      {
+        "name": "Reclaimed Treasures",
+        "questLevel": 33,
+        "xp": 3600,
+        "faction": "Horde",
+        "questId": 2342
+      },
+      {
+        "name": "The Lost Dwarves",
+        "questLevel": 35,
+        "xp": 3150,
+        "faction": "Both",
+        "questId": 1363
+      },
+      {
+        "name": "The Hidden Chamber",
+        "questLevel": 35,
+        "xp": 3900,
+        "faction": "Both",
+        "questId": 2278
+      },
+      {
+        "name": "Agmond's Fate",
+        "questLevel": 30,
+        "xp": 2850,
+        "faction": "Both",
+        "questId": 704
+      },
+      {
+        "name": "The Lost Tablets of Will",
+        "questLevel": 35,
+        "xp": 5850,
+        "faction": "Both",
+        "questId": 1139
+      },
+      {
+        "name": "Restoring the Necklace",
+        "questLevel": 37,
+        "xp": 5600,
+        "faction": "Both",
+        "questId": 219
+      },
+      {
+        "name": "The Platinum Discs",
+        "questLevel": 40,
+        "xp": 5250,
+        "faction": "Both",
+        "questId": 1108
+      }
+    ]
+  },
+  {
+    "name": "Zul'Farrak",
+    "levelRange": "44-54",
+    "minLevel": 44,
+    "maxLevel": 54,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Troll Temper",
+        "questLevel": 40,
+        "xp": 2850,
+        "faction": "Both",
+        "questId": 2936
+      },
+      {
+        "name": "Scarab Shells",
+        "questLevel": 40,
+        "xp": 2700,
+        "faction": "Both",
+        "questId": 2865
+      },
+      {
+        "name": "Tiara of the Deep",
+        "questLevel": 40,
+        "xp": 2850,
+        "faction": "Both",
+        "questId": 2860
+      },
+      {
+        "name": "The Prophecy of Mosh'aru",
+        "questLevel": 40,
+        "xp": 4550,
+        "faction": "Both",
+        "questId": 3527
+      },
+      {
+        "name": "Divino-matic Rod",
+        "questLevel": 40,
+        "xp": 3100,
+        "faction": "Both",
+        "questId": 2936
+      },
+      {
+        "name": "Gahz'rilla",
+        "questLevel": 40,
+        "xp": 4550,
+        "faction": "Both",
+        "questId": 2770
+      },
+      {
+        "name": "Nekrum's Medallion",
+        "questLevel": 40,
+        "xp": 3100,
+        "faction": "Alliance",
+        "questId": 2991
+      }
+    ]
+  },
+  {
+    "name": "Maraudon",
+    "levelRange": "45-52",
+    "minLevel": 45,
+    "maxLevel": 52,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "The Pariah's Instructions",
+        "questLevel": 39,
+        "xp": 5450,
+        "faction": "Both",
+        "questId": 7067
+      },
+      {
+        "name": "Twisted Evils",
+        "questLevel": 41,
+        "xp": 5250,
+        "faction": "Both",
+        "questId": 7028
+      },
+      {
+        "name": "Legends of Maraudon",
+        "questLevel": 41,
+        "xp": 3400,
+        "faction": "Both",
+        "questId": 7044
+      },
+      {
+        "name": "The Scepter of Celebras",
+        "questLevel": 41,
+        "xp": 5700,
+        "faction": "Both",
+        "questId": 7046
+      },
+      {
+        "name": "Seed of Life",
+        "questLevel": 39,
+        "xp": 6100,
+        "faction": "Both",
+        "questId": 7066
+      },
+      {
+        "name": "Shadowshard Fragments",
+        "questLevel": 39,
+        "xp": 3450,
+        "faction": "Both",
+        "questId": 7068
+      },
+      {
+        "name": "Vyletongue Corruption",
+        "questLevel": 41,
+        "xp": 5250,
+        "faction": "Horde",
+        "questId": 7029
+      },
+      {
+        "name": "Vyletongue Corruption",
+        "questLevel": 41,
+        "xp": 5250,
+        "faction": "Alliance",
+        "questId": 7041
+      },
+      {
+        "name": "Corruption of Earth and Seed",
+        "questLevel": 45,
+        "xp": 6100,
+        "faction": "Horde",
+        "questId": 7064
+      },
+      {
+        "name": "Corruption of Earth and Seed",
+        "questLevel": 45,
+        "xp": 6100,
+        "faction": "Alliance",
+        "questId": 7065
+      }
+    ]
+  },
+  {
+    "name": "Sunken Temple",
+    "levelRange": "50-60",
+    "minLevel": 50,
+    "maxLevel": 60,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Jammal'an the Prophet",
+        "questLevel": 38,
+        "xp": 6550,
+        "faction": "Both",
+        "questId": 1446
+      },
+      {
+        "name": "The God Hakkar",
+        "questLevel": 40,
+        "xp": 7900,
+        "faction": "Both",
+        "questId": 3528
+      },
+      {
+        "name": "Into the Depths",
+        "questLevel": 46,
+        "xp": 4900,
+        "faction": "Both",
+        "questId": 3445
+      },
+      {
+        "name": "Secret of the Circle",
+        "questLevel": 46,
+        "xp": 6100,
+        "faction": "Both",
+        "questId": 3446
+      },
+      {
+        "name": "Into The Temple of Atal'Hakkar",
+        "questLevel": 41,
+        "xp": 7100,
+        "faction": "Alliance",
+        "questId": 3385
+      },
+      {
+        "name": "The Essence of Eranikus",
+        "questLevel": 48,
+        "xp": 2800,
+        "faction": "Both",
+        "questId": 3378
+      }
+    ]
+  },
+  {
+    "name": "Blackrock Depths",
+    "levelRange": "52-60",
+    "minLevel": 52,
+    "maxLevel": 60,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Dark Iron Legacy",
+        "questLevel": 48,
+        "xp": 5100,
+        "faction": "Both"
+      },
+      {
+        "name": "The Heart of the Mountain",
+        "questLevel": 50,
+        "xp": 5650,
+        "faction": "Both"
+      },
+      {
+        "name": "A Taste of Flame",
+        "questLevel": 52,
+        "xp": 6200,
+        "faction": "Both"
+      },
+      {
+        "name": "The Fate of the Kingdom",
+        "questLevel": 50,
+        "xp": 8050,
+        "faction": "Both"
+      },
+      {
+        "name": "The Last Element",
+        "questLevel": 48,
+        "xp": 5450,
+        "faction": "Both"
+      },
+      {
+        "name": "Ribbly Screwspigot",
+        "questLevel": 48,
+        "xp": 5100,
+        "faction": "Both"
+      },
+      {
+        "name": "Attunement to the Core",
+        "questLevel": 55,
+        "xp": 6600,
+        "faction": "Both"
+      },
+      {
+        "name": "The Spectral Chalice",
+        "questLevel": 40,
+        "xp": 575,
+        "faction": "Both"
+      }
+    ]
+  },
+  {
+    "name": "Dire Maul",
+    "levelRange": "54-60",
+    "minLevel": 54,
+    "maxLevel": 60,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Pusillin and the Elder Azj'Tordin",
+        "questLevel": 54,
+        "xp": 7750,
+        "faction": "Both"
+      },
+      {
+        "name": "Lethtendris's Web",
+        "questLevel": 54,
+        "xp": 7550,
+        "faction": "Both"
+      },
+      {
+        "name": "The Gordok Ogre Suit",
+        "questLevel": 56,
+        "xp": 6600,
+        "faction": "Both"
+      },
+      {
+        "name": "The Madness Within",
+        "questLevel": 56,
+        "xp": 9950,
+        "faction": "Both"
+      },
+      {
+        "name": "The Treasure of the Shen'dralar",
+        "questLevel": 56,
+        "xp": 660,
+        "faction": "Both"
+      },
+      {
+        "name": "Unfinished Gordok Business",
+        "questLevel": 56,
+        "xp": 8300,
+        "faction": "Both"
+      },
+      {
+        "name": "Shards of the Felvine",
+        "questLevel": 56,
+        "xp": 8300,
+        "faction": "Both"
+      }
+    ]
+  },
+  {
+    "name": "Scholomance",
+    "levelRange": "58-60",
+    "minLevel": 58,
+    "maxLevel": 60,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "Plagued Hatchlings",
+        "questLevel": 55,
+        "xp": 6200,
+        "faction": "Both"
+      },
+      {
+        "name": "Doctor Theolen Krastinov, the Butcher",
+        "questLevel": 55,
+        "xp": 6600,
+        "faction": "Both"
+      },
+      {
+        "name": "Kirtonos the Herald",
+        "questLevel": 55,
+        "xp": 8300,
+        "faction": "Both"
+      },
+      {
+        "name": "Krastinov's Bag of Horrors",
+        "questLevel": 55,
+        "xp": 6600,
+        "faction": "Both"
+      },
+      {
+        "name": "Barov Family Fortune",
+        "questLevel": 52,
+        "xp": 6600,
+        "faction": "Both"
+      },
+      {
+        "name": "The Lich, Ras Frostwhisper",
+        "questLevel": 57,
+        "xp": 9950,
+        "faction": "Both"
+      },
+      {
+        "name": "Dawn's Gambit",
+        "questLevel": 57,
+        "xp": 9950,
+        "faction": "Both"
+      }
+    ]
+  },
+  {
+    "name": "Stratholme",
+    "levelRange": "56-60",
+    "minLevel": 56,
+    "maxLevel": 60,
+    "xpFromMonsters": 0,
+    "dependencies": [],
+    "quests": [
+      {
+        "name": "The Restless Souls",
+        "questLevel": 55,
+        "xp": 6600,
+        "faction": "Both"
+      },
+      {
+        "name": "The Archivist",
+        "questLevel": 55,
+        "xp": 8300,
+        "faction": "Both"
+      },
+      {
+        "name": "The Truth Comes Crashing Down",
+        "questLevel": 55,
+        "xp": 8300,
+        "faction": "Both"
+      },
+      {
+        "name": "Above and Beyond",
+        "questLevel": 55,
+        "xp": 8300,
+        "faction": "Both"
+      },
+      {
+        "name": "Houses of the Holy",
+        "questLevel": 55,
+        "xp": 6600,
+        "faction": "Both"
+      },
+      {
+        "name": "Aurius' Reckoning",
+        "questLevel": 55,
+        "xp": 9950,
+        "faction": "Both"
+      },
+      {
+        "name": "The Great Fras Siabi",
+        "questLevel": 55,
+        "xp": 8300,
+        "faction": "Both"
+      },
+      {
+        "name": "The Great Ezra Grimm",
+        "questLevel": 55,
+        "xp": 8300,
+        "faction": "Both"
+      },
+      {
+        "name": "Menethil's Gift",
+        "questLevel": 57,
+        "xp": 9950,
+        "faction": "Both"
+      }
+    ]
+  }
+]

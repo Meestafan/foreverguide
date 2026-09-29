@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Plan a WoW: Forever leveling route using dungeon quests and monster experience." />
+    <title>WoW: Forever Dungeon Leveling Route Planner</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="page-header">
+        <h1>WoW: Forever Dungeon Leveling Route Planner</h1>
+        <p class="subtitle">Enter a starting level or total experience and build a dungeon route from quest and monster XP.</p>
+      </header>
+
+      <section class="panel controls-panel" aria-label="Route controls">
+        <div class="controls-row">
+          <div class="field-group start-mode-field">
+            <label for="start-mode">Start from</label>
+            <select id="start-mode" aria-label="Starting progress type">
+              <option value="level">Level</option>
+              <option value="xp">Total XP</option>
+            </select>
+          </div>
+          <div class="field-group start-value-field">
+            <label id="start-value-label" for="start-value">Starting level</label>
+            <input id="start-value" type="number" min="1" max="60" step="0.01" value="10" />
+          </div>
+          <div class="field-group faction-field">
+            <label for="faction">Faction</label>
+            <select id="faction">
+              <option value="Alliance" selected>Alliance</option>
+              <option value="Horde">Horde</option>
+            </select>
+          </div>
+          <button id="calculate-btn" type="button">Calculate route</button>
+          <button id="share-route-btn" type="button" class="secondary-button">Copy Route Link</button>
+        </div>
+        <p id="faction-status" class="faction-status" aria-live="polite"></p>
+      </section>
+
+      <section class="panel editor-panel">
+        <div class="pool-panel-header">
+          <h2>Dungeon pool <span id="pool-count" class="pool-count"></span></h2>
+          <div class="pool-header-actions">
+            <button id="add-dungeon-top-btn" type="button" class="secondary-button">Add dungeon</button>
+            <button id="export-pool-btn" type="button" class="secondary-button">Export JSON</button>
+            <button id="import-pool-btn" type="button" class="secondary-button">Import JSON</button>
+            <input id="import-pool-file" type="file" accept=".json,application/json" hidden />
+            <div class="rules-tooltip">
+              <button type="button" class="icon-button rules-tooltip-trigger" aria-label="Show rules applied" aria-describedby="pool-rules-tooltip" title="Rules applied">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg>
+              </button>
+              <div class="rules-tooltip-content" id="pool-rules-tooltip" role="tooltip">
+                <strong>Rules applied</strong>
+                <ul>
+                  <li>Dungeons are processed in ascending level order.</li>
+                  <li>You must meet the dungeon’s minimum level to enter.</li>
+                  <li>You must be able to accept every quest before entering a dungeon.</li>
+                  <li>Selected dungeon prerequisites must be completed first.</li>
+                </ul>
+              </div>
+            </div>
+            <button id="toggle-pool-btn" type="button" class="icon-button pool-collapse-button" aria-expanded="false" aria-controls="pool-content" aria-label="Expand dungeon pool" title="Expand dungeon pool">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7.4 14.6 4.6-4.6 4.6 4.6L18 13.2l-6-6-6 6 1.4 1.4Z"/></svg>
+            </button>
+          </div>
+        </div>
+        <p id="import-export-status" class="faction-status" aria-live="polite"></p>
+        <div id="pool-content" hidden>
+          <div id="route-editor" class="route-editor"></div>
+          <div class="editor-actions">
+            <button id="add-dungeon-btn" type="button">Add dungeon</button>
+            <button id="reset-route-btn" type="button" class="secondary-button">Reset to default</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel summary-panel" id="summary-panel" aria-label="Route summary">
+        <div class="stat-card"><span class="stat-label">Start level</span><strong id="summary-start-level">10</strong></div>
+        <div class="stat-card"><span class="stat-label">Route length</span><strong id="summary-route-length">0 dungeons</strong></div>
+        <div class="stat-card highlight"><span class="stat-label">Final level</span><strong id="summary-final-level">10</strong></div>
+      </section>
+
+      <section class="panel route-panel" id="route-panel">
+        <div class="section-header route-section-header">
+          <h2>Recommended dungeon route</h2>
+          <button id="route-share-btn" type="button" class="secondary-button">Copy Route Link</button>
+        </div>
+        <div id="route-output" class="route-output"><p class="empty-state">Choose a starting level to generate a route.</p></div>
+      </section>
+
+      <section class="panel reasons-panel">
+        <div class="section-header"><h2>Why the route ended</h2></div>
+        <div id="reasons-output" class="reasons-output"><p class="empty-state">Calculate a route to see why it ends.</p></div>
+      </section>
+    </main>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

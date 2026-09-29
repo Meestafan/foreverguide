@@ -1,0 +1,11 @@
+{
+  "name": "foreverguide",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test scripts/test-foreverguide.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "^28.0.0"
+  }
+}
