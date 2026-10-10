@@ -66,7 +66,7 @@ h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
 
 .editor-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
 .route-editor { display: grid; flex: 1 1 auto; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-content: start; align-items: start; min-height: 0; overflow: auto; gap: 14px; }
-.builder-layout { display: grid; grid-template-columns: minmax(245px, 0.8fr) minmax(440px, 1.65fr) minmax(285px, 0.95fr); grid-template-areas: "dungeons route quests"; gap: 16px; align-items: stretch; }
+.builder-layout { --dungeons-col: minmax(220px, 260px); --quests-col: minmax(260px, 320px); display: grid; grid-template-columns: var(--dungeons-col) var(--quests-col) minmax(440px, 1fr); grid-template-areas: "dungeons quests route"; gap: 16px; align-items: stretch; }
 .route-builder-panel { grid-area: route; margin: 0; }
 .dungeon-source-panel { grid-area: dungeons; }
 .quest-source-panel { grid-area: quests; }
@@ -84,12 +84,17 @@ h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
 .route-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
 .source-pools { display: contents; }
 .source-pool-panel { display: flex; flex-direction: column; align-self: stretch; height: min(72vh, 760px); min-height: 420px; margin: 0; padding: 16px; overflow: hidden; }
-.source-pool-panel.is-collapsed { height: auto; min-height: 0; }
+.builder-layout:has(.dungeon-source-panel.is-collapsed) { --dungeons-col: 56px; }
+.builder-layout:has(.quest-source-panel.is-collapsed) { --quests-col: 56px; }
+.source-pool-panel.is-collapsed { padding: 16px 8px; }
+.source-pool-panel.is-collapsed .source-pool-heading { flex: 1 1 auto; flex-direction: column; justify-content: flex-start; gap: 14px; margin: 0; }
+.source-pool-panel.is-collapsed .source-pool-heading h2 { writing-mode: vertical-rl; white-space: nowrap; }
 .source-pool-heading { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 12px; padding: 0; border: 0; background: transparent; color: var(--text); cursor: pointer; text-align: left; }
 .source-pool-heading:hover { background: transparent; box-shadow: none; transform: none; }
 .source-pool-heading h2 { margin: 0; }
-.pool-chevron { flex: 0 0 8px; width: 8px; height: 8px; margin-right: 4px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform 0.16s ease; }
-.source-pool-panel.is-collapsed .pool-chevron { transform: rotate(-45deg); }
+.pool-chevron { flex: 0 0 8px; width: 8px; height: 8px; margin-right: 4px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(135deg); transition: transform 0.16s ease; }
+.source-pool-panel.is-collapsed .pool-chevron { margin-right: 0; transform: rotate(-45deg); }
+
 .source-pool-content { display: flex; flex: 1 1 0; flex-direction: column; min-height: 0; overflow: hidden; }
 .source-pool-content[hidden] { display: none; }
 .pool-search { width: 100%; margin-bottom: 10px; font-size: 0.95rem; }
@@ -181,6 +186,8 @@ select[multiple] { width: min(100%, 340px); min-height: 76px; padding: 6px 8px; 
 .start-value-field { flex: 0 1 220px; }
 .faction-field { flex: 0 1 180px; }
 .quest-faction-field { flex: 0 1 150px; }
+.quest-actions { display: flex; gap: 10px; min-height: 38px; align-items: center; }
+.quest-actions label { display: inline-flex; gap: 4px; align-items: center; }
 .faction-status { margin: 2px 0 0; color: var(--muted); font-size: 0.86rem; }
 textarea { width: 100%; min-height: 220px; font-family: "Consolas", "Courier New", monospace; line-height: 1.5; }
 button { border: none; border-radius: 10px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%); color: #1a1208; cursor: pointer; font-size: 1rem; font-weight: 700; padding: 12px 18px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
@@ -231,7 +238,11 @@ button:hover { transform: translateY(-1px); box-shadow: 0 12px 22px rgba(221, 14
   #route-content { display: block; }
   .route-editor { flex: initial; min-height: initial; overflow: visible; }
   .source-pool-panel { height: auto; min-height: 0; overflow: visible; }
-  .source-pool-panel.is-collapsed { display: block; }
+  .source-pool-panel.is-collapsed { display: block; padding: 16px; }
+  .source-pool-panel.is-collapsed .source-pool-heading { flex-direction: row; justify-content: space-between; margin: 0 0 12px; }
+  .source-pool-panel.is-collapsed .source-pool-heading h2 { writing-mode: horizontal-tb; }
+  .source-pool-panel .pool-chevron { transform: rotate(45deg); }
+  .source-pool-panel.is-collapsed .pool-chevron { margin-right: 4px; transform: rotate(-45deg); }
   .source-pool-content { flex: 0 1 auto; min-height: 0; overflow: visible; }
   .source-pool-panel:not(.is-collapsed) .source-pool-list { flex: 0 1 420px; height: 420px; max-height: 420px; min-height: 180px; }
 }

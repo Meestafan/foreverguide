@@ -30,7 +30,7 @@
     return locations.find((location) => firstWaypoint([location]))?.name || locations[0]?.name || '';
   }
 
-  function questSteps(quest, dungeonName) {
+  function questSteps(quest, dungeonName, action) {
     const lines = [];
     const questName = guideText(quest.name) || `Quest ${quest.questId}`;
     const questId = Number(quest.questId);
@@ -40,15 +40,23 @@
     const starterName = locationName(starterLocations);
     const prefix = dungeonName ? `Dungeon: ${guideText(dungeonName)}. ` : '';
 
-    lines.push('step');
-    if (starter) lines.push(`.goto ${starter.mapName},${starter.x},${starter.y}`);
-    if (starterName) lines.push(`>>${prefix}Talk to ${guideText(starterName)} to pick up ${questName}.`);
-    else lines.push(`>>${prefix}Pick up ${questName}${quest.zone ? ` in ${guideText(quest.zone)}` : ''}.`);
-    if (hasId) lines.push(`.accept ${questId} >>Accept ${questName}`);
-    else lines.push(`*Quest has no Questie ID; track it manually: ${questName}`);
+    if (action === 'Pickup') {
+      lines.push('step');
+      if (starter) lines.push(`.goto ${starter.mapName},${starter.x},${starter.y}`);
+      if (starterName) lines.push(`>>${prefix}Talk to ${guideText(starterName)} to pick up ${questName}.`);
+      else lines.push(`>>${prefix}Pick up ${questName}${quest.zone ? ` in ${guideText(quest.zone)}` : ''}.`);
+      if (hasId) lines.push(`.accept ${questId} >>Accept ${questName}`);
+      else lines.push(`*Quest has no Questie ID; track it manually: ${questName}`);
+      return lines;
+    }
 
     const objectives = Array.isArray(quest.objectiveSteps) ? quest.objectiveSteps : [];
-    if (hasId && objectives.length) {
+    if (action === 'Do') {
+      if (!hasId || !objectives.length) {
+        lines.push('step');
+        lines.push(`>>${prefix}Complete the objectives of ${questName}.`);
+        return lines;
+      }
       for (const objective of objectives) {
         const waypoint = firstWaypoint(objective.locations || []);
         const actor = locationName(objective.locations || []);
@@ -60,6 +68,7 @@
           const targetName = waypointActorName(objective.locations || []);
           if (targetName) lines.push(`.target ${guideText(targetName)}`);
       }
+      return lines;
     }
 
     const turnInLocations = [...(quest.turnIns?.npcs || []), ...(quest.turnIns?.objects || [])];
@@ -95,9 +104,14 @@
         lines.push(`.xp ${minimumLevel}`);
         continue;
       }
-      availableQuests.forEach((quest, index) => {
-        lines.push(...questSteps(quest, index === 0 ? dungeon.name : ''));
-      });
+      let dungeonLabelled = false;
+      for (const action of ['Pickup', 'Do', 'Turnin']) {
+        for (const quest of availableQuests) {
+          if (!(quest.actions || ['Pickup', 'Do', 'Turnin']).includes(action)) continue;
+          lines.push(...questSteps(quest, dungeonLabelled ? '' : dungeon.name, action));
+          dungeonLabelled = true;
+        }
+      }
     }
 
     lines.push(']])');

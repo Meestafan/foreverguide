@@ -40,13 +40,17 @@ The catalog reflects the installed QuestieDB data snapshot; some quests do not h
 
 ## Run locally
 
-Serve this directory with any static HTTP server, then open its root `index.html`. For example, with Python:
+The app must be served over HTTP (opening `index.html` directly with `file://` blocks loading the JSON data files). From this directory, start any static server:
 
 ```bash
+# Python 3
 python -m http.server 8000
+
+# or Node.js (no install needed beyond Node itself)
+npx http-server -p 8000
 ```
 
-Open <http://localhost:8000>.
+Then open <http://localhost:8000>. If the port is already in use, pick another (for example `8001`) and adjust the URL. Stop the server with `Ctrl+C`.
 
 ## Tests
 
