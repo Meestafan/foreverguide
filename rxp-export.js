@@ -16,7 +16,9 @@
       for (const zone of location.zones || []) {
         const point = zone.coordinates?.find((coordinate) => Number.isFinite(Number(coordinate[0])) && Number.isFinite(Number(coordinate[1])));
         const mapName = guideText(zone.zone);
-        if (point && mapName) return { mapName, x: numberText(point[0]), y: numberText(point[1]) };
+        if (point && mapName && point[0] >= 0 && point[0] <= 100 && point[1] >= 0 && point[1] <= 100) {
+          return { mapName, x: numberText(point[0]), y: numberText(point[1]) };
+        }
       }
     }
     return null;
@@ -30,7 +32,7 @@
     return locations.find((location) => firstWaypoint([location]))?.name || locations[0]?.name || '';
   }
 
-  function questSteps(quest, dungeonName) {
+  function questPickupSteps(quest, dungeonName, routeNotes) {
     const lines = [];
     const questName = guideText(quest.name) || `Quest ${quest.questId}`;
     const questId = Number(quest.questId);
@@ -39,14 +41,22 @@
     const starter = firstWaypoint(starterLocations);
     const starterName = locationName(starterLocations);
     const prefix = dungeonName ? `Dungeon: ${guideText(dungeonName)}. ` : '';
+    const notes = routeNotes ? ` Travel: ${guideText(routeNotes)}` : '';
 
     lines.push('step');
     if (starter) lines.push(`.goto ${starter.mapName},${starter.x},${starter.y}`);
-    if (starterName) lines.push(`>>${prefix}Talk to ${guideText(starterName)} to pick up ${questName}.`);
-    else lines.push(`>>${prefix}Pick up ${questName}${quest.zone ? ` in ${guideText(quest.zone)}` : ''}.`);
+    if (starterName) lines.push(`>>${prefix}Talk to ${guideText(starterName)} to pick up ${questName}.${notes}`);
+    else lines.push(`>>${prefix}Pick up ${questName}${quest.zone ? ` in ${guideText(quest.zone)}` : ''}.${notes}`);
     if (hasId) lines.push(`.accept ${questId} >>Accept ${questName}`);
     else lines.push(`*Quest has no Questie ID; track it manually: ${questName}`);
+    return lines;
+  }
 
+  function questObjectiveSteps(quest) {
+    const lines = [];
+    const questName = guideText(quest.name) || `Quest ${quest.questId}`;
+    const questId = Number(quest.questId);
+    const hasId = Number.isSafeInteger(questId) && questId > 0;
     const objectives = Array.isArray(quest.objectiveSteps) ? quest.objectiveSteps : [];
     if (hasId && objectives.length) {
       for (const objective of objectives) {
@@ -61,7 +71,14 @@
           if (targetName) lines.push(`.target ${guideText(targetName)}`);
       }
     }
+      return lines;
+    }
 
+    function questTurnInSteps(quest) {
+      const lines = [];
+      const questName = guideText(quest.name) || `Quest ${quest.questId}`;
+      const questId = Number(quest.questId);
+      const hasId = Number.isSafeInteger(questId) && questId > 0;
     const turnInLocations = [...(quest.turnIns?.npcs || []), ...(quest.turnIns?.objects || [])];
     const turnIn = firstWaypoint(turnInLocations);
     const turnInName = locationName(turnInLocations);
@@ -90,13 +107,20 @@
       const availableQuests = (dungeon.quests || []).filter((quest) => quest.faction !== (side === 'Horde' ? 'Alliance' : 'Horde'));
       if (!availableQuests.length) {
         lines.push('step');
-        lines.push(`>>Dungeon: ${guideText(dungeon.name)} (levels ${guideText(dungeon.levelRange || '')}). No eligible quests are assigned.`);
         const minimumLevel = Math.max(1, Math.min(60, Number(dungeon.minLevel) || 1));
-        lines.push(`.xp ${minimumLevel}`);
+        const grindToLevel = Math.max(minimumLevel, Math.min(60, Number(dungeon.grindToLevel) || minimumLevel));
+        lines.push(`>>${guideText(dungeon.notes || `Dungeon: ${dungeon.name} (levels ${dungeon.levelRange || ''}). No eligible quests are assigned.`)}`);
+        lines.push(`.xp ${grindToLevel}`);
         continue;
       }
       availableQuests.forEach((quest, index) => {
-        lines.push(...questSteps(quest, index === 0 ? dungeon.name : ''));
+        lines.push(...questPickupSteps(quest, index === 0 ? dungeon.name : '', index === 0 ? dungeon.notes : ''));
+      });
+      availableQuests.forEach((quest) => {
+        lines.push(...questObjectiveSteps(quest));
+      });
+      availableQuests.forEach((quest) => {
+        lines.push(...questTurnInSteps(quest));
       });
     }
 

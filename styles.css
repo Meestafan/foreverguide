@@ -131,6 +131,7 @@ h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
 .dungeon-card-dependencies { padding-top: 8px; color: var(--text); font-size: 0.88rem; }
 .dungeon-card-dependencies p { margin: 4px 0; }
 .dungeon-card-dependencies strong { color: var(--muted); }
+.dungeon-route-notes { margin: 8px 0; color: #c8d7ee; font-size: 0.85rem; line-height: 1.5; }
 .dungeon-card-quests li { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 8px 0; color: var(--text); font-size: 0.88rem; }
 .dungeon-card-quests li > div { min-width: 0; }
 .dungeon-card-quests li[draggable="true"] { cursor: grab; }

@@ -146,11 +146,13 @@ function normalizeDungeon(dungeon) {
   const range = normalizeRange(dungeon?.levelRange || `${dungeon?.minLevel || 1}-${dungeon?.maxLevel || 10}`);
   return {
     name: String(dungeon?.name || 'New Dungeon').trim() || 'New Dungeon',
+    notes: String(dungeon?.notes || '').trim(),
     url: normalizeUrl(dungeon?.url),
     levelRange: `${range.min}-${range.max}`,
     minLevel: range.min,
     maxLevel: range.max,
     xpFromMonsters: Math.max(0, Number(dungeon?.xpFromMonsters) || 0),
+    grindToLevel: Math.max(0, Math.min(MAX_LEVEL, Number(dungeon?.grindToLevel) || 0)),
     dependencies: normalizeDependencies(dungeon?.dependencies),
     quests: Array.isArray(dungeon?.quests) ? dungeon.quests.map(enrichQuest) : [],
   };
@@ -305,6 +307,7 @@ function renderEditor() {
           <div class="card-icon-actions"><button class="icon-button edit-dungeon-btn" data-index="${index}" aria-label="Edit ${escapeHtml(dungeon.name)}" title="Edit dungeon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5V20h3.5L18 9.5 14.5 6 4 16.5Zm16.7-10.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-1.7 1.7 3.4 3.4 1.7-1.7Z"/></svg></button>
           <button class="icon-button danger-icon delete-dungeon-btn" data-index="${index}" aria-label="Delete ${escapeHtml(dungeon.name)}" title="Delete dungeon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></div></div>
         ${dependencyDetails ? `<div class="dungeon-card-dependencies">${dependencyDetails}</div>` : ''}
+        ${dungeon.notes ? `<p class="dungeon-route-notes">${escapeHtml(dungeon.notes)}</p>` : ''}
         <details class="card-quest-details"><summary>View quest details</summary><ul class="dungeon-card-quests">${dungeon.quests.map((quest, questIndex) => `<li data-quest-index="${questIndex}" draggable="${editingIndex === null}"><div>${linkedName(quest.name, questUrl(quest.questId))} <span>${quest.faction} · Lvl ${quest.questLevel} · ${quest.xp.toLocaleString()} XP</span>${questLocationDetails(quest)}</div><button class="icon-button danger-icon remove-route-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Remove ${escapeHtml(quest.name)} from route" title="Remove quest from route"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></li>`).join('')}</ul></details>
       </article>`;
     }
@@ -422,9 +425,11 @@ function syncEditingDungeon() {
   const existingQuests = routeState[editingIndex].quests || [];
   routeState[editingIndex] = normalizeDungeon({
     name: card.querySelector('.dungeon-name').value,
+    notes: routeState[editingIndex].notes,
     url: card.querySelector('.dungeon-url').value,
     levelRange: card.querySelector('.dungeon-range').value,
     xpFromMonsters: card.querySelector('.dungeon-monster-xp').value,
+    grindToLevel: routeState[editingIndex].grindToLevel,
     dependencies: selectedDependencies(card.querySelector('.dungeon-dependencies')),
     quests: [...card.querySelectorAll('.quest-row')].map((row, questIndex) => ({
       ...existingQuests[questIndex],
@@ -469,19 +474,19 @@ function getRoute(startXp, dungeons) {
   const pending = sorted.filter((dungeon) => !completedDungeons.has(dungeon.name));
   const next = pending[0];
   let endReason;
-  if (totalXp >= maxXp) endReason = { title: 'Maximum level reached', message: `The route reached level ${MAX_LEVEL}. No more dungeon XP is needed for leveling.` };
-  else if (!next) endReason = { title: 'Dungeon pool completed', message: 'Every dungeon in the pool was completed with all prerequisites met.' };
+  if (totalXp >= maxXp) endReason = { title: 'Maximum level reached', message: `The route reached level ${MAX_LEVEL}. No more route XP is needed for leveling.` };
+  else if (!next) endReason = { title: 'Route completed', message: 'Every dungeon and route step was completed with all prerequisites met.' };
   else if (missingDependencies(next, completedDungeons).length) {
     const missing = missingDependencies(next, completedDungeons).map((dependency) => dependency.dungeonName).join(', ');
-    endReason = { title: 'Dungeon prerequisite not completed', message: `${next.name} requires completion of ${missing} before it can be entered.` };
+    endReason = { title: 'Route prerequisite not completed', message: `${next.name} requires completion of ${missing} before it can be started.` };
   }
   else if (progress.value < next.minLevel) {
     const needed = Math.max(0, (xpTable[next.minLevel] || totalXp) - totalXp);
-    endReason = { title: 'Not high enough to enter the next dungeon', message: `The next dungeon is ${next.name} (minimum level ${next.minLevel}). You are level ${progress.display} and need ${needed.toLocaleString()} more XP to enter it.` };
+    endReason = { title: 'Not high enough for the next route step', message: `${next.name} starts at level ${next.minLevel}. You are level ${progress.display} and need ${needed.toLocaleString()} more XP to start it.` };
   } else {
     const required = Math.max(next.minLevel, ...next.quests.map((quest) => quest.questLevel));
     const needed = Math.max(0, (xpTable[required] || totalXp) - totalXp);
-    endReason = { title: 'Quest level requirement stopped the route', message: `You must be able to accept every quest in ${next.name}, including the level ${required} requirement. At level ${progress.display}, you need ${needed.toLocaleString()} more XP before entering.` };
+    endReason = { title: 'Quest level requirement stopped the route', message: `You must be able to accept every quest in ${next.name}, including the level ${required} requirement. At level ${progress.display}, you need ${needed.toLocaleString()} more XP before starting it.` };
   }
   return { route, endReason, finalProgress: progress, completedDungeonCount: completedDungeons.size };
 }
@@ -499,9 +504,9 @@ function runPlanner() {
     .filter((dungeon) => dungeon.quests.length > 0 || dungeon.xpFromMonsters > 0);
   const result = getRoute(startXp, eligiblePool);
   $('#summary-start-level').textContent = startProgress.display;
-  $('#summary-route-length').textContent = `${result.completedDungeonCount} dungeons`;
+  $('#summary-route-length').textContent = `${result.completedDungeonCount} route steps`;
   $('#summary-final-level').textContent = result.finalProgress.display;
-  routeOutput.innerHTML = result.route.length ? result.route.map((step, index) => `<article class="route-step"><h3>Step ${index + 1}: ${linkedName(step.dungeon.name, step.dungeon.url)}</h3><p><strong>Dungeon range:</strong> ${escapeHtml(step.dungeon.levelRange)}</p><p><strong>Earned:</strong> ${(step.questXp + step.monsterXp).toLocaleString()} XP (${step.questXp.toLocaleString()} from quests + ${step.monsterXp.toLocaleString()} from monsters)</p><p><strong>Level progression:</strong> started at level ${step.start} and ended at level ${step.end} (${step.totalXp.toLocaleString()} XP total)</p><ul>${step.quests.map((quest) => `<li>${linkedName(quest.name, questUrl(quest.questId))} — Level ${quest.questLevel} — ${quest.xp.toLocaleString()} XP${questLocationDetails(quest)}</li>`).join('')}</ul></article>`).join('') : `<p class="empty-state">${eligiblePool.length ? 'No valid dungeon route was found for this starting level and route.' : 'Your route is empty. Add a dungeon from the pool to plan XP.'}</p>`;
+  routeOutput.innerHTML = result.route.length ? result.route.map((step, index) => `<article class="route-step"><h3>Step ${index + 1}: ${linkedName(step.dungeon.name, step.dungeon.url)}</h3><p><strong>Level range:</strong> ${escapeHtml(step.dungeon.levelRange)}</p>${step.dungeon.notes ? `<p>${escapeHtml(step.dungeon.notes)}</p>` : ''}<p><strong>Earned:</strong> ${(step.questXp + step.monsterXp).toLocaleString()} XP (${step.questXp.toLocaleString()} from quests + ${step.monsterXp.toLocaleString()} monster XP)</p><p><strong>Level progression:</strong> started at level ${step.start} and ended at level ${step.end} (${step.totalXp.toLocaleString()} XP total)</p><ul>${step.quests.map((quest) => `<li>${linkedName(quest.name, questUrl(quest.questId))} — Level ${quest.questLevel} — ${quest.xp.toLocaleString()} XP${questLocationDetails(quest)}</li>`).join('')}</ul></article>`).join('') : `<p class="empty-state">${eligiblePool.length ? 'No valid route was found for this starting level and route.' : 'Your route is empty. Add a dungeon from the pool to plan XP.'}</p>`;
   reasonsOutput.innerHTML = `<article class="reason-item route-ending-summary"><h3>${escapeHtml(result.endReason.title)}</h3><p>${escapeHtml(result.endReason.message)}</p></article>`;
 }
 

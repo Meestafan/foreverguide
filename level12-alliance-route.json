@@ -1,0 +1,4524 @@
+{
+  "startMode": "level",
+  "startValue": 12,
+  "startLevel": 12,
+  "faction": "Alliance",
+  "route": [
+    {
+      "name": "Level 12 - Westfall",
+      "levelRange": "12-12",
+      "minLevel": 12,
+      "maxLevel": 12,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the Sentinel Hill flight path while completing the local hub loop.",
+      "quests": [
+        {
+          "questId": 139,
+          "name": "Captain Sander's Hidden Treasure",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 580,
+          "faction": "Both"
+        },
+        {
+          "questId": 138,
+          "name": "Captain Sander's Hidden Treasure",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 580,
+          "faction": "Both"
+        },
+        {
+          "questId": 140,
+          "name": "Captain Sander's Hidden Treasure",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 1150,
+          "faction": "Both"
+        },
+        {
+          "questId": 152,
+          "name": "The Coast Isn't Clear",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 1450,
+          "faction": "Both"
+        },
+        {
+          "questId": 103,
+          "name": "Keeper of the Flame",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 1150,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "name": "Level 12 - Redridge Mountains",
+      "levelRange": "12-12",
+      "minLevel": 12,
+      "maxLevel": 12,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the Lakeshire flight path before leaving Redridge.",
+      "quests": [
+        {
+          "questId": 3741,
+          "name": "Hilary's Necklace",
+          "questLevel": 12,
+          "requiredLevel": 12,
+          "xp": 1350,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 12 - Westfall"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Stormwind City to level 13",
+      "levelRange": "12-13",
+      "minLevel": 12,
+      "maxLevel": 13,
+      "grindToLevel": 13,
+      "xpFromMonsters": 3840,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 3,840 XP to reach level 13.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 12 - Redridge Mountains"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Stormwind City to level 14",
+      "levelRange": "13-14",
+      "minLevel": 13,
+      "maxLevel": 14,
+      "grindToLevel": 14,
+      "xpFromMonsters": 11400,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 11,400 XP to reach level 14.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Stormwind City to level 13"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Stormwind City to level 15",
+      "levelRange": "14-15",
+      "minLevel": 14,
+      "maxLevel": 15,
+      "grindToLevel": 15,
+      "xpFromMonsters": 12900,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 12,900 XP to reach level 15.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Stormwind City to level 14"
+        }
+      ]
+    },
+    {
+      "name": "The Hall of Thanes",
+      "url": "https://www.wowhead.com/forever/guide/dungeons-overview-locations-details#hall-of-thanes",
+      "levelRange": "13-18",
+      "minLevel": 15,
+      "maxLevel": 18,
+      "xpFromMonsters": 0,
+      "notes": "Collect all listed dungeon quests before entering. The route assumes the Ironforge-side entrance.",
+      "quests": [
+        {
+          "questId": 96403,
+          "name": "Important Heirlooms",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 4600,
+          "faction": "Both"
+        },
+        {
+          "questId": 96394,
+          "name": "The Restless Dead",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 3550,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 96393,
+          "name": "Old Ironforge Incursion",
+          "questLevel": 9,
+          "requiredLevel": 9,
+          "xp": 4950,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 98423,
+          "name": "The Treaty of Understanding",
+          "questLevel": 9,
+          "requiredLevel": 9,
+          "xp": 3900,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 96395,
+          "name": "An Ancient Grudge",
+          "questLevel": 15,
+          "requiredLevel": 15,
+          "xp": 3550,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Stormwind City to level 15"
+        }
+      ]
+    },
+    {
+      "name": "Ruins of Lordaeron",
+      "levelRange": "15-20",
+      "minLevel": 16,
+      "maxLevel": 20,
+      "xpFromMonsters": 0,
+      "notes": "Remote faction-specific detour. Confirm access and collect all four Alliance quests before entering.",
+      "quests": [
+        {
+          "questId": 95250,
+          "name": "Abominable Creatures",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 6200,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 95195,
+          "name": "Bloodied Insignia",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 9750,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 95189,
+          "name": "Crest of Lordaeron",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 8300,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 92415,
+          "name": "Remember That I Love You",
+          "questLevel": 15,
+          "requiredLevel": 15,
+          "xp": 180,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "The Hall of Thanes"
+        }
+      ]
+    },
+    {
+      "name": "Deadmines",
+      "levelRange": "17-26",
+      "minLevel": 17,
+      "maxLevel": 26,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Westfall quest chain before entering from Moonbrook.",
+      "quests": [
+        {
+          "questId": 168,
+          "name": "Collecting Memories",
+          "questLevel": 14,
+          "requiredLevel": 14,
+          "xp": 1350,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 214,
+          "name": "Red Silk Bandanas",
+          "questLevel": 14,
+          "requiredLevel": 14,
+          "xp": 4700,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 167,
+          "name": "Oh Brother...",
+          "questLevel": 15,
+          "requiredLevel": 15,
+          "xp": 1550,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 2040,
+          "name": "Underground Assault",
+          "questLevel": 15,
+          "requiredLevel": 15,
+          "xp": 5800,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 166,
+          "name": "The Defias Brotherhood",
+          "questLevel": 14,
+          "requiredLevel": 14,
+          "xp": 9750,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 373,
+          "name": "The Unsent Letter",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 3250,
+          "faction": "Alliance"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Ruins of Lordaeron"
+        }
+      ]
+    },
+    {
+      "name": "Wailing Caverns",
+      "levelRange": "15-25",
+      "minLevel": 15,
+      "maxLevel": 25,
+      "xpFromMonsters": 0,
+      "notes": "Collect all four Alliance-eligible quests together in the Barrens, then complete one instance visit.",
+      "quests": [
+        {
+          "questId": 6981,
+          "name": "The Glowing Shard",
+          "questLevel": 15,
+          "requiredLevel": 15,
+          "xp": 7700,
+          "faction": "Both"
+        },
+        {
+          "questId": 1486,
+          "name": "Deviate Hides",
+          "questLevel": 13,
+          "requiredLevel": 13,
+          "xp": 4650,
+          "faction": "Both"
+        },
+        {
+          "questId": 1487,
+          "name": "Deviate Eradication",
+          "questLevel": 15,
+          "requiredLevel": 15,
+          "xp": 5950,
+          "faction": "Both"
+        },
+        {
+          "questId": 1490,
+          "name": "Trouble at the Docks",
+          "questLevel": 12,
+          "requiredLevel": 12,
+          "xp": 3900,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Deadmines"
+        }
+      ]
+    },
+    {
+      "name": "Level 20 - The Barrens",
+      "levelRange": "20-20",
+      "minLevel": 20,
+      "maxLevel": 20,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Crossroads and Ratchet flight paths where accessible; complete Wailing Caverns and Razorfen Downs on the Kalimdor leg.",
+      "quests": [
+        {
+          "questId": 1221,
+          "name": "Blueleaf Tubers",
+          "questLevel": 20,
+          "requiredLevel": 20,
+          "xp": 2100,
+          "faction": "Both"
+        },
+        {
+          "questId": 1069,
+          "name": "Deepmoss Spider Eggs",
+          "questLevel": 15,
+          "requiredLevel": 15,
+          "xp": 1950,
+          "faction": "Both"
+        },
+        {
+          "questId": 865,
+          "name": "Raptor Horns",
+          "questLevel": 13,
+          "requiredLevel": 13,
+          "xp": 1350,
+          "faction": "Both"
+        },
+        {
+          "questId": 1491,
+          "name": "Smart Drinks",
+          "questLevel": 13,
+          "requiredLevel": 13,
+          "xp": 1350,
+          "faction": "Both"
+        },
+        {
+          "questId": 959,
+          "name": "Trouble at the Docks",
+          "questLevel": 14,
+          "requiredLevel": 14,
+          "xp": 1350,
+          "faction": "Both"
+        },
+        {
+          "questId": 896,
+          "name": "Miner's Fortune",
+          "questLevel": 13,
+          "requiredLevel": 13,
+          "xp": 1700,
+          "faction": "Both"
+        },
+        {
+          "questId": 863,
+          "name": "The Escape",
+          "questLevel": 13,
+          "requiredLevel": 13,
+          "xp": 1700,
+          "faction": "Both"
+        },
+        {
+          "questId": 858,
+          "name": "Ignition",
+          "questLevel": 13,
+          "requiredLevel": 13,
+          "xp": 1350,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Wailing Caverns"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Darkshore to level 21",
+      "levelRange": "20-21",
+      "minLevel": 20,
+      "maxLevel": 21,
+      "grindToLevel": 21,
+      "xpFromMonsters": 5570,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 5,570 XP to reach level 21.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 20 - The Barrens"
+        }
+      ]
+    },
+    {
+      "name": "Level 21 - The Barrens",
+      "levelRange": "21-21",
+      "minLevel": 21,
+      "maxLevel": 21,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Crossroads and Ratchet flight paths where accessible; complete Wailing Caverns and Razorfen Downs on the Kalimdor leg.",
+      "quests": [
+        {
+          "questId": 902,
+          "name": "Samophlange",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 1150,
+          "faction": "Both"
+        },
+        {
+          "questId": 901,
+          "name": "Samophlange",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 740,
+          "faction": "Both"
+        },
+        {
+          "questId": 888,
+          "name": "Stolen Booty",
+          "questLevel": 9,
+          "requiredLevel": 9,
+          "xp": 1150,
+          "faction": "Both"
+        },
+        {
+          "questId": 887,
+          "name": "Southsea Freebooters",
+          "questLevel": 9,
+          "requiredLevel": 9,
+          "xp": 740,
+          "faction": "Both"
+        },
+        {
+          "questId": 1095,
+          "name": "Further Instructions",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 1100,
+          "faction": "Both"
+        },
+        {
+          "questId": 894,
+          "name": "Samophlange",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 740,
+          "faction": "Both"
+        },
+        {
+          "questId": 895,
+          "name": "WANTED: Baron Longshore",
+          "questLevel": 11,
+          "requiredLevel": 11,
+          "xp": 1150,
+          "faction": "Both"
+        },
+        {
+          "questId": 866,
+          "name": "Root Samples",
+          "questLevel": 9,
+          "requiredLevel": 9,
+          "xp": 1150,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Darkshore to level 21"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Darkshore to level 22",
+      "levelRange": "21-22",
+      "minLevel": 21,
+      "maxLevel": 22,
+      "grindToLevel": 22,
+      "xpFromMonsters": 17280,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 17,280 XP to reach level 22.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 21 - The Barrens"
+        }
+      ]
+    },
+    {
+      "name": "Level 22 - The Barrens",
+      "levelRange": "22-22",
+      "minLevel": 22,
+      "maxLevel": 22,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Crossroads and Ratchet flight paths where accessible; complete Wailing Caverns and Razorfen Downs on the Kalimdor leg.",
+      "quests": [
+        {
+          "questId": 1483,
+          "name": "Ziz Fizziks",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 415,
+          "faction": "Both"
+        },
+        {
+          "questId": 890,
+          "name": "The Missing Shipment",
+          "questLevel": 9,
+          "requiredLevel": 9,
+          "xp": 100,
+          "faction": "Both"
+        },
+        {
+          "questId": 892,
+          "name": "The Missing Shipment",
+          "questLevel": 9,
+          "requiredLevel": 9,
+          "xp": 100,
+          "faction": "Both"
+        },
+        {
+          "questId": 900,
+          "name": "Samophlange",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 490,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Darkshore to level 22"
+        }
+      ]
+    },
+    {
+      "name": "Level 22 - Stonetalon Mountains",
+      "levelRange": "22-22",
+      "minLevel": 22,
+      "maxLevel": 22,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Sun Rock Retreat flight path if accessible to your character.",
+      "quests": [
+        {
+          "questId": 1096,
+          "name": "Gerenzo Wrenchwhistle",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 2200,
+          "faction": "Both"
+        },
+        {
+          "questId": 1093,
+          "name": "Super Reaper 6000",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 1650,
+          "faction": "Both"
+        },
+        {
+          "questId": 1090,
+          "name": "Gerenzo's Orders",
+          "questLevel": 17,
+          "requiredLevel": 17,
+          "xp": 2200,
+          "faction": "Both"
+        },
+        {
+          "questId": 1092,
+          "name": "Gerenzo's Orders",
+          "questLevel": 17,
+          "requiredLevel": 17,
+          "xp": 1300,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 22 - The Barrens"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Darkshore to level 23",
+      "levelRange": "22-23",
+      "minLevel": 22,
+      "maxLevel": 23,
+      "grindToLevel": 23,
+      "xpFromMonsters": 18845,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 18,845 XP to reach level 23.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 22 - Stonetalon Mountains"
+        }
+      ]
+    },
+    {
+      "name": "Level 23 - Stonetalon Mountains",
+      "levelRange": "23-23",
+      "minLevel": 23,
+      "maxLevel": 23,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Sun Rock Retreat flight path if accessible to your character.",
+      "quests": [
+        {
+          "questId": 1094,
+          "name": "Further Instructions",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 830,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Darkshore to level 23"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Darkshore to level 24",
+      "levelRange": "23-24",
+      "minLevel": 23,
+      "maxLevel": 24,
+      "grindToLevel": 24,
+      "xpFromMonsters": 28570,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 28,570 XP to reach level 24.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 23 - Stonetalon Mountains"
+        }
+      ]
+    },
+    {
+      "name": "Stockades",
+      "levelRange": "24-30",
+      "minLevel": 24,
+      "maxLevel": 30,
+      "xpFromMonsters": 0,
+      "notes": "Collect all Stormwind dungeon quests before the single city instance visit.",
+      "quests": [
+        {
+          "questId": 391,
+          "name": "The Stockade Riots",
+          "questLevel": 16,
+          "requiredLevel": 16,
+          "xp": 7500,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 387,
+          "name": "Quell the Uprising",
+          "questLevel": 22,
+          "requiredLevel": 22,
+          "xp": 8500,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 386,
+          "name": "What Comes Around...",
+          "questLevel": 22,
+          "requiredLevel": 22,
+          "xp": 6400,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 378,
+          "name": "The Fury Runs Deep",
+          "questLevel": 22,
+          "requiredLevel": 22,
+          "xp": 2750,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 388,
+          "name": "The Color of Blood",
+          "questLevel": 22,
+          "requiredLevel": 22,
+          "xp": 8500,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 377,
+          "name": "Crime and Punishment",
+          "questLevel": 22,
+          "requiredLevel": 22,
+          "xp": 6700,
+          "faction": "Alliance"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Darkshore to level 24"
+        }
+      ]
+    },
+    {
+      "name": "Blackfathom Deeps",
+      "levelRange": "24-32",
+      "minLevel": 24,
+      "maxLevel": 32,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Ashenvale/Alliance quests together before the single dungeon visit.",
+      "quests": [
+        {
+          "questId": 971,
+          "name": "Knowledge in the Deeps",
+          "questLevel": 10,
+          "requiredLevel": 10,
+          "xp": 10300,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 1275,
+          "name": "Researching the Corruption",
+          "questLevel": 18,
+          "requiredLevel": 18,
+          "xp": 2400,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 78925,
+          "name": "Twilight Falls",
+          "questLevel": 20,
+          "requiredLevel": 20,
+          "xp": 9550,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 1198,
+          "name": "In Search of Thaelrid",
+          "questLevel": 18,
+          "requiredLevel": 18,
+          "xp": 9000,
+          "faction": "Both"
+        },
+        {
+          "questId": 1200,
+          "name": "Blackfathom Villainy",
+          "questLevel": 18,
+          "requiredLevel": 18,
+          "xp": 12400,
+          "faction": "Alliance"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Stockades"
+        }
+      ]
+    },
+    {
+      "name": "Level 26 - Thousand Needles",
+      "levelRange": "26-26",
+      "minLevel": 26,
+      "maxLevel": 26,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the local flight path when passing through.",
+      "quests": [
+        {
+          "questId": 1106,
+          "name": "Martek the Exiled",
+          "questLevel": 26,
+          "requiredLevel": 26,
+          "xp": 1350,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Blackfathom Deeps"
+        }
+      ]
+    },
+    {
+      "name": "Level 26 - Stranglethorn Vale",
+      "levelRange": "26-26",
+      "minLevel": 26,
+      "maxLevel": 26,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Booty Bay flight path; use the coastal boat links to avoid retracing the road.",
+      "quests": [
+        {
+          "questId": 575,
+          "name": "Supply and Demand",
+          "questLevel": 26,
+          "requiredLevel": 26,
+          "xp": 1250,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 26 - Thousand Needles"
+        }
+      ]
+    },
+    {
+      "name": "Grind near The Barrens to level 27",
+      "levelRange": "26-27",
+      "minLevel": 26,
+      "maxLevel": 27,
+      "grindToLevel": 27,
+      "xpFromMonsters": 15500,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 15,500 XP to reach level 27.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 26 - Stranglethorn Vale"
+        }
+      ]
+    },
+    {
+      "name": "Grind near The Barrens to level 28",
+      "levelRange": "27-28",
+      "minLevel": 27,
+      "maxLevel": 28,
+      "grindToLevel": 28,
+      "xpFromMonsters": 38900,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 38,900 XP to reach level 28.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near The Barrens to level 27"
+        }
+      ]
+    },
+    {
+      "name": "Level 28 - Thousand Needles",
+      "levelRange": "28-28",
+      "minLevel": 28,
+      "maxLevel": 28,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the local flight path when passing through.",
+      "quests": [
+        {
+          "questId": 1110,
+          "name": "Rocket Car Parts",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 2500,
+          "faction": "Both"
+        },
+        {
+          "questId": 5762,
+          "name": "Hemet Nesingwary",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 1250,
+          "faction": "Both"
+        },
+        {
+          "questId": 1104,
+          "name": "Salt Flat Venom",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 1850,
+          "faction": "Both"
+        },
+        {
+          "questId": 1107,
+          "name": "Encrusted Tail Fins",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 3450,
+          "faction": "Both"
+        },
+        {
+          "questId": 1105,
+          "name": "Hardened Shells",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 2450,
+          "faction": "Both"
+        },
+        {
+          "questId": 1175,
+          "name": "A Bump in the Road",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 2650,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near The Barrens to level 28"
+        }
+      ]
+    },
+    {
+      "name": "Level 28 - Stranglethorn Vale",
+      "levelRange": "28-28",
+      "minLevel": 28,
+      "maxLevel": 28,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Booty Bay flight path; use the coastal boat links to avoid retracing the road.",
+      "quests": [
+        {
+          "questId": 208,
+          "name": "Big Game Hunter",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 5350,
+          "faction": "Both"
+        },
+        {
+          "questId": 197,
+          "name": "Raptor Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 3600,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 28 - Thousand Needles"
+        }
+      ]
+    },
+    {
+      "name": "Grind near The Barrens to level 29",
+      "levelRange": "28-29",
+      "minLevel": 28,
+      "maxLevel": 29,
+      "grindToLevel": 29,
+      "xpFromMonsters": 18300,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 18,300 XP to reach level 29.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 28 - Stranglethorn Vale"
+        }
+      ]
+    },
+    {
+      "name": "Gnomeregan",
+      "levelRange": "29-38",
+      "minLevel": 29,
+      "maxLevel": 38,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Ironforge-side quest set before entering; use the Dun Morogh/Ironforge flight path.",
+      "quests": [
+        {
+          "questId": 2922,
+          "name": "Save Techbot's Brain!",
+          "questLevel": 20,
+          "requiredLevel": 20,
+          "xp": 6900,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 2924,
+          "name": "Gnogaine",
+          "questLevel": 24,
+          "requiredLevel": 24,
+          "xp": 5700,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 2962,
+          "name": "The Only Cure is More Green Glow",
+          "questLevel": 20,
+          "requiredLevel": 20,
+          "xp": 6350,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 2926,
+          "name": "Gyrodrillmatic Excavationators",
+          "questLevel": 20,
+          "requiredLevel": 20,
+          "xp": 6350,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 2928,
+          "name": "Essential Artificials",
+          "questLevel": 20,
+          "requiredLevel": 20,
+          "xp": 3050,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 2930,
+          "name": "Data Rescue",
+          "questLevel": 25,
+          "requiredLevel": 25,
+          "xp": 3650,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 2929,
+          "name": "The Grand Betrayal",
+          "questLevel": 25,
+          "requiredLevel": 25,
+          "xp": 2750,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 2904,
+          "name": "A Fine Mess",
+          "questLevel": 24,
+          "requiredLevel": 24,
+          "xp": 9200,
+          "faction": "Both"
+        },
+        {
+          "questId": 2927,
+          "name": "The Sparklematic 5200!",
+          "questLevel": 20,
+          "requiredLevel": 20,
+          "xp": 2450,
+          "faction": "Both"
+        },
+        {
+          "questId": 2945,
+          "name": "Grime-Encrusted Ring",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 2700,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near The Barrens to level 29"
+        }
+      ]
+    },
+    {
+      "name": "Level 30 - Arathi Highlands",
+      "levelRange": "30-30",
+      "minLevel": 30,
+      "maxLevel": 30,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Refuge Pointe flight path while in the zone.",
+      "quests": [
+        {
+          "questId": 642,
+          "name": "The Princess Trapped",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 651,
+          "name": "Stones of Binding",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 652,
+          "name": "Breaking the Keystone",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3450,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Gnomeregan"
+        }
+      ]
+    },
+    {
+      "name": "Level 30 - Desolace",
+      "levelRange": "30-30",
+      "minLevel": 30,
+      "maxLevel": 30,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Nijel's Point flight path before the Maraudon visit.",
+      "quests": [
+        {
+          "questId": 5561,
+          "name": "Kodo Roundup",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2000,
+          "faction": "Both"
+        },
+        {
+          "questId": 5821,
+          "name": "Bodyguard for Hire",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2750,
+          "faction": "Both"
+        },
+        {
+          "questId": 6027,
+          "name": "Book of the Ancients",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3550,
+          "faction": "Both"
+        },
+        {
+          "questId": 5741,
+          "name": "Sceptre of Light",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2650,
+          "faction": "Both"
+        },
+        {
+          "questId": 6161,
+          "name": "Claim Rackmore's Treasure!",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2800,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 30 - Arathi Highlands"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Hillsbrad Foothills to level 31",
+      "levelRange": "30-31",
+      "minLevel": 30,
+      "maxLevel": 31,
+      "grindToLevel": 31,
+      "xpFromMonsters": 19700,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 19,700 XP to reach level 31.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 30 - Desolace"
+        }
+      ]
+    },
+    {
+      "name": "Level 31 - Thousand Needles",
+      "levelRange": "31-31",
+      "minLevel": 31,
+      "maxLevel": 31,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the local flight path when passing through.",
+      "quests": [
+        {
+          "questId": 1194,
+          "name": "Rizzle's Schematics",
+          "questLevel": 29,
+          "requiredLevel": 29,
+          "xp": 1650,
+          "faction": "Both"
+        },
+        {
+          "questId": 1111,
+          "name": "Wharfmaster Dizzywig",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 1400,
+          "faction": "Both"
+        },
+        {
+          "questId": 1115,
+          "name": "The Rumormonger",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 1400,
+          "faction": "Both"
+        },
+        {
+          "questId": 1176,
+          "name": "Load Lightening",
+          "questLevel": 29,
+          "requiredLevel": 29,
+          "xp": 1850,
+          "faction": "Both"
+        },
+        {
+          "questId": 1190,
+          "name": "Keeping Pace",
+          "questLevel": 29,
+          "requiredLevel": 29,
+          "xp": 1650,
+          "faction": "Both"
+        },
+        {
+          "questId": 1178,
+          "name": "Goblin Sponsorship",
+          "questLevel": 29,
+          "requiredLevel": 29,
+          "xp": 710,
+          "faction": "Both"
+        },
+        {
+          "questId": 1187,
+          "name": "Razzeric's Tweaking",
+          "questLevel": 29,
+          "requiredLevel": 29,
+          "xp": 3300,
+          "faction": "Both"
+        },
+        {
+          "questId": 1188,
+          "name": "Safety First",
+          "questLevel": 29,
+          "requiredLevel": 29,
+          "xp": 820,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Hillsbrad Foothills to level 31"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Hillsbrad Foothills to level 32",
+      "levelRange": "31-32",
+      "minLevel": 31,
+      "maxLevel": 32,
+      "grindToLevel": 32,
+      "xpFromMonsters": 38020,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 38,020 XP to reach level 32.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 31 - Thousand Needles"
+        }
+      ]
+    },
+    {
+      "name": "Level 32 - Desolace",
+      "levelRange": "32-32",
+      "minLevel": 32,
+      "maxLevel": 32,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Nijel's Point flight path before the Maraudon visit.",
+      "quests": [
+        {
+          "questId": 5943,
+          "name": "Gizelton Caravan",
+          "questLevel": 32,
+          "requiredLevel": 32,
+          "xp": 2850,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Hillsbrad Foothills to level 32"
+        }
+      ]
+    },
+    {
+      "name": "Level 32 - Thousand Needles",
+      "levelRange": "32-32",
+      "minLevel": 32,
+      "maxLevel": 32,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the local flight path when passing through.",
+      "quests": [
+        {
+          "questId": 1114,
+          "name": "Delivery to the Gnomes",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 700,
+          "faction": "Both"
+        },
+        {
+          "questId": 1186,
+          "name": "The Eighteenth Pilot",
+          "questLevel": 29,
+          "requiredLevel": 29,
+          "xp": 285,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 32 - Desolace"
+        }
+      ]
+    },
+    {
+      "name": "Level 32 - Dustwallow Marsh",
+      "levelRange": "32-32",
+      "minLevel": 32,
+      "maxLevel": 32,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Theramore flight path before leaving the marsh.",
+      "quests": [
+        {
+          "questId": 1203,
+          "name": "Jarl Needs a Blade",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3450,
+          "faction": "Both"
+        },
+        {
+          "questId": 1206,
+          "name": "Jarl Needs Eyes",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2750,
+          "faction": "Both"
+        },
+        {
+          "questId": 1218,
+          "name": "Soothing Spices",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 1350,
+          "faction": "Both"
+        },
+        {
+          "questId": 1177,
+          "name": "Hungry!",
+          "questLevel": 32,
+          "requiredLevel": 32,
+          "xp": 2800,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 32 - Thousand Needles"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Hillsbrad Foothills to level 33",
+      "levelRange": "32-33",
+      "minLevel": 32,
+      "maxLevel": 33,
+      "grindToLevel": 33,
+      "xpFromMonsters": 40315,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 40,315 XP to reach level 33.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 32 - Dustwallow Marsh"
+        }
+      ]
+    },
+    {
+      "name": "Level 33 - Desolace",
+      "levelRange": "33-33",
+      "minLevel": 33,
+      "maxLevel": 33,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Nijel's Point flight path before the Maraudon visit.",
+      "quests": [
+        {
+          "questId": 5501,
+          "name": "Bone Collector",
+          "questLevel": 33,
+          "requiredLevel": 33,
+          "xp": 2250,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Hillsbrad Foothills to level 33"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Hillsbrad Foothills to level 34",
+      "levelRange": "33-34",
+      "minLevel": 33,
+      "maxLevel": 34,
+      "grindToLevel": 34,
+      "xpFromMonsters": 56350,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 56,350 XP to reach level 34.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 33 - Desolace"
+        }
+      ]
+    },
+    {
+      "name": "Level 34 - Desolace",
+      "levelRange": "34-34",
+      "minLevel": 34,
+      "maxLevel": 34,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Nijel's Point flight path before the Maraudon visit.",
+      "quests": [
+        {
+          "questId": 6134,
+          "name": "Ghost-o-plasm Round Up",
+          "questLevel": 34,
+          "requiredLevel": 34,
+          "xp": 2250,
+          "faction": "Both"
+        },
+        {
+          "questId": 6132,
+          "name": "Get Me Out of Here!",
+          "questLevel": 34,
+          "requiredLevel": 34,
+          "xp": 2250,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Hillsbrad Foothills to level 34"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Hillsbrad Foothills to level 35",
+      "levelRange": "34-35",
+      "minLevel": 34,
+      "maxLevel": 35,
+      "grindToLevel": 35,
+      "xpFromMonsters": 58300,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 58,300 XP to reach level 35.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 34 - Desolace"
+        }
+      ]
+    },
+    {
+      "name": "Level 35 - Stranglethorn Vale",
+      "levelRange": "35-35",
+      "minLevel": 35,
+      "maxLevel": 35,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Booty Bay flight path; use the coastal boat links to avoid retracing the road.",
+      "quests": [
+        {
+          "questId": 613,
+          "name": "Cracking Maury's Foot",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 4650,
+          "faction": "Both"
+        },
+        {
+          "questId": 609,
+          "name": "Voodoo Dues",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3750,
+          "faction": "Both"
+        },
+        {
+          "questId": 621,
+          "name": "Zanzil's Secret",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 3750,
+          "faction": "Both"
+        },
+        {
+          "questId": 1119,
+          "name": "Zanzil's Mixture and a Fool's Stout",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 3750,
+          "faction": "Both"
+        },
+        {
+          "questId": 600,
+          "name": "Venture Company Mining",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3300,
+          "faction": "Both"
+        },
+        {
+          "questId": 1116,
+          "name": "Dream Dust in the Swamp",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3500,
+          "faction": "Both"
+        },
+        {
+          "questId": 1117,
+          "name": "Rumors for Kravel",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3500,
+          "faction": "Both"
+        },
+        {
+          "questId": 338,
+          "name": "The Green Hills of Stranglethorn",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 4700,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Hillsbrad Foothills to level 35"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Stranglethorn Vale to level 36",
+      "levelRange": "35-36",
+      "minLevel": 35,
+      "maxLevel": 36,
+      "grindToLevel": 36,
+      "xpFromMonsters": 36200,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 36,200 XP to reach level 36.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 35 - Stranglethorn Vale"
+        }
+      ]
+    },
+    {
+      "name": "Level 36 - Stranglethorn Vale",
+      "levelRange": "36-36",
+      "minLevel": 36,
+      "maxLevel": 36,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Booty Bay flight path; use the coastal boat links to avoid retracing the road.",
+      "quests": [
+        {
+          "questId": 188,
+          "name": "Tiger Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 193,
+          "name": "Panther Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 3150,
+          "faction": "Both"
+        },
+        {
+          "questId": 8551,
+          "name": "The Captain's Chest",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 3150,
+          "faction": "Both"
+        },
+        {
+          "questId": 1182,
+          "name": "Goblin Sponsorship",
+          "questLevel": 29,
+          "requiredLevel": 29,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 670,
+          "name": "Sunken Treasure",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 3150,
+          "faction": "Both"
+        },
+        {
+          "questId": 605,
+          "name": "Singing Blue Shards",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2750,
+          "faction": "Both"
+        },
+        {
+          "questId": 213,
+          "name": "Hostile Takeover",
+          "questLevel": 31,
+          "requiredLevel": 31,
+          "xp": 2800,
+          "faction": "Both"
+        },
+        {
+          "questId": 628,
+          "name": "Excelsior",
+          "questLevel": 31,
+          "requiredLevel": 31,
+          "xp": 2850,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Stranglethorn Vale to level 36"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Stranglethorn Vale to level 37",
+      "levelRange": "36-37",
+      "minLevel": 36,
+      "maxLevel": 37,
+      "grindToLevel": 37,
+      "xpFromMonsters": 48050,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 48,050 XP to reach level 37.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 36 - Stranglethorn Vale"
+        }
+      ]
+    },
+    {
+      "name": "Razorfen Downs",
+      "levelRange": "37-47",
+      "minLevel": 37,
+      "maxLevel": 47,
+      "xpFromMonsters": 0,
+      "notes": "Collect all four eligible quests during the Barrens leg before entering.",
+      "quests": [
+        {
+          "questId": 6626,
+          "name": "A Host of Evil",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 3450,
+          "faction": "Both"
+        },
+        {
+          "questId": 3523,
+          "name": "Scourge of the Downs",
+          "questLevel": 32,
+          "requiredLevel": 32,
+          "xp": 290,
+          "faction": "Both"
+        },
+        {
+          "questId": 3525,
+          "name": "Extinguishing the Idol",
+          "questLevel": 32,
+          "requiredLevel": 32,
+          "xp": 4250,
+          "faction": "Both"
+        },
+        {
+          "questId": 6624,
+          "name": "Bring the Light",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 4300,
+          "faction": "Alliance"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Stranglethorn Vale to level 37"
+        }
+      ]
+    },
+    {
+      "name": "Level 37 - Stranglethorn Vale",
+      "levelRange": "37-37",
+      "minLevel": 37,
+      "maxLevel": 37,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Booty Bay flight path; use the coastal boat links to avoid retracing the road.",
+      "quests": [
+        {
+          "questId": 608,
+          "name": "The Bloodsail Buccaneers",
+          "questLevel": 37,
+          "requiredLevel": 37,
+          "xp": 4850,
+          "faction": "Both"
+        },
+        {
+          "questId": 604,
+          "name": "The Bloodsail Buccaneers",
+          "questLevel": 37,
+          "requiredLevel": 37,
+          "xp": 3600,
+          "faction": "Both"
+        },
+        {
+          "questId": 209,
+          "name": "Skullsplitter Tusks",
+          "questLevel": 37,
+          "requiredLevel": 37,
+          "xp": 3450,
+          "faction": "Both"
+        },
+        {
+          "questId": 595,
+          "name": "The Bloodsail Buccaneers",
+          "questLevel": 37,
+          "requiredLevel": 37,
+          "xp": 2450,
+          "faction": "Both"
+        },
+        {
+          "questId": 576,
+          "name": "Keep An Eye Out",
+          "questLevel": 37,
+          "requiredLevel": 37,
+          "xp": 2550,
+          "faction": "Both"
+        },
+        {
+          "questId": 607,
+          "name": "Return to MacKinley",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2450,
+          "faction": "Both"
+        },
+        {
+          "questId": 597,
+          "name": "The Bloodsail Buccaneers",
+          "questLevel": 37,
+          "requiredLevel": 37,
+          "xp": 2450,
+          "faction": "Both"
+        },
+        {
+          "questId": 196,
+          "name": "Raptor Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 2450,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Razorfen Downs"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Stranglethorn Vale to level 38",
+      "levelRange": "37-38",
+      "minLevel": 37,
+      "maxLevel": 38,
+      "grindToLevel": 38,
+      "xpFromMonsters": 39560,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 39,560 XP to reach level 38.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 37 - Stranglethorn Vale"
+        }
+      ]
+    },
+    {
+      "name": "Level 38 - Stranglethorn Vale",
+      "levelRange": "38-38",
+      "minLevel": 38,
+      "maxLevel": 38,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Booty Bay flight path; use the coastal boat links to avoid retracing the road.",
+      "quests": [
+        {
+          "questId": 195,
+          "name": "Raptor Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 1400,
+          "faction": "Both"
+        },
+        {
+          "questId": 194,
+          "name": "Raptor Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 1350,
+          "faction": "Both"
+        },
+        {
+          "questId": 187,
+          "name": "Tiger Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 2050,
+          "faction": "Both"
+        },
+        {
+          "questId": 192,
+          "name": "Panther Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 2150,
+          "faction": "Both"
+        },
+        {
+          "questId": 617,
+          "name": "Akiris by the Bundle",
+          "questLevel": 38,
+          "requiredLevel": 38,
+          "xp": 3600,
+          "faction": "Both"
+        },
+        {
+          "questId": 189,
+          "name": "Bloodscalp Ears",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2050,
+          "faction": "Both"
+        },
+        {
+          "questId": 587,
+          "name": "Up to Snuff",
+          "questLevel": 37,
+          "requiredLevel": 37,
+          "xp": 1650,
+          "faction": "Both"
+        },
+        {
+          "questId": 577,
+          "name": "Some Assembly Required",
+          "questLevel": 31,
+          "requiredLevel": 31,
+          "xp": 1400,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Stranglethorn Vale to level 38"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Stranglethorn Vale to level 39",
+      "levelRange": "38-39",
+      "minLevel": 38,
+      "maxLevel": 39,
+      "grindToLevel": 39,
+      "xpFromMonsters": 65150,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 65,150 XP to reach level 39.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 38 - Stranglethorn Vale"
+        }
+      ]
+    },
+    {
+      "name": "Level 39 - Stranglethorn Vale",
+      "levelRange": "39-39",
+      "minLevel": 39,
+      "maxLevel": 39,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Booty Bay flight path; use the coastal boat links to avoid retracing the road.",
+      "quests": [
+        {
+          "questId": 606,
+          "name": "Scaring Shaky",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 820,
+          "faction": "Both"
+        },
+        {
+          "questId": 599,
+          "name": "The Bloodsail Buccaneers",
+          "questLevel": 37,
+          "requiredLevel": 37,
+          "xp": 820,
+          "faction": "Both"
+        },
+        {
+          "questId": 186,
+          "name": "Tiger Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 1300,
+          "faction": "Both"
+        },
+        {
+          "questId": 185,
+          "name": "Tiger Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 1250,
+          "faction": "Both"
+        },
+        {
+          "questId": 339,
+          "name": "Chapter I",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 780,
+          "faction": "Both"
+        },
+        {
+          "questId": 340,
+          "name": "Chapter II",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 780,
+          "faction": "Both"
+        },
+        {
+          "questId": 191,
+          "name": "Panther Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 1300,
+          "faction": "Both"
+        },
+        {
+          "questId": 190,
+          "name": "Panther Mastery",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 1250,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Stranglethorn Vale to level 39"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Stranglethorn Vale to level 40",
+      "levelRange": "39-40",
+      "minLevel": 39,
+      "maxLevel": 40,
+      "grindToLevel": 40,
+      "xpFromMonsters": 77400,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 77,400 XP to reach level 40.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 39 - Stranglethorn Vale"
+        }
+      ]
+    },
+    {
+      "name": "Uldaman",
+      "levelRange": "40-45",
+      "minLevel": 40,
+      "maxLevel": 45,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Badlands and Ironforge quest leads before entering from the Badlands side.",
+      "quests": [
+        {
+          "questId": 1360,
+          "name": "Reclaimed Treasures",
+          "questLevel": 33,
+          "requiredLevel": 33,
+          "xp": 3600,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 1363,
+          "name": "The Lost Dwarves",
+          "questLevel": 37,
+          "requiredLevel": 37,
+          "xp": 3150,
+          "faction": "Both"
+        },
+        {
+          "questId": 2278,
+          "name": "The Hidden Chamber",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 704,
+          "name": "Agmond's Fate",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 1139,
+          "name": "The Lost Tablets of Will",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 5850,
+          "faction": "Both"
+        },
+        {
+          "questId": 219,
+          "name": "Restoring the Necklace",
+          "questLevel": 19,
+          "requiredLevel": 19,
+          "xp": 5600,
+          "faction": "Both"
+        },
+        {
+          "questId": 1108,
+          "name": "The Platinum Discs",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 5250,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Stranglethorn Vale to level 40"
+        }
+      ]
+    },
+    {
+      "name": "Level 40 - Badlands",
+      "levelRange": "40-40",
+      "minLevel": 40,
+      "maxLevel": 40,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the nearest usable flight path before Uldaman.",
+      "quests": [
+        {
+          "questId": 778,
+          "name": "This Is Going to Be Hard",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 4850,
+          "faction": "Both"
+        },
+        {
+          "questId": 712,
+          "name": "Study of the Elements: Rock",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 3450,
+          "faction": "Both"
+        },
+        {
+          "questId": 711,
+          "name": "Study of the Elements: Rock",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 3000,
+          "faction": "Both"
+        },
+        {
+          "questId": 705,
+          "name": "Pearl Diving",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3550,
+          "faction": "Both"
+        },
+        {
+          "questId": 2418,
+          "name": "Power Stones",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3500,
+          "faction": "Both"
+        },
+        {
+          "questId": 656,
+          "name": "Summoning the Princess",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 7100,
+          "faction": "Both"
+        },
+        {
+          "questId": 692,
+          "name": "The Lost Fragments",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3300,
+          "faction": "Both"
+        },
+        {
+          "questId": 709,
+          "name": "Solution to Doom",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3150,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Uldaman"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Badlands to level 41",
+      "levelRange": "40-41",
+      "minLevel": 40,
+      "maxLevel": 41,
+      "grindToLevel": 41,
+      "xpFromMonsters": 28600,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 28,600 XP to reach level 41.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 40 - Badlands"
+        }
+      ]
+    },
+    {
+      "name": "Level 41 - Badlands",
+      "levelRange": "41-41",
+      "minLevel": 41,
+      "maxLevel": 41,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the nearest usable flight path before Uldaman.",
+      "quests": [
+        {
+          "questId": 703,
+          "name": "Barbecued Buzzard Wings",
+          "questLevel": 33,
+          "requiredLevel": 33,
+          "xp": 2350,
+          "faction": "Both"
+        },
+        {
+          "questId": 1137,
+          "name": "News for Fizzle",
+          "questLevel": 28,
+          "requiredLevel": 28,
+          "xp": 1450,
+          "faction": "Both"
+        },
+        {
+          "questId": 710,
+          "name": "Study of the Elements: Rock",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 713,
+          "name": "Coolant Heads Prevail",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 714,
+          "name": "Gyro... What?",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 716,
+          "name": "Stone Is Better than Cloth",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 2550,
+          "faction": "Both"
+        },
+        {
+          "questId": 715,
+          "name": "Liquid Stone",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 2100,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Badlands to level 41"
+        }
+      ]
+    },
+    {
+      "name": "Level 41 - Tanaris",
+      "levelRange": "41-41",
+      "minLevel": 41,
+      "maxLevel": 41,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Gadgetzan flight path; pair the stop with Zul'Farrak.",
+      "quests": [
+        {
+          "questId": 8182,
+          "name": "The Hand of Rastakhan",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 9300,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 41 - Badlands"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Badlands to level 42",
+      "levelRange": "41-42",
+      "minLevel": 41,
+      "maxLevel": 42,
+      "grindToLevel": 42,
+      "xpFromMonsters": 69500,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 69,500 XP to reach level 42.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 41 - Tanaris"
+        }
+      ]
+    },
+    {
+      "name": "Level 42 - Tanaris",
+      "levelRange": "42-42",
+      "minLevel": 42,
+      "maxLevel": 42,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Gadgetzan flight path; pair the stop with Zul'Farrak.",
+      "quests": [
+        {
+          "questId": 4788,
+          "name": "The Final Tablets",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 7750,
+          "faction": "Both"
+        },
+        {
+          "questId": 5065,
+          "name": "The Lost Tablets of Mosh'aru",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 7750,
+          "faction": "Both"
+        },
+        {
+          "questId": 8181,
+          "name": "Confront Yeh'kinya",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 6200,
+          "faction": "Both"
+        },
+        {
+          "questId": 4787,
+          "name": "The Ancient Egg",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 5900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2781,
+          "name": "WANTED: Caliph Scorpidsting",
+          "questLevel": 39,
+          "requiredLevel": 39,
+          "xp": 5050,
+          "faction": "Both"
+        },
+        {
+          "questId": 2768,
+          "name": "Divino-matic Rod",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 6300,
+          "faction": "Both"
+        },
+        {
+          "questId": 3321,
+          "name": "Did You Lose This?",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 7100,
+          "faction": "Both"
+        },
+        {
+          "questId": 1560,
+          "name": "Tooga's Quest",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 5900,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Badlands to level 42"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Badlands to level 43",
+      "levelRange": "42-43",
+      "minLevel": 42,
+      "maxLevel": 43,
+      "grindToLevel": 43,
+      "xpFromMonsters": 49050,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 49,050 XP to reach level 43.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 42 - Tanaris"
+        }
+      ]
+    },
+    {
+      "name": "Level 43 - The Hinterlands",
+      "levelRange": "43-43",
+      "minLevel": 43,
+      "maxLevel": 43,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Aerie Peak flight path if available to your faction.",
+      "quests": [
+        {
+          "questId": 836,
+          "name": "Rescue OOX-09/HL!",
+          "questLevel": 43,
+          "requiredLevel": 43,
+          "xp": 5450,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Badlands to level 43"
+        }
+      ]
+    },
+    {
+      "name": "Level 43 - Tanaris",
+      "levelRange": "43-43",
+      "minLevel": 43,
+      "maxLevel": 43,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Gadgetzan flight path; pair the stop with Zul'Farrak.",
+      "quests": [
+        {
+          "questId": 3161,
+          "name": "Gahz'ridian",
+          "questLevel": 43,
+          "requiredLevel": 43,
+          "xp": 4400,
+          "faction": "Both"
+        },
+        {
+          "questId": 2771,
+          "name": "A Good Head On Your Shoulders",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2772,
+          "name": "The World At Your Feet",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2773,
+          "name": "The Mithril Kid",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 10,
+          "name": "The Scrimshank Redemption",
+          "questLevel": 39,
+          "requiredLevel": 39,
+          "xp": 4400,
+          "faction": "Both"
+        },
+        {
+          "questId": 2741,
+          "name": "The Super Egg-O-Matic",
+          "questLevel": 42,
+          "requiredLevel": 42,
+          "xp": 4950,
+          "faction": "Both"
+        },
+        {
+          "questId": 648,
+          "name": "Rescue OOX-17/TN!",
+          "questLevel": 43,
+          "requiredLevel": 43,
+          "xp": 5450,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 43 - The Hinterlands"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Badlands to level 44",
+      "levelRange": "43-44",
+      "minLevel": 43,
+      "maxLevel": 44,
+      "grindToLevel": 44,
+      "xpFromMonsters": 69950,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 69,950 XP to reach level 44.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 43 - Tanaris"
+        }
+      ]
+    },
+    {
+      "name": "Zul'Farrak",
+      "levelRange": "44-54",
+      "minLevel": 44,
+      "maxLevel": 54,
+      "xpFromMonsters": 0,
+      "notes": "Collect all Tanaris quest leads before the single Zul'Farrak visit.",
+      "quests": [
+        {
+          "questId": 2936,
+          "name": "Troll Temper",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 2865,
+          "name": "Scarab Shells",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 2700,
+          "faction": "Both"
+        },
+        {
+          "questId": 2860,
+          "name": "Tiara of the Deep",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2850,
+          "faction": "Both"
+        },
+        {
+          "questId": 3527,
+          "name": "The Prophecy of Mosh'aru",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 4550,
+          "faction": "Both"
+        },
+        {
+          "questId": 2936,
+          "name": "Divino-matic Rod",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3100,
+          "faction": "Both"
+        },
+        {
+          "questId": 2770,
+          "name": "Gahz'rilla",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 4550,
+          "faction": "Both"
+        },
+        {
+          "questId": 2991,
+          "name": "Nekrum's Medallion",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3100,
+          "faction": "Alliance"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Badlands to level 44"
+        }
+      ]
+    },
+    {
+      "name": "Level 44 - Tanaris",
+      "levelRange": "44-44",
+      "minLevel": 44,
+      "maxLevel": 44,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Gadgetzan flight path; pair the stop with Zul'Farrak.",
+      "quests": [
+        {
+          "questId": 2605,
+          "name": "The Thirsty Goblin",
+          "questLevel": 44,
+          "requiredLevel": 44,
+          "xp": 4550,
+          "faction": "Both"
+        },
+        {
+          "questId": 3042,
+          "name": "Troll Temper",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 6610,
+          "name": "Clamlette Surprise",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 5863,
+          "name": "The Dunemaul Compound",
+          "questLevel": 44,
+          "requiredLevel": 44,
+          "xp": 4550,
+          "faction": "Both"
+        },
+        {
+          "questId": 2641,
+          "name": "Sprinkle's Secret Ingredient",
+          "questLevel": 44,
+          "requiredLevel": 44,
+          "xp": 4550,
+          "faction": "Both"
+        },
+        {
+          "questId": 2873,
+          "name": "Stoley's Shipment",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2874,
+          "name": "Deliver to MacKinley",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2875,
+          "name": "WANTED: Andre Firebeard",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Zul'Farrak"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Badlands to level 45",
+      "levelRange": "44-45",
+      "minLevel": 44,
+      "maxLevel": 45,
+      "grindToLevel": 45,
+      "xpFromMonsters": 54950,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 54,950 XP to reach level 45.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 44 - Tanaris"
+        }
+      ]
+    },
+    {
+      "name": "Maraudon",
+      "levelRange": "45-52",
+      "minLevel": 45,
+      "maxLevel": 52,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Desolace quest set before entering from Nijel's Point.",
+      "quests": [
+        {
+          "questId": 7067,
+          "name": "The Pariah's Instructions",
+          "questLevel": 39,
+          "requiredLevel": 39,
+          "xp": 5450,
+          "faction": "Both"
+        },
+        {
+          "questId": 7028,
+          "name": "Twisted Evils",
+          "questLevel": 41,
+          "requiredLevel": 41,
+          "xp": 5250,
+          "faction": "Both"
+        },
+        {
+          "questId": 7044,
+          "name": "Legends of Maraudon",
+          "questLevel": 41,
+          "requiredLevel": 41,
+          "xp": 3400,
+          "faction": "Both"
+        },
+        {
+          "questId": 7046,
+          "name": "The Scepter of Celebras",
+          "questLevel": 41,
+          "requiredLevel": 41,
+          "xp": 5700,
+          "faction": "Both"
+        },
+        {
+          "questId": 7066,
+          "name": "Seed of Life",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 6100,
+          "faction": "Both"
+        },
+        {
+          "questId": 7068,
+          "name": "Shadowshard Fragments",
+          "questLevel": 39,
+          "requiredLevel": 39,
+          "xp": 3450,
+          "faction": "Both"
+        },
+        {
+          "questId": 7041,
+          "name": "Vyletongue Corruption",
+          "questLevel": 41,
+          "requiredLevel": 41,
+          "xp": 5250,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 7065,
+          "name": "Corruption of Earth and Seed",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 6100,
+          "faction": "Alliance"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Badlands to level 45"
+        }
+      ]
+    },
+    {
+      "name": "Level 45 - Feralas",
+      "levelRange": "45-45",
+      "minLevel": 45,
+      "maxLevel": 45,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Feathermoon Stronghold flight path; pair it with Dire Maul.",
+      "quests": [
+        {
+          "questId": 7003,
+          "name": "Zapped Giants",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4400,
+          "faction": "Both"
+        },
+        {
+          "questId": 7721,
+          "name": "Fuel for the Zapping",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4400,
+          "faction": "Both"
+        },
+        {
+          "questId": 7725,
+          "name": "Again With the Zapped Giants",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 560,
+          "faction": "Both"
+        },
+        {
+          "questId": 7726,
+          "name": "Refuel for the Zapping",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 560,
+          "faction": "Both"
+        },
+        {
+          "questId": 2767,
+          "name": "Rescue OOX-22/FE!",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 4850,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Maraudon"
+        }
+      ]
+    },
+    {
+      "name": "Level 45 - Tanaris",
+      "levelRange": "45-45",
+      "minLevel": 45,
+      "maxLevel": 45,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Gadgetzan flight path; pair the stop with Zul'Farrak.",
+      "quests": [
+        {
+          "questId": 3362,
+          "name": "Thistleshrub Valley",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4700,
+          "faction": "Both"
+        },
+        {
+          "questId": 8365,
+          "name": "Pirate Hats Ahoy!",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2954,
+          "name": "The Stone Watcher",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4700,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 45 - Feralas"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Feralas to level 46",
+      "levelRange": "45-46",
+      "minLevel": 45,
+      "maxLevel": 46,
+      "grindToLevel": 46,
+      "xpFromMonsters": 48730,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 48,730 XP to reach level 46.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 45 - Tanaris"
+        }
+      ]
+    },
+    {
+      "name": "Level 46 - Tanaris",
+      "levelRange": "46-46",
+      "minLevel": 46,
+      "maxLevel": 46,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Gadgetzan flight path; pair the stop with Zul'Farrak.",
+      "quests": [
+        {
+          "questId": 3447,
+          "name": "Secret of the Circle",
+          "questLevel": 46,
+          "requiredLevel": 46,
+          "xp": 6100,
+          "faction": "Both"
+        },
+        {
+          "questId": 3444,
+          "name": "The Stone Circle",
+          "questLevel": 46,
+          "requiredLevel": 46,
+          "xp": 4900,
+          "faction": "Both"
+        },
+        {
+          "questId": 1691,
+          "name": "More Wastewander Justice",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3750,
+          "faction": "Both"
+        },
+        {
+          "questId": 1690,
+          "name": "Wastewander Justice",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3600,
+          "faction": "Both"
+        },
+        {
+          "questId": 3639,
+          "name": "Show Your Work",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 3150,
+          "faction": "Both"
+        },
+        {
+          "questId": 82,
+          "name": "Noxious Lair Investigation",
+          "questLevel": 39,
+          "requiredLevel": 39,
+          "xp": 3150,
+          "faction": "Both"
+        },
+        {
+          "questId": 8366,
+          "name": "Southsea Shakedown",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 3520,
+          "name": "Screecher Spirits",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3750,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Feralas to level 46"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Feralas to level 47",
+      "levelRange": "46-47",
+      "minLevel": 46,
+      "maxLevel": 47,
+      "grindToLevel": 47,
+      "xpFromMonsters": 90900,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 90,900 XP to reach level 47.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 46 - Tanaris"
+        }
+      ]
+    },
+    {
+      "name": "Level 47 - Tanaris",
+      "levelRange": "47-47",
+      "minLevel": 47,
+      "maxLevel": 47,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Gadgetzan flight path; pair the stop with Zul'Farrak.",
+      "quests": [
+        {
+          "questId": 3913,
+          "name": "A Grave Situation",
+          "questLevel": 47,
+          "requiredLevel": 47,
+          "xp": 2550,
+          "faction": "Both"
+        },
+        {
+          "questId": 2661,
+          "name": "Delivery for Marin",
+          "questLevel": 44,
+          "requiredLevel": 44,
+          "xp": 455,
+          "faction": "Both"
+        },
+        {
+          "questId": 1189,
+          "name": "Safety First",
+          "questLevel": 29,
+          "requiredLevel": 29,
+          "xp": 820,
+          "faction": "Both"
+        },
+        {
+          "questId": 992,
+          "name": "Gadgetzan Water Survey",
+          "questLevel": 38,
+          "requiredLevel": 38,
+          "xp": 3050,
+          "faction": "Both"
+        },
+        {
+          "questId": 110,
+          "name": "Insect Part Analysis",
+          "questLevel": 39,
+          "requiredLevel": 39,
+          "xp": 440,
+          "faction": "Both"
+        },
+        {
+          "questId": 2606,
+          "name": "In Good Taste",
+          "questLevel": 44,
+          "requiredLevel": 44,
+          "xp": 455,
+          "faction": "Both"
+        },
+        {
+          "questId": 1707,
+          "name": "Water Pouch Bounty",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 2800,
+          "faction": "Both"
+        },
+        {
+          "questId": 3914,
+          "name": "Linken's Sword",
+          "questLevel": 47,
+          "requiredLevel": 47,
+          "xp": 5100,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Feralas to level 47"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Feralas to level 48",
+      "levelRange": "47-48",
+      "minLevel": 47,
+      "maxLevel": 48,
+      "grindToLevel": 48,
+      "xpFromMonsters": 113430,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 113,430 XP to reach level 48.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 47 - Tanaris"
+        }
+      ]
+    },
+    {
+      "name": "Level 48 - Tanaris",
+      "levelRange": "48-48",
+      "minLevel": 48,
+      "maxLevel": 48,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Gadgetzan flight path; pair the stop with Zul'Farrak.",
+      "quests": [
+        {
+          "questId": 1878,
+          "name": "Water Pouch Bounty",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 375,
+          "faction": "Both"
+        },
+        {
+          "questId": 3638,
+          "name": "The Pledge of Secrecy",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 420,
+          "faction": "Both"
+        },
+        {
+          "questId": 4504,
+          "name": "Super Sticky",
+          "questLevel": 48,
+          "requiredLevel": 48,
+          "xp": 5450,
+          "faction": "Both"
+        },
+        {
+          "questId": 113,
+          "name": "Insect Part Analysis",
+          "questLevel": 39,
+          "requiredLevel": 39,
+          "xp": 440,
+          "faction": "Both"
+        },
+        {
+          "questId": 4324,
+          "name": "Yuka Screwspigot",
+          "questLevel": 48,
+          "requiredLevel": 48,
+          "xp": 2650,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Feralas to level 48"
+        }
+      ]
+    },
+    {
+      "name": "Level 48 - Stranglethorn Vale",
+      "levelRange": "48-48",
+      "minLevel": 48,
+      "maxLevel": 48,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Booty Bay flight path; use the coastal boat links to avoid retracing the road.",
+      "quests": [
+        {
+          "questId": 630,
+          "name": "Message in a Bottle",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 7350,
+          "faction": "Both"
+        },
+        {
+          "questId": 3721,
+          "name": "An OOX of Your Own",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 7100,
+          "faction": "Both"
+        },
+        {
+          "questId": 8554,
+          "name": "Facing Negolash",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 7100,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 48 - Tanaris"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Feralas to level 49",
+      "levelRange": "48-49",
+      "minLevel": 48,
+      "maxLevel": 49,
+      "grindToLevel": 49,
+      "xpFromMonsters": 104215,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 104,215 XP to reach level 49.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 48 - Stranglethorn Vale"
+        }
+      ]
+    },
+    {
+      "name": "Level 49 - Stranglethorn Vale",
+      "levelRange": "49-49",
+      "minLevel": 49,
+      "maxLevel": 49,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Booty Bay flight path; use the coastal boat links to avoid retracing the road.",
+      "quests": [
+        {
+          "questId": 2760,
+          "name": "The Mithril Order",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3150,
+          "faction": "Both"
+        },
+        {
+          "questId": 348,
+          "name": "Stranglethorn Fever",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 5850,
+          "faction": "Both"
+        },
+        {
+          "questId": 580,
+          "name": "Whiskey Slim's Lost Grog",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 4700,
+          "faction": "Both"
+        },
+        {
+          "questId": 2761,
+          "name": "Smelt On, Smelt Off",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2762,
+          "name": "The Great Silver Deceiver",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2763,
+          "name": "The Art of the Imbue",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2765,
+          "name": "Expert Blacksmith!",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 3900,
+          "faction": "Both"
+        },
+        {
+          "questId": 2764,
+          "name": "Galvan's Finest Pupil",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 2900,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Feralas to level 49"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Feralas to level 50",
+      "levelRange": "49-50",
+      "minLevel": 49,
+      "maxLevel": 50,
+      "grindToLevel": 50,
+      "xpFromMonsters": 109000,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 109,000 XP to reach level 50.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 49 - Stranglethorn Vale"
+        }
+      ]
+    },
+    {
+      "name": "Sunken Temple",
+      "levelRange": "50-60",
+      "minLevel": 50,
+      "maxLevel": 60,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Swamp of Sorrows quest leads before the single Temple visit.",
+      "quests": [
+        {
+          "questId": 1446,
+          "name": "Jammal'an the Prophet",
+          "questLevel": 38,
+          "requiredLevel": 38,
+          "xp": 6550,
+          "faction": "Both"
+        },
+        {
+          "questId": 3528,
+          "name": "The God Hakkar",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 7900,
+          "faction": "Both"
+        },
+        {
+          "questId": 3445,
+          "name": "Into the Depths",
+          "questLevel": 46,
+          "requiredLevel": 46,
+          "xp": 4900,
+          "faction": "Both"
+        },
+        {
+          "questId": 3446,
+          "name": "Secret of the Circle",
+          "questLevel": 46,
+          "requiredLevel": 46,
+          "xp": 6100,
+          "faction": "Both"
+        },
+        {
+          "questId": 3385,
+          "name": "Into The Temple of Atal'Hakkar",
+          "questLevel": 46,
+          "requiredLevel": 46,
+          "xp": 7100,
+          "faction": "Alliance"
+        },
+        {
+          "questId": 3378,
+          "name": "The Essence of Eranikus",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 2800,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Feralas to level 50"
+        }
+      ]
+    },
+    {
+      "name": "Level 50 - Swamp Of Sorrows",
+      "levelRange": "50-50",
+      "minLevel": 50,
+      "maxLevel": 50,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the nearest usable flight path before Sunken Temple.",
+      "quests": [
+        {
+          "questId": 625,
+          "name": "Cortello's Riddle",
+          "questLevel": 35,
+          "requiredLevel": 35,
+          "xp": 3600,
+          "faction": "Both"
+        },
+        {
+          "questId": 2701,
+          "name": "Heroes of Old",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 6000,
+          "faction": "Both"
+        },
+        {
+          "questId": 3628,
+          "name": "You Are Rakh'likh, Demon",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 9950,
+          "faction": "Both"
+        },
+        {
+          "questId": 3627,
+          "name": "Uniting the Shattered Amulet",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "questId": 2681,
+          "name": "The Stones That Bind Us",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 7550,
+          "faction": "Both"
+        },
+        {
+          "questId": 2744,
+          "name": "The Demon Hunter",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 2721,
+          "name": "Kirith",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 6200,
+          "faction": "Both"
+        },
+        {
+          "questId": 3512,
+          "name": "In Eranikus' Own Words",
+          "questLevel": 48,
+          "requiredLevel": 48,
+          "xp": 4200,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Sunken Temple"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Swamp Of Sorrows to level 51",
+      "levelRange": "50-51",
+      "minLevel": 50,
+      "maxLevel": 51,
+      "grindToLevel": 51,
+      "xpFromMonsters": 59750,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 59,750 XP to reach level 51.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 50 - Swamp Of Sorrows"
+        }
+      ]
+    },
+    {
+      "name": "Level 51 - Swamp Of Sorrows",
+      "levelRange": "51-51",
+      "minLevel": 51,
+      "maxLevel": 51,
+      "xpFromMonsters": 0,
+      "notes": "Pick up the nearest usable flight path before Sunken Temple.",
+      "quests": [
+        {
+          "questId": 2702,
+          "name": "Heroes of Old",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 3000,
+          "faction": "Both"
+        },
+        {
+          "questId": 2801,
+          "name": "A Tale of Sorrow",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 600,
+          "faction": "Both"
+        },
+        {
+          "questId": 1389,
+          "name": "Draenethyst Crystals",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2750,
+          "faction": "Both"
+        },
+        {
+          "questId": 1393,
+          "name": "Galen's Escape",
+          "questLevel": 30,
+          "requiredLevel": 30,
+          "xp": 2850,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Swamp Of Sorrows to level 51"
+        }
+      ]
+    },
+    {
+      "name": "Level 51 - Searing Gorge",
+      "levelRange": "51-51",
+      "minLevel": 51,
+      "maxLevel": 51,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Thorium Point flight path before Blackrock Depths.",
+      "quests": [
+        {
+          "questId": 3463,
+          "name": "Set Them Ablaze!",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 7600,
+          "faction": "Both"
+        },
+        {
+          "questId": 4450,
+          "name": "Ledger from Tanaris",
+          "questLevel": 43,
+          "requiredLevel": 43,
+          "xp": 5050,
+          "faction": "Both"
+        },
+        {
+          "questId": 3379,
+          "name": "Shadoweaver",
+          "questLevel": 46,
+          "requiredLevel": 46,
+          "xp": 7100,
+          "faction": "Both"
+        },
+        {
+          "questId": 3402,
+          "name": "The Undermarket",
+          "questLevel": 43,
+          "requiredLevel": 43,
+          "xp": 7100,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 51 - Swamp Of Sorrows"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Swamp Of Sorrows to level 52",
+      "levelRange": "51-52",
+      "minLevel": 51,
+      "maxLevel": 52,
+      "grindToLevel": 52,
+      "xpFromMonsters": 117850,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 117,850 XP to reach level 52.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 51 - Searing Gorge"
+        }
+      ]
+    },
+    {
+      "name": "Level 52 - Searing Gorge",
+      "levelRange": "52-52",
+      "minLevel": 52,
+      "maxLevel": 52,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Thorium Point flight path before Blackrock Depths.",
+      "quests": [
+        {
+          "questId": 3452,
+          "name": "The Flame's Casing",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 4700,
+          "faction": "Both"
+        },
+        {
+          "questId": 3454,
+          "name": "The Torch of Retribution",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 4700,
+          "faction": "Both"
+        },
+        {
+          "questId": 3442,
+          "name": "The Flawless Flame",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 4400,
+          "faction": "Both"
+        },
+        {
+          "questId": 7722,
+          "name": "What the Flux?",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4700,
+          "faction": "Both"
+        },
+        {
+          "questId": 7723,
+          "name": "Curse These Fat Fingers",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4550,
+          "faction": "Both"
+        },
+        {
+          "questId": 7724,
+          "name": "Fiery Menace!",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4550,
+          "faction": "Both"
+        },
+        {
+          "questId": 7727,
+          "name": "Incendosaurs? Whateverosaur is More Like It",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4550,
+          "faction": "Both"
+        },
+        {
+          "questId": 7701,
+          "name": "WANTED: Overseer Maltorius",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4700,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Swamp Of Sorrows to level 52"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Swamp Of Sorrows to level 53",
+      "levelRange": "52-53",
+      "minLevel": 52,
+      "maxLevel": 53,
+      "grindToLevel": 53,
+      "xpFromMonsters": 123550,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 123,550 XP to reach level 53.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 52 - Searing Gorge"
+        }
+      ]
+    },
+    {
+      "name": "Level 53 - Searing Gorge",
+      "levelRange": "53-53",
+      "minLevel": 53,
+      "maxLevel": 53,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Thorium Point flight path before Blackrock Depths.",
+      "quests": [
+        {
+          "questId": 7728,
+          "name": "STOLEN: Smithing Tuyere and Lookout's Spyglass",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4400,
+          "faction": "Both"
+        },
+        {
+          "questId": 7729,
+          "name": "JOB OPPORTUNITY: Culling the Competition",
+          "questLevel": 45,
+          "requiredLevel": 45,
+          "xp": 4400,
+          "faction": "Both"
+        },
+        {
+          "questId": 3481,
+          "name": "Trinkets...",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 470,
+          "faction": "Both"
+        },
+        {
+          "questId": 3443,
+          "name": "Forging the Shaft",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 4400,
+          "faction": "Both"
+        },
+        {
+          "questId": 3453,
+          "name": "The Torch of Retribution",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 470,
+          "faction": "Both"
+        },
+        {
+          "questId": 3462,
+          "name": "Squire Maltrake",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 470,
+          "faction": "Both"
+        },
+        {
+          "questId": 3441,
+          "name": "Divine Retribution",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 440,
+          "faction": "Both"
+        },
+        {
+          "questId": 4449,
+          "name": "Caught!",
+          "questLevel": 43,
+          "requiredLevel": 43,
+          "xp": 3900,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Swamp Of Sorrows to level 53"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Swamp Of Sorrows to level 54",
+      "levelRange": "53-54",
+      "minLevel": 53,
+      "maxLevel": 54,
+      "grindToLevel": 54,
+      "xpFromMonsters": 148150,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 148,150 XP to reach level 54.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 53 - Searing Gorge"
+        }
+      ]
+    },
+    {
+      "name": "Level 54 - Feralas",
+      "levelRange": "54-54",
+      "minLevel": 54,
+      "maxLevel": 54,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Feathermoon Stronghold flight path; pair it with Dire Maul.",
+      "quests": [
+        {
+          "questId": 7441,
+          "name": "Pusillin and the Elder Azj'Tordin",
+          "questLevel": 54,
+          "requiredLevel": 54,
+          "xp": 7750,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Swamp Of Sorrows to level 54"
+        }
+      ]
+    },
+    {
+      "name": "Level 54 - Felwood",
+      "levelRange": "54-54",
+      "minLevel": 54,
+      "maxLevel": 54,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Emerald Sanctuary flight path while passing through.",
+      "quests": [
+        {
+          "questId": 6031,
+          "name": "Runecloth",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 5650,
+          "faction": "Both"
+        },
+        {
+          "questId": 5385,
+          "name": "The Remains of Trey Lightforge",
+          "questLevel": 49,
+          "requiredLevel": 49,
+          "xp": 7550,
+          "faction": "Both"
+        },
+        {
+          "questId": 5203,
+          "name": "Rescue From Jaedenar",
+          "questLevel": 49,
+          "requiredLevel": 49,
+          "xp": 5650,
+          "faction": "Both"
+        },
+        {
+          "questId": 5156,
+          "name": "Verifying the Corruption",
+          "questLevel": 48,
+          "requiredLevel": 48,
+          "xp": 6800,
+          "faction": "Both"
+        },
+        {
+          "questId": 4084,
+          "name": "Silver Heart",
+          "questLevel": 47,
+          "requiredLevel": 47,
+          "xp": 5650,
+          "faction": "Both"
+        },
+        {
+          "questId": 5242,
+          "name": "A Final Blow",
+          "questLevel": 48,
+          "requiredLevel": 48,
+          "xp": 9300,
+          "faction": "Both"
+        },
+        {
+          "questId": 5165,
+          "name": "Dousing the Flames of Protection",
+          "questLevel": 48,
+          "requiredLevel": 48,
+          "xp": 5650,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Level 54 - Feralas"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Swamp Of Sorrows to level 55",
+      "levelRange": "54-55",
+      "minLevel": 54,
+      "maxLevel": 55,
+      "grindToLevel": 55,
+      "xpFromMonsters": 119900,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 119,900 XP to reach level 55.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 54 - Felwood"
+        }
+      ]
+    },
+    {
+      "name": "Blackrock Depths",
+      "levelRange": "52-60",
+      "minLevel": 55,
+      "maxLevel": 60,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Searing Gorge/Blackrock quest leads before entering.",
+      "quests": [
+        {
+          "name": "Dark Iron Legacy",
+          "questLevel": 48,
+          "requiredLevel": 48,
+          "xp": 5100,
+          "faction": "Both"
+        },
+        {
+          "name": "The Heart of the Mountain",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 5650,
+          "faction": "Both"
+        },
+        {
+          "name": "A Taste of Flame",
+          "questLevel": 52,
+          "requiredLevel": 52,
+          "xp": 6200,
+          "faction": "Both"
+        },
+        {
+          "name": "The Fate of the Kingdom",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 8050,
+          "faction": "Both"
+        },
+        {
+          "name": "The Last Element",
+          "questLevel": 48,
+          "requiredLevel": 48,
+          "xp": 5450,
+          "faction": "Both"
+        },
+        {
+          "name": "Ribbly Screwspigot",
+          "questLevel": 48,
+          "requiredLevel": 48,
+          "xp": 5100,
+          "faction": "Both"
+        },
+        {
+          "name": "Attunement to the Core",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "name": "The Spectral Chalice",
+          "questLevel": 40,
+          "requiredLevel": 40,
+          "xp": 575,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Swamp Of Sorrows to level 55"
+        }
+      ]
+    },
+    {
+      "name": "Level 55 - Eastern Plaguelands",
+      "levelRange": "55-55",
+      "minLevel": 55,
+      "maxLevel": 55,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Light's Hope Chapel flight path; pair it with Stratholme.",
+      "quests": [
+        {
+          "questId": 5942,
+          "name": "Hidden Treasures",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 9950,
+          "faction": "Both"
+        },
+        {
+          "questId": 5251,
+          "name": "The Archivist",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "questId": 5263,
+          "name": "Above and Beyond",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "questId": 5206,
+          "name": "Marauders of Darrowshire",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 5212,
+          "name": "The Flesh Does Not Lie",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 5265,
+          "name": "The Argent Hold",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 9950,
+          "faction": "Both"
+        },
+        {
+          "questId": 5214,
+          "name": "The Great Ezra Grimm",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "questId": 5282,
+          "name": "The Restless Souls",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Blackrock Depths"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Eastern Plaguelands to level 56",
+      "levelRange": "55-56",
+      "minLevel": 55,
+      "maxLevel": 56,
+      "grindToLevel": 56,
+      "xpFromMonsters": 71775,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 71,775 XP to reach level 56.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 55 - Eastern Plaguelands"
+        }
+      ]
+    },
+    {
+      "name": "Dire Maul",
+      "levelRange": "54-60",
+      "minLevel": 56,
+      "maxLevel": 60,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Feralas quest set before the single Dire Maul visit.",
+      "quests": [
+        {
+          "name": "Pusillin and the Elder Azj'Tordin",
+          "questLevel": 54,
+          "requiredLevel": 54,
+          "xp": 7750,
+          "faction": "Both"
+        },
+        {
+          "name": "Lethtendris's Web",
+          "questLevel": 54,
+          "requiredLevel": 54,
+          "xp": 7550,
+          "faction": "Both"
+        },
+        {
+          "name": "The Gordok Ogre Suit",
+          "questLevel": 56,
+          "requiredLevel": 56,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "name": "The Madness Within",
+          "questLevel": 56,
+          "requiredLevel": 56,
+          "xp": 9950,
+          "faction": "Both"
+        },
+        {
+          "name": "The Treasure of the Shen'dralar",
+          "questLevel": 56,
+          "requiredLevel": 56,
+          "xp": 660,
+          "faction": "Both"
+        },
+        {
+          "name": "Unfinished Gordok Business",
+          "questLevel": 56,
+          "requiredLevel": 56,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "name": "Shards of the Felvine",
+          "questLevel": 56,
+          "requiredLevel": 56,
+          "xp": 8300,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Eastern Plaguelands to level 56"
+        }
+      ]
+    },
+    {
+      "name": "Level 56 - Eastern Plaguelands",
+      "levelRange": "56-56",
+      "minLevel": 56,
+      "maxLevel": 56,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Light's Hope Chapel flight path; pair it with Stratholme.",
+      "quests": [
+        {
+          "questId": 6024,
+          "name": "Hameya's Plea",
+          "questLevel": 54,
+          "requiredLevel": 54,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 5281,
+          "name": "The Restless Souls",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 5264,
+          "name": "Lord Maxwell Tyrosus",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 5213,
+          "name": "The Active Agent",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 9124,
+          "name": "Cryptstalker Armor Doesn't Make Itself...",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 9126,
+          "name": "Bonescythe Digs",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 9128,
+          "name": "The Elemental Equation",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 5243,
+          "name": "Houses of the Holy",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Dire Maul"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Eastern Plaguelands to level 57",
+      "levelRange": "56-57",
+      "minLevel": 56,
+      "maxLevel": 57,
+      "grindToLevel": 57,
+      "xpFromMonsters": 85990,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 85,990 XP to reach level 57.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 56 - Eastern Plaguelands"
+        }
+      ]
+    },
+    {
+      "name": "Stratholme",
+      "levelRange": "56-60",
+      "minLevel": 57,
+      "maxLevel": 60,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Eastern Plaguelands quest set before the single Stratholme visit.",
+      "quests": [
+        {
+          "name": "The Restless Souls",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "name": "The Archivist",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "name": "The Truth Comes Crashing Down",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "name": "Above and Beyond",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "name": "Houses of the Holy",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "name": "Aurius' Reckoning",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 9950,
+          "faction": "Both"
+        },
+        {
+          "name": "The Great Fras Siabi",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "name": "The Great Ezra Grimm",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "name": "Menethil's Gift",
+          "questLevel": 57,
+          "requiredLevel": 57,
+          "xp": 9950,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Eastern Plaguelands to level 57"
+        }
+      ]
+    },
+    {
+      "name": "Level 57 - Eastern Plaguelands",
+      "levelRange": "57-57",
+      "minLevel": 57,
+      "maxLevel": 57,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Light's Hope Chapel flight path; pair it with Stratholme.",
+      "quests": [
+        {
+          "questId": 5463,
+          "name": "Menethil's Gift",
+          "questLevel": 57,
+          "requiredLevel": 57,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 9131,
+          "name": "Binding the Dreadnaught",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 9136,
+          "name": "Savage Flora",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 4771,
+          "name": "Dawn's Gambit",
+          "questLevel": 57,
+          "requiredLevel": 57,
+          "xp": 9950,
+          "faction": "Both"
+        },
+        {
+          "questId": 5529,
+          "name": "Plagued Hatchlings",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6200,
+          "faction": "Both"
+        },
+        {
+          "questId": 6026,
+          "name": "That's Asking A Lot",
+          "questLevel": 54,
+          "requiredLevel": 54,
+          "xp": 6200,
+          "faction": "Both"
+        },
+        {
+          "questId": 5845,
+          "name": "Of Lost Honor",
+          "questLevel": 52,
+          "requiredLevel": 52,
+          "xp": 6200,
+          "faction": "Both"
+        },
+        {
+          "questId": 5846,
+          "name": "Of Love and Family",
+          "questLevel": 52,
+          "requiredLevel": 52,
+          "xp": 6200,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Stratholme"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Eastern Plaguelands to level 58",
+      "levelRange": "57-58",
+      "minLevel": 57,
+      "maxLevel": 58,
+      "grindToLevel": 58,
+      "xpFromMonsters": 65850,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 65,850 XP to reach level 58.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 57 - Eastern Plaguelands"
+        }
+      ]
+    },
+    {
+      "name": "Scholomance",
+      "levelRange": "58-60",
+      "minLevel": 58,
+      "maxLevel": 60,
+      "xpFromMonsters": 0,
+      "notes": "Collect the Western Plaguelands quest set before the single Scholomance visit.",
+      "quests": [
+        {
+          "name": "Plagued Hatchlings",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6200,
+          "faction": "Both"
+        },
+        {
+          "name": "Doctor Theolen Krastinov, the Butcher",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "name": "Kirtonos the Herald",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "name": "Krastinov's Bag of Horrors",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "name": "Barov Family Fortune",
+          "questLevel": 52,
+          "requiredLevel": 52,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "name": "The Lich, Ras Frostwhisper",
+          "questLevel": 57,
+          "requiredLevel": 57,
+          "xp": 9950,
+          "faction": "Both"
+        },
+        {
+          "name": "Dawn's Gambit",
+          "questLevel": 57,
+          "requiredLevel": 57,
+          "xp": 9950,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Eastern Plaguelands to level 58"
+        }
+      ]
+    },
+    {
+      "name": "Level 58 - Eastern Plaguelands",
+      "levelRange": "58-58",
+      "minLevel": 58,
+      "maxLevel": 58,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Light's Hope Chapel flight path; pair it with Stratholme.",
+      "quests": [
+        {
+          "questId": 5781,
+          "name": "Of Forgotten Memories",
+          "questLevel": 52,
+          "requiredLevel": 52,
+          "xp": 6000,
+          "faction": "Both"
+        },
+        {
+          "questId": 5542,
+          "name": "Demon Dogs",
+          "questLevel": 52,
+          "requiredLevel": 52,
+          "xp": 5800,
+          "faction": "Both"
+        },
+        {
+          "questId": 8945,
+          "name": "Dead Man's Plea",
+          "questLevel": 58,
+          "requiredLevel": 58,
+          "xp": 8300,
+          "faction": "Both"
+        },
+        {
+          "questId": 8947,
+          "name": "Anthion's Strange Request",
+          "questLevel": 58,
+          "requiredLevel": 58,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 8948,
+          "name": "Anthion's Old Friend",
+          "questLevel": 58,
+          "requiredLevel": 58,
+          "xp": 6600,
+          "faction": "Both"
+        },
+        {
+          "questId": 6041,
+          "name": "When Smokey Sings, I Get Violent",
+          "questLevel": 54,
+          "requiredLevel": 54,
+          "xp": 6200,
+          "faction": "Both"
+        },
+        {
+          "questId": 5181,
+          "name": "Villains of Darrowshire",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 6000,
+          "faction": "Both"
+        },
+        {
+          "questId": 5168,
+          "name": "Heroes of Darrowshire",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 5800,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Scholomance"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Eastern Plaguelands to level 59",
+      "levelRange": "58-59",
+      "minLevel": 58,
+      "maxLevel": 59,
+      "grindToLevel": 59,
+      "xpFromMonsters": 96800,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 96,800 XP to reach level 59.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 58 - Eastern Plaguelands"
+        }
+      ]
+    },
+    {
+      "name": "Level 59 - Eastern Plaguelands",
+      "levelRange": "59-59",
+      "minLevel": 59,
+      "maxLevel": 59,
+      "xpFromMonsters": 0,
+      "notes": "Pick up Light's Hope Chapel flight path; pair it with Stratholme.",
+      "quests": [
+        {
+          "questId": 5211,
+          "name": "Defenders of Darrowshire",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 5650,
+          "faction": "Both"
+        },
+        {
+          "questId": 5941,
+          "name": "Return to Chromie",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 3300,
+          "faction": "Both"
+        },
+        {
+          "questId": 5465,
+          "name": "Soulbound Keepsake",
+          "questLevel": 57,
+          "requiredLevel": 57,
+          "xp": 4950,
+          "faction": "Both"
+        },
+        {
+          "questId": 9141,
+          "name": "They Call Me \"The Rooster\"",
+          "questLevel": 55,
+          "requiredLevel": 55,
+          "xp": 3300,
+          "faction": "Both"
+        },
+        {
+          "questId": 6021,
+          "name": "Zaeldarr the Outcast",
+          "questLevel": 50,
+          "requiredLevel": 50,
+          "xp": 4200,
+          "faction": "Both"
+        },
+        {
+          "questId": 5543,
+          "name": "Blood Tinged Skies",
+          "questLevel": 52,
+          "requiredLevel": 52,
+          "xp": 5800,
+          "faction": "Both"
+        },
+        {
+          "questId": 5544,
+          "name": "Carrion Grubbage",
+          "questLevel": 52,
+          "requiredLevel": 52,
+          "xp": 5800,
+          "faction": "Both"
+        },
+        {
+          "questId": 5861,
+          "name": "Find Myranda",
+          "questLevel": 52,
+          "requiredLevel": 52,
+          "xp": 4950,
+          "faction": "Both"
+        }
+      ],
+      "dependencies": [
+        {
+          "dungeonName": "Grind near Eastern Plaguelands to level 59"
+        }
+      ]
+    },
+    {
+      "name": "Grind near Eastern Plaguelands to level 60",
+      "levelRange": "59-60",
+      "minLevel": 59,
+      "maxLevel": 60,
+      "grindToLevel": 60,
+      "xpFromMonsters": 171850,
+      "notes": "Questie has no more nearby, non-item quest XP in this route segment. Grind nearby mobs for about 171,850 XP to reach level 60.",
+      "quests": [],
+      "dependencies": [
+        {
+          "dungeonName": "Level 59 - Eastern Plaguelands"
+        }
+      ]
+    }
+  ]
+}

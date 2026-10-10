@@ -210,6 +210,27 @@ test('enriches imported dungeon quests from Questie without replacing planner va
   assert.equal(quest.objectiveLocations[0].name, 'Kobold Vermin');
 });
 
+test('preserves route notes through JSON and includes them in the RXP guide', async () => {
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const quest = questCatalogData.quests.find((entry) => entry.questId === 7);
+  window.importPoolJson(JSON.stringify({
+    startMode: 'level',
+    startValue: 12,
+    faction: 'Alliance',
+    route: [{
+      name: 'Westfall Hub',
+      minLevel: 12,
+      levelRange: '12-16',
+      notes: 'Get the Sentinel Hill flight path before leaving Westfall.',
+      quests: [quest],
+    }],
+  }));
+  assert.match(document.querySelector('.dungeon-route-notes').textContent, /Sentinel Hill flight path/);
+  assert.match(JSON.parse(window.exportPoolJson()).route[0].notes, /Sentinel Hill flight path/);
+  const guide = window.ForeverguideRXPExport.createAddonArchive(JSON.parse(window.exportPoolJson()).route, 'Alliance', 12).guide;
+  assert.match(guide, /Travel: Get the Sentinel Hill flight path/);
+});
+
 test('searches dungeons and supports adding a dungeon from its pool', async () => {
   const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
   const search = document.querySelector('#dungeon-search');
@@ -320,7 +341,7 @@ test('searches and applies dungeon-only prerequisites', async () => {
   assert.equal(visibleOptions[0].value, 'Uldaman');
   visibleOptions[0].selected = true;
   dispatch(window, dungeonDependencies, 'change');
-  assert.match(document.querySelector('#reasons-output').textContent, /Dungeon prerequisite not completed/);
+  assert.match(document.querySelector('#reasons-output').textContent, /Route prerequisite not completed/);
   assert.doesNotMatch(document.querySelector('#route-output').textContent, /Step 1: The Hall of Thanes/);
   assert.equal(document.querySelector('.quest-dependencies'), null);
 });
@@ -575,12 +596,18 @@ test('exports and imports route JSON without URL sharing', async () => {
 
 test('exports a RestedXP Forever companion addon with quest steps and waypoints', async () => {
   const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
-  const quest = questCatalogData.quests.find((entry) => entry.questId === 7);
+  const firstQuest = questCatalogData.quests.find((entry) => entry.questId === 7);
+  const secondQuest = structuredClone(questCatalogData.quests.find((entry) => entry.questId === 9));
+  secondQuest.objectiveSteps = [{
+    index: 1,
+    text: 'Kill a Deeprun Rat',
+    locations: [{ name: 'Deeprun Rat', zones: [{ zone: 'Deeprun Tram', coordinates: [[-1, -1]] }] }],
+  }];
   window.importPoolJson(JSON.stringify({
     startMode: 'level',
     startValue: 10,
     faction: 'Alliance',
-    route: [{ name: 'Custom dungeon', levelRange: '1-10', quests: [quest] }],
+    route: [{ name: 'Custom dungeon', levelRange: '1-10', quests: [firstQuest, secondQuest] }],
   }));
 
   document.querySelector('#export-rxp-btn').click();
@@ -602,6 +629,14 @@ test('exports a RestedXP Forever companion addon with quest steps and waypoints'
   assert.match(archive.guide, /\.complete 7,1/);
   assert.match(archive.guide, /\.turnin 7/);
   assert.match(archive.guide, /Kobold Vermin/);
+  assert.doesNotMatch(archive.guide, /\.goto Deeprun Tram,-1,-1/);
+  const guideLines = archive.guide.split('\n');
+  const stepIndex = (pattern) => guideLines.findIndex((line) => pattern.test(line));
+  assert.ok(stepIndex(/^\.accept 7/) < stepIndex(/^\.accept 9/));
+  assert.ok(stepIndex(/^\.accept 9/) < stepIndex(/^\.complete 7,/));
+  assert.ok(stepIndex(/^\.complete 7,/) < stepIndex(/^\.complete 9,/));
+  assert.ok(stepIndex(/^\.complete 9,/) < stepIndex(/^\.turnin 7/));
+  assert.ok(stepIndex(/^\.turnin 7/) < stepIndex(/^\.turnin 9/));
   assert.match(readme, /Interface\/AddOns/);
 });
 

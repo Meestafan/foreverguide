@@ -281,6 +281,7 @@ function main() {
       xp: questXp?.xp ?? 0,
       faction: factionFromRaceMask(row['6']),
       requiredRaceMask: Number(row['6']) >>> 0,
+      requiredClasses: Number(row['7']) >>> 0,
       zoneId,
       zone: zones.get(zoneId) || fallbackZone || null,
       starters,
