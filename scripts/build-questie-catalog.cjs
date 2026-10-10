@@ -289,6 +289,8 @@ function main() {
       objectiveSteps,
       completionWaypoints: locationRows(completionSpawns, zoneId, zones),
       objectiveText: field(metadata, 'Quest', id, 8) || [],
+      preQuestGroup: numericIds(field(metadata, 'Quest', id, 12)),
+      preQuestSingle: numericIds(field(metadata, 'Quest', id, 13)),
     };
   }).filter((quest) => quest.name);
 
