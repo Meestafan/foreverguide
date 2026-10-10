@@ -8,10 +8,12 @@ const root = path.join(__dirname, '..');
 const plannerPath = root;
 const html = fs.readFileSync(path.join(plannerPath, 'index.html'), 'utf8');
 const app = fs.readFileSync(path.join(plannerPath, 'app.js'), 'utf8');
+const rxpExport = fs.readFileSync(path.join(plannerPath, 'rxp-export.js'), 'utf8');
 const xpData = JSON.parse(fs.readFileSync(path.join(plannerPath, 'xp_per_level.json'), 'utf8'));
 const dungeonData = JSON.parse(fs.readFileSync(path.join(plannerPath, 'dungeon_quest_db.json'), 'utf8'));
+const questCatalogData = JSON.parse(fs.readFileSync(path.join(plannerPath, 'quest_catalog.json'), 'utf8'));
 
-async function loadPlanner(url = 'http://localhost/foreverguide/') {
+async function loadPlanner(url = 'http://localhost/foreverguide/', seedDefaultRoute = true) {
   const dom = new JSDOM(html, { url, runScripts: 'outside-only' });
   const { window } = dom;
   window.TextEncoder = TextEncoder;
@@ -24,10 +26,15 @@ async function loadPlanner(url = 'http://localhost/foreverguide/') {
   window.HTMLAnchorElement.prototype.click = function () { window.downloadedFile = this.download; };
   window.fetch = async (url) => ({
     ok: true,
-    json: async () => String(url).includes('xp_per_level') ? xpData : dungeonData,
+    json: async () => String(url).includes('xp_per_level') ? xpData
+      : String(url).includes('quest_catalog') ? questCatalogData : dungeonData,
   });
+  window.eval(rxpExport);
   window.eval(app);
   await new Promise((resolve) => setTimeout(resolve, 0));
+  if (seedDefaultRoute) {
+    window.importPoolJson(JSON.stringify({ startMode: 'level', startValue: 10, faction: 'Alliance', route: dungeonData }));
+  }
   return { dom, window, document: window.document };
 }
 
@@ -49,10 +56,31 @@ function dragQuest(window, source, target, clientY = 0) {
   }
 }
 
+function readStoredZip(bytes) {
+  const buffer = Buffer.from(bytes);
+  const files = new Map();
+  let offset = 0;
+  while (buffer.readUInt32LE(offset) === 0x04034b50) {
+    const method = buffer.readUInt16LE(offset + 8);
+    const size = buffer.readUInt32LE(offset + 18);
+    const nameLength = buffer.readUInt16LE(offset + 26);
+    const extraLength = buffer.readUInt16LE(offset + 28);
+    const nameStart = offset + 30;
+    const dataStart = nameStart + nameLength + extraLength;
+    const name = buffer.toString('utf8', nameStart, nameStart + nameLength);
+    assert.equal(method, 0);
+    files.set(name, buffer.toString('utf8', dataStart, dataStart + size));
+    offset = dataStart + size;
+  }
+  return files;
+}
+
 test('loads structured JSON databases and supports fractional levels and total XP', async () => {
   assert.equal(xpData.levels.length, 59);
   assert.equal(dungeonData.length, 18);
   assert.equal(dungeonData.reduce((count, dungeon) => count + dungeon.quests.length, 0), 113);
+  assert.equal(questCatalogData.quests.length, 5010);
+  assert.ok(questCatalogData.quests.some((quest) => quest.questId === 2 && quest.name === "Sharptalon's Claw"));
   assert.deepEqual(dungeonData.flatMap((dungeon) => dungeon.quests).reduce((counts, quest) => {
     counts[quest.faction] = (counts[quest.faction] || 0) + 1;
     return counts;
@@ -82,13 +110,132 @@ test('loads structured JSON databases and supports fractional levels and total X
   assert.equal(document.querySelector('#summary-start-level').textContent, '10.32');
 });
 
+test('renames the planner and expands both source pools by default', async () => {
+  const { document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const dungeonPool = document.querySelector('.dungeon-source-panel');
+  const questPool = document.querySelector('.quest-source-panel');
+  const dungeonToggle = document.querySelector('#toggle-dungeons-btn');
+  const questToggle = document.querySelector('#toggle-quests-btn');
+  assert.equal(document.title, 'WoW: Forever Leveling Route Planner');
+  assert.match(document.querySelector('h1').textContent, /Leveling Route Planner/);
+  assert.equal(dungeonToggle.getAttribute('aria-expanded'), 'true');
+  assert.equal(questToggle.getAttribute('aria-expanded'), 'true');
+  assert.equal(document.querySelector('#dungeon-pool-content').hidden, false);
+  assert.equal(document.querySelector('#quest-pool-content').hidden, false);
+
+  dungeonToggle.click();
+  assert.equal(dungeonToggle.getAttribute('aria-expanded'), 'false');
+  assert.equal(questToggle.getAttribute('aria-expanded'), 'true');
+  questToggle.click();
+  assert.equal(questToggle.getAttribute('aria-expanded'), 'false');
+});
+
+test('collapses all builder sections after calculation and exposes route rules', async () => {
+  const { document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const content = document.querySelector('#route-content');
+  const toggle = document.querySelector('#toggle-route-btn');
+  assert.equal(content.hidden, false);
+  assert.equal(toggle.getAttribute('aria-expanded'), 'true');
+  assert.equal(document.querySelector('.route-rules-tooltip [role="tooltip"]').textContent.includes('Quest XP'), true);
+
+  document.querySelector('#calculate-btn').click();
+  assert.equal(content.hidden, true);
+  assert.equal(toggle.getAttribute('aria-expanded'), 'false');
+  assert.equal(document.querySelector('#toggle-dungeons-btn').getAttribute('aria-expanded'), 'false');
+  assert.equal(document.querySelector('#toggle-quests-btn').getAttribute('aria-expanded'), 'false');
+  assert.equal(document.querySelector('#route-output').hidden, false);
+
+  toggle.click();
+  assert.equal(content.hidden, false);
+  assert.equal(toggle.getAttribute('aria-expanded'), 'true');
+});
+
+test('confirms before clearing the route and respects cancellation', async () => {
+  const { window, document } = await loadPlanner();
+  const originalCount = JSON.parse(window.exportPoolJson()).route.length;
+  window.confirm = () => false;
+  document.querySelector('#reset-route-btn').click();
+  assert.equal(JSON.parse(window.exportPoolJson()).route.length, originalCount);
+
+  window.confirm = () => true;
+  document.querySelector('#reset-route-btn').click();
+  assert.equal(JSON.parse(window.exportPoolJson()).route.length, 0);
+});
+
+test('searches the Questie catalog and adds a quest with its location metadata', async () => {
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const questSearch = document.querySelector('#quest-search');
+  questSearch.value = 'Kobold Camp Cleanup';
+  dispatch(window, questSearch, 'input');
+  const questItem = document.querySelector('.quest-pool-item');
+  assert.match(questItem.textContent, /Kobold Camp Cleanup/);
+  assert.match(questItem.textContent, /Elwynn Forest/);
+
+  const dungeonIndex = dungeonData.findIndex((dungeon) => dungeon.name === 'The Hall of Thanes');
+  document.querySelector(`.pool-item[data-pool-dungeon-index="${dungeonIndex}"] .add-pool-dungeon-btn`).click();
+  const routeCard = document.querySelector('.dungeon-card');
+  const refreshedQuestItem = document.querySelector('.quest-pool-item');
+  dragQuest(window, refreshedQuestItem, routeCard);
+
+  const exported = JSON.parse(window.exportPoolJson());
+  const addedQuest = exported.route[0].quests.find((quest) => quest.questId === 7);
+  assert.equal(addedQuest.name, 'Kobold Camp Cleanup');
+  assert.equal(addedQuest.starters.npcs[0].name, 'Marshal McBride');
+  assert.deepEqual(addedQuest.starters.npcs[0].zones[0].coordinates[0], [48.92, 41.61]);
+  assert.equal(addedQuest.turnIns.npcs[0].name, 'Marshal McBride');
+  assert.equal(addedQuest.objectiveLocations[0].name, 'Kobold Vermin');
+
+  document.querySelector('.dungeon-card details').open = true;
+  assert.match(document.querySelector('.dungeon-card-quests').textContent, /Marshal McBride/);
+  assert.match(document.querySelector('.dungeon-card-quests').textContent, /48\.9, 41\.6/);
+});
+
+test('enriches imported dungeon quests from Questie without replacing planner values', async () => {
+  const { window } = await loadPlanner('http://localhost/foreverguide/', false);
+  window.importPoolJson(JSON.stringify({
+    startMode: 'level',
+    startValue: 10,
+    faction: 'Alliance',
+    route: [{
+      name: 'Legacy route dungeon',
+      levelRange: '1-10',
+      quests: [{ name: 'Legacy quest label', questId: 7, questLevel: 3, xp: 999, faction: 'Horde' }],
+    }],
+  }));
+  const quest = JSON.parse(window.exportPoolJson()).route[0].quests[0];
+  assert.equal(quest.name, 'Legacy quest label');
+  assert.equal(quest.xp, 999);
+  assert.equal(quest.faction, 'Horde');
+  assert.equal(quest.starters.npcs[0].name, 'Marshal McBride');
+  assert.equal(quest.objectiveLocations[0].name, 'Kobold Vermin');
+});
+
+test('searches dungeons and supports adding a dungeon from its pool', async () => {
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const search = document.querySelector('#dungeon-search');
+  search.value = 'uldaman';
+  dispatch(window, search, 'input');
+  assert.equal(document.querySelectorAll('#dungeon-pool .pool-item').length, 1);
+  assert.match(document.querySelector('#dungeon-pool').textContent, /Uldaman/);
+
+  const item = document.querySelector('#dungeon-pool .pool-item');
+  const route = document.querySelector('#route-editor');
+  const dataTransfer = { effectAllowed: '', dropEffect: '', setData() {} };
+  for (const [type, element] of [['dragstart', item], ['drop', route]]) {
+    const event = new window.Event(type, { bubbles: true, cancelable: true });
+    Object.defineProperty(event, 'dataTransfer', { value: dataTransfer });
+    element.dispatchEvent(event);
+  }
+  assert.equal(document.querySelector('.dungeon-card h3').textContent, 'Uldaman');
+});
+
 test('filters quests by faction and keeps Both quests included', async () => {
   const { window, document } = await loadPlanner();
   const startValue = document.querySelector('#start-value');
   startValue.value = '20';
   dispatch(window, startValue, 'input');
   assert.match(document.querySelector('#faction-status').textContent, /37 Alliance-only · 71 Both factions · 5 Horde-only/);
-  assert.match(document.querySelector('#faction-status').textContent, /^Quests in Pool:/);
+  assert.match(document.querySelector('#faction-status').textContent, /^Quests in route:/);
   assert.deepEqual([...document.querySelector('#faction').options].map((option) => option.value), ['Alliance', 'Horde']);
 
   const faction = document.querySelector('#faction');
@@ -113,7 +260,7 @@ test('filters quests by faction and keeps Both quests included', async () => {
   assert.equal(document.querySelector('.quest-faction').value, 'Both');
 });
 
-test('uses canonical faction metadata for older shared route snapshots', async () => {
+test('imports older JSON route snapshots and resolves canonical faction metadata', async () => {
   const wailingCaverns = structuredClone(dungeonData.find((dungeon) => dungeon.name === 'Wailing Caverns'));
   for (const quest of wailingCaverns.quests) delete quest.faction;
   const legacyDungeon = {
@@ -127,8 +274,8 @@ test('uses canonical faction metadata for older shared route snapshots', async (
     faction: 'Alliance',
     route: [wailingCaverns, legacyDungeon],
   };
-  const token = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const { document } = await loadPlanner(`http://localhost/foreverguide/#route=v1.${token}`);
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  window.importPoolJson(JSON.stringify(payload));
   const wailingRoute = [...document.querySelectorAll('.route-step')]
     .find((step) => step.querySelector('h3').textContent.includes('Wailing Caverns'));
 
@@ -355,28 +502,23 @@ test('renders and edits the configured dungeon and quest hyperlinks', async () =
   assert.equal(savedOldIronforgeQuest.querySelector('a').href, 'https://www.wowhead.com/forever/quest=96393');
 });
 
-test('adds a dungeon from the pool header and collapses the pool after calculation', async () => {
-  const { window, document } = await loadPlanner();
-  const poolContent = document.querySelector('#pool-content');
-  assert.equal(poolContent.hidden, true);
-  assert.equal(poolContent.contains(document.querySelector('#import-pool-btn')), false);
-  assert.equal(poolContent.contains(document.querySelector('#export-pool-btn')), false);
-  document.querySelector('#add-dungeon-top-btn').click();
-  assert.equal(poolContent.hidden, false);
-  assert.equal(document.querySelectorAll('.dungeon-card').length, dungeonData.length + 1);
+test('starts with an empty route and adds a custom dungeon for editing', async () => {
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  assert.equal(document.querySelectorAll('.dungeon-card').length, 0);
+  assert.equal(document.querySelectorAll('.pool-item[draggable="true"]').length > 0, true);
+  document.querySelector('#add-dungeon-btn').click();
+  assert.equal(document.querySelectorAll('.dungeon-card').length, 1);
   assert.ok(document.querySelector('.dungeon-card.is-editing'));
   assert.equal(window.lastScrolledElement, document.querySelector('.dungeon-card.is-editing'));
   assert.equal(document.activeElement, document.querySelector('.dungeon-name'));
 
   document.querySelector('#calculate-btn').click();
-  assert.equal(poolContent.hidden, true);
-  assert.equal(document.querySelector('#toggle-pool-btn').getAttribute('aria-expanded'), 'false');
+  assert.equal(document.querySelector('#route-editor').hidden, false);
 });
 
-test('exports and imports the dungeon pool with route configuration', async () => {
+test('exports and imports route JSON without URL sharing', async () => {
   const { window, document } = await loadPlanner();
-  const shareButtons = [...document.querySelectorAll('#share-route-btn, #route-share-btn')];
-  assert.deepEqual(shareButtons.map((button) => button.textContent), ['Copy Route Link', 'Copy Route Link']);
+  assert.equal(document.querySelector('#share-route-btn, #route-share-btn'), null);
 
   document.querySelector('.edit-dungeon-btn[data-index="0"]').click();
   const prerequisite = document.querySelector('.dungeon-dependencies option[value="Ruins of Lordaeron"]');
@@ -395,7 +537,7 @@ test('exports and imports the dungeon pool with route configuration', async () =
   dispatch(window, faction, 'change');
 
   document.querySelector('#export-pool-btn').click();
-  assert.equal(window.downloadedFile, 'foreverguide-pool.json');
+  assert.equal(window.downloadedFile, 'foreverguide-route.json');
   assert.match(document.querySelector('#import-export-status').textContent, /exported/i);
   const exported = JSON.parse(window.exportPoolJson());
   assert.equal(exported.startMode, 'xp');
@@ -424,10 +566,47 @@ test('exports and imports the dungeon pool with route configuration', async () =
     dispatch(window, fileInput, 'change');
   });
 
-  assert.match(status.textContent, /Imported 18 dungeons and configuration/);
-  assert.equal(document.querySelector('#pool-content').hidden, false);
+  assert.match(status.textContent, /Imported route with 18 dungeons/);
   assert.equal(document.querySelector('#start-mode').value, 'xp');
   assert.equal(document.querySelector('#start-value').value, '30000');
   assert.equal(document.querySelector('#faction').value, 'Horde');
   assert.match(document.querySelector('.dungeon-card[data-index="0"] .dungeon-card-dependencies').textContent, /Requires completion of: Ruins of Lordaeron/);
+});
+
+test('exports a RestedXP Forever companion addon with quest steps and waypoints', async () => {
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const quest = questCatalogData.quests.find((entry) => entry.questId === 7);
+  window.importPoolJson(JSON.stringify({
+    startMode: 'level',
+    startValue: 10,
+    faction: 'Alliance',
+    route: [{ name: 'Custom dungeon', levelRange: '1-10', quests: [quest] }],
+  }));
+
+  document.querySelector('#export-rxp-btn').click();
+  assert.equal(window.downloadedFile, 'foreverguide-rxp-route-alliance.zip');
+  assert.match(document.querySelector('#rxp-export-status').textContent, /downloaded/i);
+
+  const archive = window.ForeverguideRXPExport.createAddonArchive(JSON.parse(window.exportPoolJson()).route, 'Alliance', 10);
+  assert.equal(Buffer.from(archive.bytes).readUInt32LE(0), 0x04034b50);
+  const files = readStoredZip(archive.bytes);
+  const toc = files.get('Foreverguide_RestedXP/Foreverguide_RestedXP.toc');
+  const guide = files.get('Foreverguide_RestedXP/Foreverguide_RestedXP.lua');
+  const readme = files.get('Foreverguide_RestedXP/README.txt');
+  assert.match(toc, /## Interface: 16001/);
+  assert.match(toc, /## Dependencies: RXPGuides/);
+  assert.ok(guide);
+  assert.match(archive.guide, /#forever/);
+  assert.match(archive.guide, /\.goto Elwynn Forest,48\.92,41\.61/);
+  assert.match(archive.guide, /\.accept 7/);
+  assert.match(archive.guide, /\.complete 7,1/);
+  assert.match(archive.guide, /\.turnin 7/);
+  assert.match(archive.guide, /Kobold Vermin/);
+  assert.match(readme, /Interface\/AddOns/);
+});
+
+test('discloses Questie and RestedXP attribution', () => {
+  assert.match(html, /Quest names, requirements, and location data are sourced from/);
+  assert.match(html, /restedxp\.com/);
+  assert.match(html, /not affiliated with or endorsed by RestedXP/);
 });

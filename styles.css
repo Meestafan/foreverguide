@@ -21,7 +21,7 @@ body {
   color: var(--text);
 }
 
-.app-shell { max-width: 1080px; margin: 0 auto; padding: 32px 20px 48px; }
+.app-shell { max-width: 1600px; margin: 0 auto; padding: 32px 24px 48px; }
 .page-header { margin-bottom: 28px; }
 h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
 .subtitle { max-width: 760px; color: var(--muted); font-size: 1.05rem; line-height: 1.6; margin-top: 12px; }
@@ -65,7 +65,48 @@ h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
 .pool-collapse-button[aria-expanded="false"] svg { transform: rotate(180deg); }
 
 .editor-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
-.route-editor { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: start; gap: 14px; }
+.route-editor { display: grid; flex: 1 1 auto; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-content: start; align-items: start; min-height: 0; overflow: auto; gap: 14px; }
+.builder-layout { display: grid; grid-template-columns: minmax(245px, 0.8fr) minmax(440px, 1.65fr) minmax(285px, 0.95fr); grid-template-areas: "dungeons route quests"; gap: 16px; align-items: stretch; }
+.route-builder-panel { grid-area: route; margin: 0; }
+.dungeon-source-panel { grid-area: dungeons; }
+.quest-source-panel { grid-area: quests; }
+.route-builder-panel { display: flex; flex-direction: column; height: min(72vh, 760px); min-height: 420px; margin: 0; overflow: hidden; }
+.route-builder-panel.is-collapsed { height: auto; min-height: 0; }
+#route-content { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; }
+#route-content[hidden] { display: none; }
+.route-builder-heading { align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.route-builder-heading h2 { margin: 0; }
+.route-collapse-button[aria-expanded="false"] svg { transform: rotate(180deg); }
+.route-actions { margin: 0 0 14px; }
+.route-rules-tooltip { align-self: flex-end; }
+.route-builder-heading h2, .source-pool-heading h2 { margin: 0; font-size: 1.3rem; }
+.section-note { color: var(--muted); font-size: 0.9rem; margin: 6px 0 0; }
+.route-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.source-pools { display: contents; }
+.source-pool-panel { display: flex; flex-direction: column; align-self: stretch; height: min(72vh, 760px); min-height: 420px; margin: 0; padding: 16px; overflow: hidden; }
+.source-pool-panel.is-collapsed { height: auto; min-height: 0; }
+.source-pool-heading { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 12px; padding: 0; border: 0; background: transparent; color: var(--text); cursor: pointer; text-align: left; }
+.source-pool-heading:hover { background: transparent; box-shadow: none; transform: none; }
+.source-pool-heading h2 { margin: 0; }
+.pool-chevron { flex: 0 0 8px; width: 8px; height: 8px; margin-right: 4px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform 0.16s ease; }
+.source-pool-panel.is-collapsed .pool-chevron { transform: rotate(-45deg); }
+.source-pool-content { display: flex; flex: 1 1 0; flex-direction: column; min-height: 0; overflow: hidden; }
+.source-pool-content[hidden] { display: none; }
+.pool-search { width: 100%; margin-bottom: 10px; font-size: 0.95rem; }
+.source-pool-list { display: grid; flex: 1 1 0; height: 0; min-height: 0; gap: 8px; overflow: auto; overscroll-behavior: contain; padding-right: 3px; }
+.pool-item { min-width: 0; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 10px; background: rgba(12, 20, 36, 0.65); border: 1px solid var(--border); border-radius: 8px; }
+.pool-item[draggable="true"] { cursor: grab; }
+.pool-item:active { cursor: grabbing; }
+.pool-item h3 { margin: 0; font-size: 0.93rem; line-height: 1.35; }
+.pool-item p { color: var(--muted); font-size: 0.78rem; line-height: 1.4; margin: 4px 0 0; }
+.pool-item-copy { min-width: 0; overflow-wrap: anywhere; }
+.pool-item > button { flex: 0 0 auto; padding: 7px 10px; font-size: 0.85rem; }
+.pool-item > button:disabled { cursor: default; opacity: 0.6; }
+.pool-limit-note { color: var(--muted); font-size: 0.82rem; margin: 4px 2px; }
+.quest-target-row { margin-bottom: 10px; }
+.quest-target-row select { width: 100%; min-width: 0; font-size: 0.9rem; padding: 9px 10px; }
+.route-drop-empty { display: grid; min-height: 230px; place-items: center; border: 1px dashed var(--border); border-radius: 8px; padding: 24px; text-align: center; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .dungeon-card { min-width: 0; border: 1px solid var(--border); background: rgba(12, 20, 36, 0.65); border-radius: 12px; padding: 16px; }
 .dungeon-card[draggable="true"] { cursor: grab; }
 .dungeon-card.is-dragging { opacity: 0.45; cursor: grabbing; }
@@ -74,6 +115,9 @@ h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
 .dungeon-card-topline h3, .dungeon-edit-heading h3 { margin: 0; color: var(--text); font-size: 1.05rem; }
 .dungeon-card a, .route-step a { color: inherit; text-decoration-color: var(--primary); text-underline-offset: 3px; }
 .dungeon-card a:hover, .route-step a:hover { color: var(--primary); }
+.pool-item a, .dungeon-card-quests a, .route-step li a { color: var(--text); }
+.pool-item a:visited, .dungeon-card-quests a:visited, .route-step li a:visited { color: var(--text); }
+.pool-item a:hover, .dungeon-card-quests a:hover, .route-step li a:hover { color: var(--primary); }
 .dungeon-card-meta { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
 .card-icon-actions, .card-edit-actions { display: flex; align-items: center; gap: 8px; }
 .card-edit-actions { justify-content: space-between; margin-top: 14px; }
@@ -87,12 +131,17 @@ h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
 .dungeon-card-dependencies { padding-top: 8px; color: var(--text); font-size: 0.88rem; }
 .dungeon-card-dependencies p { margin: 4px 0; }
 .dungeon-card-dependencies strong { color: var(--muted); }
-.dungeon-card-quests li { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; color: var(--text); font-size: 0.88rem; }
+.dungeon-card-quests li { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 8px 0; color: var(--text); font-size: 0.88rem; }
+.dungeon-card-quests li > div { min-width: 0; }
 .dungeon-card-quests li[draggable="true"] { cursor: grab; }
 .dungeon-card-quests li.is-quest-dragging { opacity: 0.45; cursor: grabbing; }
 .dungeon-card-quests li.is-quest-drop-target { background: rgba(243, 182, 95, 0.12); outline: 1px solid var(--primary); }
 .dungeon-card-quests li + li { border-top: 1px solid rgba(255, 255, 255, 0.04); }
 .dungeon-card-quests span { flex: 0 0 auto; color: var(--muted); }
+.quest-location-details { margin-top: 5px; }
+.quest-location-details summary { cursor: pointer; color: #8fd8c0; font-size: 0.78rem; }
+.quest-location-details p { margin: 4px 0; color: var(--muted); line-height: 1.45; overflow-wrap: anywhere; }
+.quest-location-details strong { color: var(--text); }
 .dungeon-card.is-editing { grid-column: 1 / -1; border-color: rgba(243, 182, 95, 0.65); background: rgba(23, 38, 63, 0.92); }
 .dungeon-edit-heading { align-items: center; margin-bottom: 14px; }
 .dungeon-header { display: flex; gap: 14px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 12px; }
@@ -154,6 +203,10 @@ button:hover { transform: translateY(-1px); box-shadow: 0 12px 22px rgba(221, 14
 .route-step ul { margin: 10px 0 0; padding-left: 18px; color: var(--text); }
 .route-step li + li { margin-top: 6px; }
 .empty-state { color: var(--muted); margin: 0; }
+.site-disclosures { padding: 4px 2px; color: var(--muted); font-size: 0.82rem; line-height: 1.55; }
+.site-disclosures a { color: var(--text); text-underline-offset: 3px; }
+.site-disclosures a:hover { color: var(--primary); }
+.site-disclosures p { margin: 6px 0; }
 
 @media (max-width: 640px) {
   .app-shell { padding-left: 14px; padding-right: 14px; }
@@ -162,8 +215,28 @@ button:hover { transform: translateY(-1px); box-shadow: 0 12px 22px rgba(221, 14
   input, select, button { width: 100%; }
   select[multiple] { width: 100%; }
   .pool-panel-header { align-items: flex-start; }
-  #add-dungeon-top-btn, #export-pool-btn, #import-pool-btn { width: auto; }
+  .builder-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "route" "dungeons" "quests"; }
+  .route-builder-heading { flex-direction: column; }
+  .route-actions { width: 100%; justify-content: stretch; }
+  .route-actions button { flex: 1 1 auto; }
+  #export-pool-btn, #import-pool-btn { width: auto; }
   .dungeon-card-quests li { flex-direction: column; gap: 3px; }
   .card-icon-actions { flex: 0 0 auto; }
   .icon-button { width: 40px; }
+}
+
+@media (max-width: 1100px) {
+  .builder-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto; grid-template-areas: "route route" "dungeons quests"; gap: 14px; }
+  .route-builder-panel, .route-builder-panel.is-collapsed { height: auto; min-height: 0; overflow: visible; }
+  #route-content { display: block; }
+  .route-editor { flex: initial; min-height: initial; overflow: visible; }
+  .source-pool-panel { height: auto; min-height: 0; overflow: visible; }
+  .source-pool-panel.is-collapsed { display: block; }
+  .source-pool-content { flex: 0 1 auto; min-height: 0; overflow: visible; }
+  .source-pool-panel:not(.is-collapsed) .source-pool-list { flex: 0 1 420px; height: 420px; max-height: 420px; min-height: 180px; }
+}
+
+@media (max-width: 760px) {
+  .builder-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "route" "dungeons" "quests"; }
+  .source-pool-panel:not(.is-collapsed) .source-pool-list { flex-basis: 320px; height: 320px; max-height: 320px; }
 }

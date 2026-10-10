@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Plan a WoW: Forever leveling route using dungeon quests and monster experience." />
-    <title>WoW: Forever Dungeon Leveling Route Planner</title>
+    <title>WoW: Forever Leveling Route Planner</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="app-shell">
       <header class="page-header">
-        <h1>WoW: Forever Dungeon Leveling Route Planner</h1>
-        <p class="subtitle">Enter a starting level or total experience and build a dungeon route from quest and monster XP.</p>
+        <h1>WoW: Forever Leveling Route Planner</h1>
+        <p class="subtitle">Enter a starting level or total XP and build a leveling route from dungeon, quest, and monster XP.</p>
       </header>
 
       <section class="panel controls-panel" aria-label="Route controls">
@@ -35,46 +35,82 @@
             </select>
           </div>
           <button id="calculate-btn" type="button">Calculate route</button>
-          <button id="share-route-btn" type="button" class="secondary-button">Copy Route Link</button>
+          <div class="rules-tooltip route-rules-tooltip">
+            <button type="button" class="icon-button rules-tooltip-trigger" aria-label="How route calculation works" aria-describedby="route-rules-tooltip" title="How route calculation works">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 15.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5ZM13.4 12c-.65.45-.9.75-.9 1.5h-2c0-1.55.7-2.25 1.75-2.95.7-.48 1.15-.83 1.15-1.55a1.4 1.4 0 0 0-1.5-1.4c-.95 0-1.55.58-1.65 1.55h-2c.1-2.05 1.55-3.45 3.7-3.45 2.1 0 3.5 1.33 3.5 3.25 0 1.45-.85 2.3-2.05 3.05Z"/></svg>
+            </button>
+            <div class="rules-tooltip-content" id="route-rules-tooltip" role="tooltip">
+              <strong>How the route is calculated</strong>
+              <ul>
+                <li>Dungeons are considered from lower to higher minimum level.</li>
+                <li>You must meet the dungeon and included quest level requirements before entry.</li>
+                <li>Faction-ineligible quests are excluded; selected prerequisites must be completed first.</li>
+                <li>Quest XP and estimated monster XP advance your level, up to level 60.</li>
+              </ul>
+            </div>
+          </div>
+          <button id="export-pool-btn" type="button" class="secondary-button">Export JSON</button>
+          <button id="import-pool-btn" type="button" class="secondary-button">Import JSON</button>
+          <input id="import-pool-file" type="file" accept=".json,application/json" hidden />
+          <div class="rules-tooltip rxp-export-tooltip">
+            <button id="export-rxp-btn" type="button" class="secondary-button" aria-describedby="rxp-export-tooltip">RestedXP export</button>
+            <div class="rules-tooltip-content" id="rxp-export-tooltip" role="tooltip">
+              <strong>RestedXP export</strong>
+              <p>RestedXP's paste-import strings are account-bound, so this site cannot copy one directly. This button downloads a companion add-on ZIP instead.</p>
+              <p>Close WoW, extract <code>Foreverguide_RestedXP</code> into the game's <code>Interface/AddOns</code> folder, restart, enable the addon, then select the generated guide in RestedXP.</p>
+            </div>
+          </div>
         </div>
         <p id="faction-status" class="faction-status" aria-live="polite"></p>
+        <p id="import-export-status" class="faction-status" aria-live="polite"></p>
+        <p id="rxp-export-status" class="faction-status" aria-live="polite"></p>
       </section>
 
-      <section class="panel editor-panel">
-        <div class="pool-panel-header">
-          <h2>Dungeon pool <span id="pool-count" class="pool-count"></span></h2>
-          <div class="pool-header-actions">
-            <button id="add-dungeon-top-btn" type="button" class="secondary-button">Add dungeon</button>
-            <button id="export-pool-btn" type="button" class="secondary-button">Export JSON</button>
-            <button id="import-pool-btn" type="button" class="secondary-button">Import JSON</button>
-            <input id="import-pool-file" type="file" accept=".json,application/json" hidden />
-            <div class="rules-tooltip">
-              <button type="button" class="icon-button rules-tooltip-trigger" aria-label="Show rules applied" aria-describedby="pool-rules-tooltip" title="Rules applied">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg>
-              </button>
-              <div class="rules-tooltip-content" id="pool-rules-tooltip" role="tooltip">
-                <strong>Rules applied</strong>
-                <ul>
-                  <li>Dungeons are processed in ascending level order.</li>
-                  <li>You must meet the dungeon’s minimum level to enter.</li>
-                  <li>You must be able to accept every quest before entering a dungeon.</li>
-                  <li>Selected dungeon prerequisites must be completed first.</li>
-                </ul>
-              </div>
-            </div>
-            <button id="toggle-pool-btn" type="button" class="icon-button pool-collapse-button" aria-expanded="false" aria-controls="pool-content" aria-label="Expand dungeon pool" title="Expand dungeon pool">
+      <section class="builder-layout" aria-label="Route builder">
+        <section class="panel route-builder-panel">
+          <div class="section-header route-builder-heading">
+            <h2>Your route <span id="route-count" class="pool-count"></span></h2>
+            <button id="toggle-route-btn" type="button" class="icon-button route-collapse-button" aria-expanded="true" aria-controls="route-content" aria-label="Collapse route builder" title="Collapse route builder">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7.4 14.6 4.6-4.6 4.6 4.6L18 13.2l-6-6-6 6 1.4 1.4Z"/></svg>
             </button>
           </div>
-        </div>
-        <p id="import-export-status" class="faction-status" aria-live="polite"></p>
-        <div id="pool-content" hidden>
-          <div id="route-editor" class="route-editor"></div>
-          <div class="editor-actions">
-            <button id="add-dungeon-btn" type="button">Add dungeon</button>
-            <button id="reset-route-btn" type="button" class="secondary-button">Reset to default</button>
+          <div id="route-content">
+            <p class="section-note">Drop dungeons here, then drop quests onto a dungeon.</p>
+            <div class="route-actions">
+              <button id="add-dungeon-btn" type="button" class="secondary-button">Add custom dungeon or step</button>
+              <button id="reset-route-btn" type="button" class="secondary-button">Clear route</button>
+            </div>
+            <div id="route-editor" class="route-editor" aria-label="Planned dungeons"></div>
           </div>
-        </div>
+        </section>
+
+        <aside class="source-pools" aria-label="Available content">
+          <section class="panel source-pool-panel dungeon-source-panel">
+            <button id="toggle-dungeons-btn" type="button" class="source-pool-heading" aria-expanded="true" aria-controls="dungeon-pool-content" title="Collapse Dungeons">
+              <h2>Dungeons <span id="dungeon-pool-count" class="pool-count"></span></h2><span class="pool-chevron" aria-hidden="true"></span>
+            </button>
+            <div id="dungeon-pool-content" class="source-pool-content">
+              <label class="sr-only" for="dungeon-search">Search dungeons</label>
+              <input id="dungeon-search" class="pool-search" type="search" placeholder="Search dungeons" autocomplete="off" />
+              <div id="dungeon-pool" class="source-pool-list" aria-label="Dungeon pool"></div>
+            </div>
+          </section>
+
+          <section class="panel source-pool-panel quest-source-panel">
+            <button id="toggle-quests-btn" type="button" class="source-pool-heading" aria-expanded="true" aria-controls="quest-pool-content" title="Collapse Quests">
+              <h2>Quests <span id="quest-pool-count" class="pool-count"></span></h2><span class="pool-chevron" aria-hidden="true"></span>
+            </button>
+            <div id="quest-pool-content" class="source-pool-content">
+              <label class="sr-only" for="quest-search">Search quests by name, ID, or zone</label>
+              <input id="quest-search" class="pool-search" type="search" placeholder="Search quests, IDs, or zones" autocomplete="off" />
+              <div class="quest-target-row field-group">
+                <label for="quest-target">Add quest to</label>
+                <select id="quest-target" aria-label="Dungeon to add quest to"><option value="">Choose a route dungeon</option></select>
+              </div>
+              <div id="quest-pool" class="source-pool-list quest-source-list" aria-label="Quest pool"></div>
+            </div>
+          </section>
+        </aside>
       </section>
 
       <section class="panel summary-panel" id="summary-panel" aria-label="Route summary">
@@ -85,8 +121,7 @@
 
       <section class="panel route-panel" id="route-panel">
         <div class="section-header route-section-header">
-          <h2>Recommended dungeon route</h2>
-          <button id="route-share-btn" type="button" class="secondary-button">Copy Route Link</button>
+          <h2>Calculated leveling route</h2>
         </div>
         <div id="route-output" class="route-output"><p class="empty-state">Choose a starting level to generate a route.</p></div>
       </section>
@@ -95,7 +130,13 @@
         <div class="section-header"><h2>Why the route ended</h2></div>
         <div id="reasons-output" class="reasons-output"><p class="empty-state">Calculate a route to see why it ends.</p></div>
       </section>
+
+      <footer class="site-disclosures">
+        <p>Quest names, requirements, and location data are sourced from <a href="https://github.com/Questie/Questie" target="_blank" rel="noopener noreferrer">Questie</a> and QuestieDB. Data availability and accuracy depend on that project.</p>
+        <p><a href="https://www.restedxp.com/" target="_blank" rel="noopener noreferrer">RestedXP</a> is owned by RXP Media LLC. This independent route exporter is not affiliated with or endorsed by RestedXP.</p>
+      </footer>
     </main>
+    <script src="./rxp-export.js" defer></script>
     <script src="./app.js" defer></script>
   </body>
 </html>
