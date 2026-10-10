@@ -64,22 +64,23 @@
         <p id="faction-status" class="faction-status" aria-live="polite"></p>
         <p id="import-export-status" class="faction-status" aria-live="polite"></p>
         <p id="rxp-export-status" class="faction-status" aria-live="polite"></p>
+        <div id="prereq-warnings" class="prereq-warnings" role="alert" hidden></div>
       </section>
 
       <section class="builder-layout" aria-label="Route builder">
         <section class="panel route-builder-panel">
           <div class="section-header route-builder-heading">
             <h2>Your route <span id="route-count" class="pool-count"></span></h2>
+            <div class="route-actions">
+              <button id="add-dungeon-btn" type="button" class="secondary-button">Add custom dungeon or step</button>
+              <button id="reset-route-btn" type="button" class="secondary-button">Clear route</button>
+            </div>
             <button id="toggle-route-btn" type="button" class="icon-button route-collapse-button" aria-expanded="true" aria-controls="route-content" aria-label="Collapse route builder" title="Collapse route builder">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7.4 14.6 4.6-4.6 4.6 4.6L18 13.2l-6-6-6 6 1.4 1.4Z"/></svg>
             </button>
           </div>
           <div id="route-content">
             <p class="section-note">Drop dungeons here, then drop quests onto a dungeon.</p>
-            <div class="route-actions">
-              <button id="add-dungeon-btn" type="button" class="secondary-button">Add custom dungeon or step</button>
-              <button id="reset-route-btn" type="button" class="secondary-button">Clear route</button>
-            </div>
             <div id="route-editor" class="route-editor" aria-label="Planned dungeons"></div>
           </div>
         </section>
@@ -115,7 +116,7 @@
 
       <section class="panel summary-panel" id="summary-panel" aria-label="Route summary">
         <div class="stat-card"><span class="stat-label">Start level</span><strong id="summary-start-level">10</strong></div>
-        <div class="stat-card"><span class="stat-label">Route length</span><strong id="summary-route-length">0 dungeons</strong></div>
+        <div class="stat-card"><span class="stat-label">Route length</span><strong id="summary-route-length">0 steps (0 quests)</strong></div>
         <div class="stat-card highlight"><span class="stat-label">Final level</span><strong id="summary-final-level">10</strong></div>
       </section>
 
@@ -136,6 +137,7 @@
         <p><a href="https://www.restedxp.com/" target="_blank" rel="noopener noreferrer">RestedXP</a> is owned by RXP Media LLC. This independent route exporter is not affiliated with or endorsed by RestedXP.</p>
       </footer>
     </main>
+    <script src="./quest-prereqs.js" defer></script>
     <script src="./rxp-export.js" defer></script>
     <script src="./app.js" defer></script>
   </body>

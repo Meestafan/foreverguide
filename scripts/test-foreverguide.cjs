@@ -9,6 +9,7 @@ const plannerPath = root;
 const html = fs.readFileSync(path.join(plannerPath, 'index.html'), 'utf8');
 const app = fs.readFileSync(path.join(plannerPath, 'app.js'), 'utf8');
 const rxpExport = fs.readFileSync(path.join(plannerPath, 'rxp-export.js'), 'utf8');
+const questPrereqs = fs.readFileSync(path.join(plannerPath, 'quest-prereqs.js'), 'utf8');
 const xpData = JSON.parse(fs.readFileSync(path.join(plannerPath, 'xp_per_level.json'), 'utf8'));
 const dungeonData = JSON.parse(fs.readFileSync(path.join(plannerPath, 'dungeon_quest_db.json'), 'utf8'));
 const questCatalogData = JSON.parse(fs.readFileSync(path.join(plannerPath, 'quest_catalog.json'), 'utf8'));
@@ -29,6 +30,7 @@ async function loadPlanner(url = 'http://localhost/foreverguide/', seedDefaultRo
     json: async () => String(url).includes('xp_per_level') ? xpData
       : String(url).includes('quest_catalog') ? questCatalogData : dungeonData,
   });
+  window.eval(questPrereqs);
   window.eval(rxpExport);
   window.eval(app);
   await new Promise((resolve) => setTimeout(resolve, 0));
@@ -538,7 +540,7 @@ test('exports and imports route JSON without URL sharing', async () => {
 
   document.querySelector('#export-pool-btn').click();
   assert.equal(window.downloadedFile, 'foreverguide-route.json');
-  assert.match(document.querySelector('#import-export-status').textContent, /exported/i);
+  assert.equal(document.querySelector('#import-export-status').textContent, '');
   const exported = JSON.parse(window.exportPoolJson());
   assert.equal(exported.startMode, 'xp');
   assert.equal(exported.startValue, 30000);
@@ -585,7 +587,7 @@ test('exports a RestedXP Forever companion addon with quest steps and waypoints'
 
   document.querySelector('#export-rxp-btn').click();
   assert.equal(window.downloadedFile, 'foreverguide-rxp-route-alliance.zip');
-  assert.match(document.querySelector('#rxp-export-status').textContent, /downloaded/i);
+  assert.equal(document.querySelector('#rxp-export-status').textContent, '');
 
   const archive = window.ForeverguideRXPExport.createAddonArchive(JSON.parse(window.exportPoolJson()).route, 'Alliance', 10);
   assert.equal(Buffer.from(archive.bytes).readUInt32LE(0), 0x04034b50);
@@ -603,6 +605,36 @@ test('exports a RestedXP Forever companion addon with quest steps and waypoints'
   assert.match(archive.guide, /\.turnin 7/);
   assert.match(archive.guide, /Kobold Vermin/);
   assert.match(readme, /Interface\/AddOns/);
+});
+
+test('warns about missing prerequisites and orders the export by them', async () => {
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const mk = (questId, name, requiresQuests = []) => ({ questId, name, questLevel: 1, xp: 100, faction: 'Both', requiresQuests });
+  window.importPoolJson(JSON.stringify({
+    startMode: 'level',
+    startValue: 1,
+    faction: 'Alliance',
+    route: [{ name: 'Prereq dungeon', levelRange: '1-10', quests: [mk(900002, 'Second', [900001]), mk(900001, 'First')] }],
+  }));
+  assert.equal(document.querySelector('#prereq-warnings').hidden, true);
+  const guide = window.ForeverguideRXPExport.createAddonArchive(JSON.parse(window.exportPoolJson()).route, 'Alliance', 1).guide;
+  assert.ok(guide.indexOf('.turnin 900001') < guide.indexOf('.accept 900002'));
+
+  window.importPoolJson(JSON.stringify({
+    startMode: 'level',
+    startValue: 1,
+    faction: 'Alliance',
+    route: [{ name: 'Prereq dungeon', levelRange: '1-10', quests: [mk(900002, 'Second', [900001])] }],
+  }));
+  const warnings = document.querySelector('#prereq-warnings');
+  assert.equal(warnings.hidden, false);
+  assert.match(warnings.textContent, /Second \(900002\) requires .*\(900001\) — not in the route/);
+  assert.ok(warnings.querySelector('a[href$="quest=900001"]'));
+  const jump = warnings.querySelector('.prereq-jump');
+  dispatch(window, jump, 'click');
+  const target = document.querySelector('.dungeon-card-quests li[data-quest-id="900002"]');
+  assert.ok(target.closest('details').open);
+  assert.ok(target.classList.contains('is-prereq-target'));
 });
 
 test('discloses Questie and RestedXP attribution', () => {

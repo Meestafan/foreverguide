@@ -74,10 +74,13 @@ h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
 .route-builder-panel.is-collapsed { height: auto; min-height: 0; }
 #route-content { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; }
 #route-content[hidden] { display: none; }
-.route-builder-heading { align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.route-builder-heading { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px 12px; margin-bottom: 8px; }
+.route-builder-heading .route-actions { justify-self: end; }
+.route-builder-panel.is-collapsed .route-actions { display: none; }
+#route-content .section-note { margin: 0 0 12px; }
 .route-builder-heading h2 { margin: 0; }
 .route-collapse-button[aria-expanded="false"] svg { transform: rotate(180deg); }
-.route-actions { margin: 0 0 14px; }
+.route-actions { margin: 0; }
 .route-rules-tooltip { align-self: flex-end; }
 .route-builder-heading h2, .source-pool-heading h2 { margin: 0; font-size: 1.3rem; }
 .section-note { color: var(--muted); font-size: 0.9rem; margin: 6px 0 0; }
@@ -187,6 +190,12 @@ select[multiple] { width: min(100%, 340px); min-height: 76px; padding: 6px 8px; 
 .faction-field { flex: 0 1 180px; }
 .quest-faction-field { flex: 0 1 150px; }
 .quest-actions { display: flex; gap: 10px; min-height: 38px; align-items: center; }
+.quest-requires-field { flex: 0 1 170px; }
+.prereq-warnings { margin: 10px 0 0; padding: 10px 14px; border: 1px solid #d9a441; border-radius: 8px; background: rgba(217, 164, 65, 0.12); font-size: 0.9rem; }
+.prereq-warnings ul { margin: 6px 0 0; padding-left: 18px; }
+.prereq-warnings a, .prereq-warnings a:visited { color: #fff; }
+.dungeon-card-quests li.is-prereq-target { background: rgba(217, 164, 65, 0.2); outline: 1px solid #d9a441; }
+.prereq-flag, .dungeon-card-quests .prereq-flag { color: #d9a441; font-weight: 600; }
 .quest-actions label { display: inline-flex; gap: 4px; align-items: center; }
 .faction-status { margin: 2px 0 0; color: var(--muted); font-size: 0.86rem; }
 textarea { width: 100%; min-height: 220px; font-family: "Consolas", "Courier New", monospace; line-height: 1.5; }
@@ -223,8 +232,8 @@ button:hover { transform: translateY(-1px); box-shadow: 0 12px 22px rgba(221, 14
   select[multiple] { width: 100%; }
   .pool-panel-header { align-items: flex-start; }
   .builder-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "route" "dungeons" "quests"; }
-  .route-builder-heading { flex-direction: column; }
-  .route-actions { width: 100%; justify-content: stretch; }
+  .route-builder-heading { grid-template-columns: minmax(0, 1fr) auto; }
+  .route-actions { grid-column: 1 / -1; grid-row: 2; width: 100%; justify-content: stretch; }
   .route-actions button { flex: 1 1 auto; }
   #export-pool-btn, #import-pool-btn { width: auto; }
   .dungeon-card-quests li { flex-direction: column; gap: 3px; }

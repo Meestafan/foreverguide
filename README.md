@@ -47,7 +47,7 @@ The app must be served over HTTP (opening `index.html` directly with `file://` b
 python -m http.server 8000
 
 # or Node.js (no install needed beyond Node itself)
-npx http-server -p 8000
+npx http-server -p 8000 -c-1
 ```
 
 Then open <http://localhost:8000>. If the port is already in use, pick another (for example `8001`) and adjust the URL. Stop the server with `Ctrl+C`.

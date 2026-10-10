@@ -95,6 +95,7 @@
       '#subgroup Generated Routes',
     ];
 
+    const turnedIn = new Set();
     for (const dungeon of route) {
       const availableQuests = (dungeon.quests || []).filter((quest) => quest.faction !== (side === 'Horde' ? 'Alliance' : 'Horde'));
       if (!availableQuests.length) {
@@ -105,11 +106,17 @@
         continue;
       }
       let dungeonLabelled = false;
-      for (const action of ['Pickup', 'Do', 'Turnin']) {
-        for (const quest of availableQuests) {
-          if (!(quest.actions || ['Pickup', 'Do', 'Turnin']).includes(action)) continue;
-          lines.push(...questSteps(quest, dungeonLabelled ? '' : dungeon.name, action));
-          dungeonLabelled = true;
+      for (const layer of global.ForeverguideQuestPrereqs.layerQuests(availableQuests, turnedIn)) {
+        for (const action of ['Pickup', 'Do', 'Turnin']) {
+          for (const quest of layer) {
+            if (!(quest.actions || ['Pickup', 'Do', 'Turnin']).includes(action)) continue;
+            lines.push(...questSteps(quest, dungeonLabelled ? '' : dungeon.name, action));
+            dungeonLabelled = true;
+          }
+        }
+        for (const quest of layer) {
+          const questId = Number(quest.questId);
+          if (questId > 0 && (quest.actions || ['Turnin']).includes('Turnin')) turnedIn.add(questId);
         }
       }
     }
