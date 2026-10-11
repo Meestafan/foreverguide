@@ -110,6 +110,9 @@ function questsForFaction(quests, faction = factionInput.value) {
 }
 
 const QUEST_ACTIONS = ['Pickup', 'Do', 'Turnin'];
+function actionsHtml(actions) {
+  return actions.map((action) => `<span class="action-${action.toLowerCase()}">${action}</span>`).join('/') || 'No actions';
+}
 
 function normalizeActions(actions) {
   if (!Array.isArray(actions)) return [...QUEST_ACTIONS];
@@ -331,7 +334,7 @@ function renderEditor() {
           <div class="card-icon-actions"><button class="icon-button edit-dungeon-btn" data-index="${index}" aria-label="Edit ${escapeHtml(dungeon.name)}" title="Edit dungeon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5V20h3.5L18 9.5 14.5 6 4 16.5Zm16.7-10.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-1.7 1.7 3.4 3.4 1.7-1.7Z"/></svg></button>
           <button class="icon-button danger-icon delete-dungeon-btn" data-index="${index}" aria-label="Delete ${escapeHtml(dungeon.name)}" title="Delete dungeon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></div></div>
         ${dependencyDetails ? `<div class="dungeon-card-dependencies">${dependencyDetails}</div>` : ''}
-        <details class="card-quest-details"><summary>View quest details</summary><ul class="dungeon-card-quests">${dungeon.quests.map((quest, questIndex) => `<li data-quest-index="${questIndex}" data-quest-id="${quest.questId ?? ''}" draggable="${editingIndex === null}"><div>${linkedName(quest.name, questUrl(quest.questId))}${warningKeys.has(`${dungeon.name}|${quest.questId}`) ? ' <span class="prereq-flag" title="Missing prerequisite quests">⚠ missing prerequisite</span>' : ''} <span>${quest.faction} · Lvl ${quest.questLevel} · ${quest.xp.toLocaleString()} XP · ${quest.actions.join('/') || 'No actions'}</span>${questLocationDetails(quest)}</div><button class="icon-button danger-icon remove-route-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Remove ${escapeHtml(quest.name)} from route" title="Remove quest from route"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></li>`).join('')}</ul></details>
+        <details class="card-quest-details"><summary>View quest details</summary><ul class="dungeon-card-quests">${dungeon.quests.map((quest, questIndex) => `<li data-quest-index="${questIndex}" data-quest-id="${quest.questId ?? ''}" draggable="${editingIndex === null}"><div>${linkedName(quest.name, questUrl(quest.questId))}${warningKeys.has(`${dungeon.name}|${quest.questId}`) ? ' <span class="prereq-flag" title="Missing prerequisite quests">⚠ missing prerequisite</span>' : ''} <span>${quest.faction} · Lvl ${quest.questLevel} · ${quest.xp.toLocaleString()} XP · ${actionsHtml(quest.actions)}</span>${questLocationDetails(quest)}</div><button class="icon-button danger-icon remove-route-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Remove ${escapeHtml(quest.name)} from route" title="Remove quest from route"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></li>`).join('')}</ul></details>
       </article>`;
     }
     return `<article class="dungeon-card is-editing" data-index="${index}" data-name="${escapeHtml(dungeon.name)}">
@@ -349,7 +352,7 @@ function renderEditor() {
         <div class="field-group quest-xp-field"><label>XP reward</label><input class="quest-xp" type="number" min="0" value="${quest.xp}" /></div>
         <div class="field-group quest-faction-field"><label>Faction</label><select class="quest-faction">${factionOptions(quest.faction)}</select></div>
         <div class="field-group quest-requires-field"><label>Also requires quest IDs</label><input class="quest-requires" value="${quest.requiresQuests.join(', ')}" placeholder="e.g. 96392" /></div>
-        <div class="field-group quest-actions-field"><label>Actions</label><div class="quest-actions">${QUEST_ACTIONS.map((action) => `<label><input type="checkbox" class="quest-action" value="${action}"${quest.actions.includes(action) ? ' checked' : ''} /> ${action}</label>`).join('')}</div></div>
+        <div class="field-group quest-actions-field"><label>Actions</label><div class="quest-actions">${QUEST_ACTIONS.map((action) => `<label><input type="checkbox" class="quest-action" value="${action}"${quest.actions.includes(action) ? ' checked' : ''} /> <span class="action-${action.toLowerCase()}">${action}</span></label>`).join('')}</div></div>
         <button class="icon-button danger-icon remove-quest-btn" data-quest-index="${questIndex}" aria-label="Remove quest" title="Remove quest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button>
       </div>`).join('')}</div><div class="card-edit-actions"><button class="secondary-button add-quest-btn">Add quest</button><button class="save-dungeon-btn">Done</button></div></article>`;
   }).join('') : '<p class="empty-state route-drop-empty">Your route is empty. Drag a dungeon here to get started.</p>';
@@ -537,7 +540,7 @@ function runPlanner() {
   const routeQuestCount = result.route.reduce((sum, step) => sum + step.quests.length, 0);
   $('#summary-route-length').textContent = `${result.completedDungeonCount} steps (${routeQuestCount} quests)`;
   $('#summary-final-level').textContent = result.finalProgress.display;
-  routeOutput.innerHTML = result.route.length ? result.route.map((step, index) => `<article class="route-step"><h3>Step ${index + 1}: ${linkedName(step.dungeon.name, step.dungeon.url)}</h3><p><strong>Dungeon range:</strong> ${escapeHtml(step.dungeon.levelRange)}</p><p><strong>Earned:</strong> ${(step.questXp + step.monsterXp).toLocaleString()} XP (${step.questXp.toLocaleString()} from quests + ${step.monsterXp.toLocaleString()} from monsters)</p><p><strong>Level progression:</strong> started at level ${step.start} and ended at level ${step.end} (${step.totalXp.toLocaleString()} XP total)</p><ul>${step.quests.map((quest) => `<li>${linkedName(quest.name, questUrl(quest.questId))} — Level ${quest.questLevel} — ${quest.actions.join('/') || 'No actions'} — ${rewardedXp(quest).toLocaleString()} XP${questLocationDetails(quest)}</li>`).join('')}</ul></article>`).join('') : `<p class="empty-state">${eligiblePool.length ? 'No valid dungeon route was found for this starting level and route.' : 'Your route is empty. Add a dungeon from the pool to plan XP.'}</p>`;
+  routeOutput.innerHTML = result.route.length ? result.route.map((step, index) => `<article class="route-step"><h3>Step ${index + 1}: ${linkedName(step.dungeon.name, step.dungeon.url)}</h3><p><strong>Dungeon range:</strong> ${escapeHtml(step.dungeon.levelRange)}</p><p><strong>Earned:</strong> ${(step.questXp + step.monsterXp).toLocaleString()} XP (${step.questXp.toLocaleString()} from quests + ${step.monsterXp.toLocaleString()} from monsters)</p><p><strong>Level progression:</strong> started at level ${step.start} and ended at level ${step.end} (${step.totalXp.toLocaleString()} XP total)</p><ul>${step.quests.map((quest) => `<li>${linkedName(quest.name, questUrl(quest.questId))} — Level ${quest.questLevel} — ${actionsHtml(quest.actions)} — ${rewardedXp(quest).toLocaleString()} XP${questLocationDetails(quest)}</li>`).join('')}</ul></article>`).join('') : `<p class="empty-state">${eligiblePool.length ? 'No valid dungeon route was found for this starting level and route.' : 'Your route is empty. Add a dungeon from the pool to plan XP.'}</p>`;
   reasonsOutput.innerHTML = `<article class="reason-item route-ending-summary"><h3>${escapeHtml(result.endReason.title)}</h3><p>${escapeHtml(result.endReason.message)}</p></article>`;
 }
 
@@ -901,10 +904,20 @@ routeEditor.addEventListener('click', (event) => {
 
 $('#calculate-btn').addEventListener('click', () => {
   runPlanner();
-  setRouteExpanded(false);
-  setSourcePoolsExpanded(false);
-  $('#summary-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  selectTab('recommended');
 });
+function selectTab(name) {
+  for (const id of ['planner', 'recommended']) {
+    const active = id === name;
+    const tab = $(`#tab-${id}`);
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+    $(`#${id}-tab-panel`).hidden = !active;
+  }
+  window.scrollTo({ top: 0 });
+}
+$('#tab-planner').addEventListener('click', () => selectTab('planner'));
+$('#tab-recommended').addEventListener('click', () => selectTab('recommended'));
 toggleRouteButton.addEventListener('click', () => {
   setRouteExpanded(toggleRouteButton.getAttribute('aria-expanded') !== 'true');
 });
