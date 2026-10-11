@@ -22,6 +22,8 @@ async function loadPlanner(url = 'http://localhost/foreverguide/', seedDefaultRo
   window.structuredClone = structuredClone;
   window.history.replaceState = () => {};
   window.HTMLElement.prototype.scrollIntoView = function () { window.lastScrolledElement = this; };
+  window.HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', ''); };
+  window.HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); };
   window.URL.createObjectURL = (blob) => { window.exportedBlob = blob; return 'blob:foreverguide-export'; };
   window.URL.revokeObjectURL = () => {};
   window.HTMLAnchorElement.prototype.click = function () { window.downloadedFile = this.download; };
@@ -132,7 +134,7 @@ test('renames the planner and expands both source pools by default', async () =>
   assert.equal(questToggle.getAttribute('aria-expanded'), 'false');
 });
 
-test('collapses all builder sections after calculation and exposes route rules', async () => {
+test('keeps builder sections open after calculation, switches tabs, and exposes route rules', async () => {
   const { document } = await loadPlanner('http://localhost/foreverguide/', false);
   const content = document.querySelector('#route-content');
   const toggle = document.querySelector('#toggle-route-btn');
@@ -141,15 +143,15 @@ test('collapses all builder sections after calculation and exposes route rules',
   assert.equal(document.querySelector('.route-rules-tooltip [role="tooltip"]').textContent.includes('Quest XP'), true);
 
   document.querySelector('#calculate-btn').click();
-  assert.equal(content.hidden, true);
-  assert.equal(toggle.getAttribute('aria-expanded'), 'false');
-  assert.equal(document.querySelector('#toggle-dungeons-btn').getAttribute('aria-expanded'), 'false');
-  assert.equal(document.querySelector('#toggle-quests-btn').getAttribute('aria-expanded'), 'false');
-  assert.equal(document.querySelector('#route-output').hidden, false);
-
-  toggle.click();
   assert.equal(content.hidden, false);
   assert.equal(toggle.getAttribute('aria-expanded'), 'true');
+  assert.equal(document.querySelector('#toggle-dungeons-btn').getAttribute('aria-expanded'), 'true');
+  assert.equal(document.querySelector('#toggle-quests-btn').getAttribute('aria-expanded'), 'true');
+  assert.equal(document.querySelector('#recommended-tab-panel').hidden, false);
+  assert.equal(document.querySelector('#planner-tab-panel').hidden, true);
+
+  document.querySelector('#tab-planner').click();
+  assert.equal(document.querySelector('#planner-tab-panel').hidden, false);
 });
 
 test('confirms before clearing the route and respects cancellation', async () => {
@@ -322,7 +324,7 @@ test('searches and applies dungeon-only prerequisites', async () => {
   assert.equal(visibleOptions[0].value, 'Uldaman');
   visibleOptions[0].selected = true;
   dispatch(window, dungeonDependencies, 'change');
-  assert.match(document.querySelector('#reasons-output').textContent, /Dungeon prerequisite not completed/);
+  assert.match(document.querySelector('#reasons-output').textContent, /Dungeon or step prerequisite not completed/);
   assert.doesNotMatch(document.querySelector('#route-output').textContent, /Step 1: The Hall of Thanes/);
   assert.equal(document.querySelector('.quest-dependencies'), null);
 });
@@ -509,13 +511,52 @@ test('starts with an empty route and adds a custom dungeon for editing', async (
   assert.equal(document.querySelectorAll('.dungeon-card').length, 0);
   assert.equal(document.querySelectorAll('.pool-item[draggable="true"]').length > 0, true);
   document.querySelector('#add-dungeon-btn').click();
-  assert.equal(document.querySelectorAll('.dungeon-card').length, 1);
-  assert.ok(document.querySelector('.dungeon-card.is-editing'));
-  assert.equal(window.lastScrolledElement, document.querySelector('.dungeon-card.is-editing'));
+  assert.equal(document.querySelectorAll('#route-editor .dungeon-card').length, 1);
+  assert.equal(document.querySelector('#route-editor .is-editing'), null);
+  assert.equal(document.querySelector('#edit-modal').open, true);
+  assert.ok(document.querySelector('#edit-modal-form .dungeon-card.is-editing'));
   assert.equal(document.activeElement, document.querySelector('.dungeon-name'));
 
   document.querySelector('#calculate-btn').click();
   assert.equal(document.querySelector('#route-editor').hidden, false);
+});
+
+test('adds quests from the modal pool and duplicates quests while editing', async () => {
+  const { window, document } = await loadPlanner();
+  document.querySelector('.edit-dungeon-btn[data-index="0"]').click();
+  const before = document.querySelectorAll('.quest-row').length;
+  document.querySelector('.duplicate-quest-btn[data-quest-index="0"]').click();
+  const names = [...document.querySelectorAll('.quest-row .quest-name')].map((input) => input.value);
+  assert.equal(names.length, before + 1);
+  assert.equal(names[0], names[1]);
+
+  const addButton = document.querySelector('#modal-quest-pool .add-modal-quest-btn:not([disabled])');
+  addButton.click();
+  assert.equal(document.querySelectorAll('.quest-row').length, before + 2);
+
+  document.querySelector('.save-dungeon-btn').click();
+  assert.equal(document.querySelector('#edit-modal').open, false);
+  assert.equal(JSON.parse(window.exportPoolJson()).route[0].quests.length, before + 2);
+});
+
+test('warns when the route picks up or turns in the same quest twice', async () => {
+  const { window, document } = await loadPlanner();
+  const warnings = document.querySelector('#duplicate-warnings');
+  const startValue = document.querySelector('#start-value');
+  startValue.value = '14';
+  dispatch(window, startValue, 'input');
+  assert.equal(warnings.hidden, true);
+  document.querySelector('.edit-dungeon-btn[data-index="0"]').click();
+  document.querySelector('.duplicate-quest-btn[data-quest-index="0"]').click();
+  assert.equal(warnings.hidden, false);
+  assert.match(warnings.textContent, /picked up/);
+  assert.match(warnings.textContent, /turned in/);
+  const jump = warnings.querySelector('.prereq-jump');
+  assert.match(warnings.textContent, new RegExp(`\\(${jump.dataset.questId}\\)`));
+  jump.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
+  assert.equal(document.querySelector('#planner-tab-panel').hidden, false);
+  assert.equal(document.querySelector('.dungeon-card[data-index="0"] details').open, true);
+  document.querySelector('.save-dungeon-btn').click();
 });
 
 test('exports and imports route JSON without URL sharing', async () => {
@@ -568,7 +609,7 @@ test('exports and imports route JSON without URL sharing', async () => {
     dispatch(window, fileInput, 'change');
   });
 
-  assert.match(status.textContent, /Imported route with 18 dungeons/);
+  assert.match(status.textContent, /Imported route with 18 dungeons and steps/);
   assert.equal(document.querySelector('#start-mode').value, 'xp');
   assert.equal(document.querySelector('#start-value').value, '30000');
   assert.equal(document.querySelector('#faction').value, 'Horde');
