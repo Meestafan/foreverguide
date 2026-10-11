@@ -67,6 +67,12 @@
         <div id="prereq-warnings" class="prereq-warnings" role="alert" hidden></div>
       </section>
 
+      <div class="tab-list" role="tablist" aria-label="Route views">
+        <button id="tab-planner" type="button" role="tab" class="tab-button" aria-selected="true" aria-controls="planner-tab-panel">Route planner</button>
+        <button id="tab-recommended" type="button" role="tab" class="tab-button" aria-selected="false" aria-controls="recommended-tab-panel" tabindex="-1">Recommended route</button>
+      </div>
+
+      <div id="planner-tab-panel" role="tabpanel" aria-labelledby="tab-planner">
       <section class="builder-layout" aria-label="Route builder">
         <section class="panel route-builder-panel">
           <div class="section-header route-builder-heading">
@@ -113,7 +119,9 @@
           </section>
         </aside>
       </section>
+      </div>
 
+      <div id="recommended-tab-panel" role="tabpanel" aria-labelledby="tab-recommended" hidden>
       <section class="panel summary-panel" id="summary-panel" aria-label="Route summary">
         <div class="stat-card"><span class="stat-label">Start level</span><strong id="summary-start-level">10</strong></div>
         <div class="stat-card"><span class="stat-label">Route length</span><strong id="summary-route-length">0 steps (0 quests)</strong></div>
@@ -131,6 +139,7 @@
         <div class="section-header"><h2>Why the route ended</h2></div>
         <div id="reasons-output" class="reasons-output"><p class="empty-state">Calculate a route to see why it ends.</p></div>
       </section>
+      </div>
 
       <footer class="site-disclosures">
         <p>Quest names, requirements, and location data are sourced from <a href="https://github.com/Questie/Questie" target="_blank" rel="noopener noreferrer">Questie</a> and QuestieDB. Data availability and accuracy depend on that project.</p>
