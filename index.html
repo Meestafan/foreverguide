@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Plan a WoW: Forever leveling route using dungeon quests and monster experience." />
+    <meta name="description" content="Plan a WoW: Forever leveling route using dungeons, steps, quests, and monster experience." />
     <title>WoW: Forever Leveling Route Planner</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -11,7 +11,7 @@
     <main class="app-shell">
       <header class="page-header">
         <h1>WoW: Forever Leveling Route Planner</h1>
-        <p class="subtitle">Enter a starting level or total XP and build a leveling route from dungeon, quest, and monster XP.</p>
+        <p class="subtitle">Enter a starting level or total XP and build a leveling route of dungeons and steps from quest and monster XP.</p>
       </header>
 
       <section class="panel controls-panel" aria-label="Route controls">
@@ -42,8 +42,8 @@
             <div class="rules-tooltip-content" id="route-rules-tooltip" role="tooltip">
               <strong>How the route is calculated</strong>
               <ul>
-                <li>Dungeons are considered from lower to higher minimum level.</li>
-                <li>You must meet the dungeon and included quest level requirements before entry.</li>
+                <li>Dungeons and steps are considered from lower to higher minimum level.</li>
+                <li>You must meet the dungeon or step and included quest level requirements before entry.</li>
                 <li>Faction-ineligible quests are excluded; selected prerequisites must be completed first.</li>
                 <li>Quest XP and estimated monster XP advance your level, up to level 60.</li>
               </ul>
@@ -65,6 +65,7 @@
         <p id="import-export-status" class="faction-status" aria-live="polite"></p>
         <p id="rxp-export-status" class="faction-status" aria-live="polite"></p>
         <div id="prereq-warnings" class="prereq-warnings" role="alert" hidden></div>
+        <div id="duplicate-warnings" class="prereq-warnings" role="alert" hidden></div>
       </section>
 
       <div class="tab-list" role="tablist" aria-label="Route views">
@@ -86,8 +87,8 @@
             </button>
           </div>
           <div id="route-content">
-            <p class="section-note">Drop dungeons here, then drop quests onto a dungeon.</p>
-            <div id="route-editor" class="route-editor" aria-label="Planned dungeons"></div>
+            <p class="section-note">Drop dungeons or steps here, then drop quests onto a dungeon or step.</p>
+            <div id="route-editor" class="route-editor" aria-label="Planned dungeons and steps"></div>
           </div>
         </section>
 
@@ -112,7 +113,7 @@
               <input id="quest-search" class="pool-search" type="search" placeholder="Search quests, IDs, or zones" autocomplete="off" />
               <div class="quest-target-row field-group">
                 <label for="quest-target">Add quest to</label>
-                <select id="quest-target" aria-label="Dungeon to add quest to"><option value="">Choose a route dungeon</option></select>
+                <select id="quest-target" aria-label="Dungeon or step to add quest to"><option value="">Choose a route dungeon or step</option></select>
               </div>
               <div id="quest-pool" class="source-pool-list quest-source-list" aria-label="Quest pool"></div>
             </div>
@@ -140,6 +141,16 @@
         <div id="reasons-output" class="reasons-output"><p class="empty-state">Calculate a route to see why it ends.</p></div>
       </section>
       </div>
+
+      <dialog id="edit-modal" class="edit-modal" aria-label="Edit dungeon or step">
+        <div id="edit-modal-form" class="edit-modal-form"></div>
+        <aside class="edit-modal-pool" aria-label="Quest pool">
+          <h2>Quests <span id="modal-quest-count" class="pool-count"></span></h2>
+          <label class="sr-only" for="modal-quest-search">Search quests by name, ID, or zone</label>
+          <input id="modal-quest-search" class="pool-search" type="search" placeholder="Search quests, IDs, or zones" autocomplete="off" />
+          <div id="modal-quest-pool" class="modal-pool-list"></div>
+        </aside>
+      </dialog>
 
       <footer class="site-disclosures">
         <p>Quest names, requirements, and location data are sourced from <a href="https://github.com/Questie/Questie" target="_blank" rel="noopener noreferrer">Questie</a> and QuestieDB. Data availability and accuracy depend on that project.</p>
