@@ -46,6 +46,14 @@ function dispatch(window, element, type) {
   element.dispatchEvent(new window.Event(type, { bubbles: true }));
 }
 
+function pointerDrag(window, source, target) {
+  window.document.elementFromPoint = () => target;
+  const fire = (type, clientX) => source.dispatchEvent(new window.MouseEvent(type, { bubbles: true, cancelable: true, button: 0, clientX, clientY: 0 }));
+  fire('pointerdown', 0);
+  fire('pointermove', 20);
+  fire('pointerup', 20);
+}
+
 function dragQuest(window, source, target, clientY = 0) {
   const dataTransfer = {
     effectAllowed: '',
@@ -179,7 +187,7 @@ test('searches the Questie catalog and adds a quest with its location metadata',
   document.querySelector(`.pool-item[data-pool-dungeon-index="${dungeonIndex}"] .add-pool-dungeon-btn`).click();
   const routeCard = document.querySelector('.dungeon-card');
   const refreshedQuestItem = document.querySelector('.quest-pool-item');
-  dragQuest(window, refreshedQuestItem, routeCard);
+  pointerDrag(window, refreshedQuestItem, routeCard);
 
   const exported = JSON.parse(window.exportPoolJson());
   const addedQuest = exported.route[0].quests.find((quest) => quest.questId === 7);
@@ -224,12 +232,7 @@ test('searches dungeons and supports adding a dungeon from its pool', async () =
 
   const item = document.querySelector('#dungeon-pool .pool-item');
   const route = document.querySelector('#route-editor');
-  const dataTransfer = { effectAllowed: '', dropEffect: '', setData() {} };
-  for (const [type, element] of [['dragstart', item], ['drop', route]]) {
-    const event = new window.Event(type, { bubbles: true, cancelable: true });
-    Object.defineProperty(event, 'dataTransfer', { value: dataTransfer });
-    element.dispatchEvent(event);
-  }
+  pointerDrag(window, item, route);
   assert.equal(document.querySelector('.dungeon-card h3').textContent, 'Uldaman');
 });
 
@@ -448,9 +451,14 @@ test('reorders quests while editing a dungeon', async () => {
   document.querySelector('.edit-dungeon-btn[data-index="0"]').click();
   const initialQuests = JSON.parse(window.exportPoolJson()).route[0].quests;
   const sourceRow = document.querySelector('.quest-row[data-quest-index="0"]');
-  const targetRow = document.querySelector('.quest-row[data-quest-index="2"]');
-  targetRow.getBoundingClientRect = () => ({ top: 0, height: 10 });
-  dragQuest(window, sourceRow, targetRow, 9);
+  document.querySelectorAll('.quest-row').forEach((row, index) => {
+    row.getBoundingClientRect = () => ({ top: index * 10, bottom: index * 10 + 10, height: 10 });
+  });
+  const handle = sourceRow.querySelector('.quest-drag-handle');
+  const pointer = (type, clientY) => handle.dispatchEvent(new window.MouseEvent(type, { bubbles: true, cancelable: true, button: 0, clientY }));
+  pointer('pointerdown', 2);
+  pointer('pointermove', 29);
+  pointer('pointerup', 29);
 
   const editedNames = [...document.querySelectorAll('.quest-row .quest-name')].map((input) => input.value);
   const savedQuests = JSON.parse(window.exportPoolJson()).route[0].quests;
@@ -509,7 +517,7 @@ test('renders and edits the configured dungeon and quest hyperlinks', async () =
 test('starts with an empty route and adds a custom dungeon for editing', async () => {
   const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
   assert.equal(document.querySelectorAll('.dungeon-card').length, 0);
-  assert.equal(document.querySelectorAll('.pool-item[draggable="true"]').length > 0, true);
+  assert.equal(document.querySelectorAll('.pool-item').length > 0, true);
   document.querySelector('#add-dungeon-btn').click();
   assert.equal(document.querySelectorAll('#route-editor .dungeon-card').length, 1);
   assert.equal(document.querySelector('#route-editor .is-editing'), null);
@@ -537,6 +545,37 @@ test('adds quests from the modal pool and duplicates quests while editing', asyn
   document.querySelector('.save-dungeon-btn').click();
   assert.equal(document.querySelector('#edit-modal').open, false);
   assert.equal(JSON.parse(window.exportPoolJson()).route[0].quests.length, before + 2);
+});
+
+test('shows a route quest in the quest search from the card and the edit modal', async () => {
+  const { window, document } = await loadPlanner();
+  const click = (element) => element.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
+  const cardQuest = document.querySelector('.dungeon-card[data-index="0"] .dungeon-card-quests li');
+  click(cardQuest.querySelector('.find-quest-btn'));
+  assert.equal(document.querySelector('#quest-search').value, `#${cardQuest.dataset.questId}`);
+  assert.equal(document.querySelectorAll('#quest-pool .quest-pool-item').length, 1);
+  assert.match(document.querySelector('#quest-pool').textContent, new RegExp(`#${cardQuest.dataset.questId}\\b`));
+
+  click(document.querySelector('.edit-dungeon-btn[data-index="0"]'));
+  const row = document.querySelector('#edit-modal-form .quest-row[data-quest-index="1"]');
+  const questId = row.querySelector('.quest-id').value;
+  click(row.querySelector('.find-quest-btn'));
+  assert.equal(document.querySelector('#modal-quest-search').value, `#${questId}`);
+  assert.equal(document.querySelectorAll('#modal-quest-pool .quest-pool-item').length, 1);
+});
+
+test('drags a quest from the modal pool into the edited dungeon', async () => {
+  const { window, document } = await loadPlanner();
+  document.querySelector('.edit-dungeon-btn[data-index="0"]').click();
+  const before = document.querySelectorAll('#edit-modal-form .quest-row').length;
+  const item = document.querySelector('#modal-quest-pool .quest-pool-item:has(.add-modal-quest-btn:not([disabled]))');
+  const questId = Number(item.dataset.poolQuestId);
+  const targetRow = document.querySelector('#edit-modal-form .quest-row[data-quest-index="0"]');
+  targetRow.getBoundingClientRect = () => ({ top: 0, height: 10 });
+  pointerDrag(window, item, targetRow);
+  const ids = [...document.querySelectorAll('#edit-modal-form .quest-id')].map((input) => input.value);
+  assert.equal(ids.length, before + 1);
+  assert.equal(ids[0], String(questId));
 });
 
 test('warns when the route picks up or turns in the same quest twice', async () => {

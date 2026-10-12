@@ -7,8 +7,6 @@ let originalDungeon = null;
 let isNewDungeon = false;
 let draggedDungeonIndex = null;
 let draggedQuest = null;
-let draggedPoolDungeonIndex = null;
-let draggedPoolQuest = null;
 let dungeonCatalog = [];
 let questCatalog = [];
 let questCatalogById = new Map();
@@ -339,7 +337,7 @@ function renderEditor() {
           <div class="card-icon-actions"><button class="icon-button edit-dungeon-btn" data-index="${index}" aria-label="Edit ${escapeHtml(dungeon.name)}" title="Edit dungeon or step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5V20h3.5L18 9.5 14.5 6 4 16.5Zm16.7-10.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-1.7 1.7 3.4 3.4 1.7-1.7Z"/></svg></button>
           <button class="icon-button danger-icon delete-dungeon-btn" data-index="${index}" aria-label="Delete ${escapeHtml(dungeon.name)}" title="Delete dungeon or step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></div></div>
         ${dependencyDetails ? `<div class="dungeon-card-dependencies">${dependencyDetails}</div>` : ''}
-        <details class="card-quest-details"><summary>View quest details</summary><ul class="dungeon-card-quests">${dungeon.quests.map((quest, questIndex) => `<li data-quest-index="${questIndex}" data-quest-id="${quest.questId ?? ''}" draggable="${editingIndex === null}"><div>${linkedName(quest.name, questUrl(quest.questId))}${warningKeys.has(`${dungeon.name}|${quest.questId}`) ? ' <span class="prereq-flag" title="Missing prerequisite quests">⚠ missing prerequisite</span>' : ''} <span>${quest.faction} · Lvl ${quest.questLevel} · ${quest.xp.toLocaleString()} XP · ${actionsHtml(quest.actions)}</span>${questLocationDetails(quest)}</div><button class="icon-button danger-icon remove-route-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Remove ${escapeHtml(quest.name)} from route" title="Remove quest from route"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></li>`).join('')}</ul></details>
+        <details class="card-quest-details"><summary>View quest details</summary><ul class="dungeon-card-quests">${dungeon.quests.map((quest, questIndex) => `<li data-quest-index="${questIndex}" data-quest-id="${quest.questId ?? ''}" draggable="${editingIndex === null}"><div>${linkedName(quest.name, questUrl(quest.questId))}${warningKeys.has(`${dungeon.name}|${quest.questId}`) ? ' <span class="prereq-flag" title="Missing prerequisite quests">⚠ missing prerequisite</span>' : ''} <span>${quest.faction} · Lvl ${quest.questLevel} · ${quest.xp.toLocaleString()} XP · ${actionsHtml(quest.actions)}</span>${questLocationDetails(quest)}</div><div class="quest-item-actions"><button class="icon-button find-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Show ${escapeHtml(quest.name)} in quest search" title="Show in quest search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14Z"/></svg></button><button class="icon-button danger-icon remove-route-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Remove ${escapeHtml(quest.name)} from route" title="Remove quest from route"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></div></li>`).join('')}</ul></details>
       </article>`;
     }
     return `<article class="dungeon-card is-editing" data-index="${index}" data-name="${escapeHtml(dungeon.name)}">
@@ -350,7 +348,8 @@ function renderEditor() {
         <div class="field-group dungeon-monster-xp-field"><label>Experience from monsters</label><input class="dungeon-monster-xp" type="number" min="0" value="${dungeon.xpFromMonsters}" /></div>
         <div class="field-group dungeon-dependency-field"><label>Requires completion of</label><input class="dependency-search" type="search" placeholder="Search dungeon/step" aria-label="Search required dungeons or steps" /><select class="dungeon-dependencies" multiple size="3" aria-label="Dungeons or steps that must be completed first">${dependencyOptions(index, dungeon.dependencies)}</select></div>
         <div class="field-group dungeon-dependency-field"><label>Completion unlocks</label><input class="downstream-dependency-search" type="search" placeholder="Search dungeon/step" aria-label="Search unlocked dungeons or steps" /><select class="dungeon-downstream-dependencies" multiple size="3" aria-label="Dungeons or steps unlocked by completion">${dependencyOptions(index, routeState.flatMap((candidate, candidateIndex) => candidateIndex !== index && normalizeDungeon(candidate).dependencies.some((dependency) => dependency.dungeonName === dungeon.name) ? [{ dungeonName: normalizeDungeon(candidate).name }] : []))}</select></div></div>
-      <div class="quest-list">${dungeon.quests.map((quest, questIndex) => `<div class="quest-row" data-quest-index="${questIndex}" draggable="true">
+      <div class="quest-list">${dungeon.quests.map((quest, questIndex) => `<div class="quest-row" data-quest-index="${questIndex}">
+        <button type="button" class="icon-button quest-drag-handle" aria-label="Drag to reorder quest" title="Drag to reorder"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h2v2H9V5Zm4 0h2v2h-2V5ZM9 11h2v2H9v-2Zm4 0h2v2h-2v-2ZM9 17h2v2H9v-2Zm4 0h2v2h-2v-2Z"/></svg></button>
         <div class="field-group quest-field"><label>Quest</label><input class="quest-name" value="${escapeHtml(quest.name)}" /></div>
         <div class="field-group quest-id-field"><label>Quest ID</label><input class="quest-id" type="number" min="1" step="1" value="${quest.questId ?? ''}" placeholder="Quest ID" /></div>
         <div class="field-group quest-level-field"><label>Quest level</label><input class="quest-level" type="number" min="1" max="60" value="${quest.questLevel}" /></div>
@@ -358,6 +357,7 @@ function renderEditor() {
         <div class="field-group quest-faction-field"><label>Faction</label><select class="quest-faction">${factionOptions(quest.faction)}</select></div>
         <div class="field-group quest-requires-field"><label>Also requires quest IDs</label><input class="quest-requires" value="${quest.requiresQuests.join(', ')}" placeholder="e.g. 96392" /></div>
         <div class="field-group quest-actions-field"><label>Actions</label><div class="quest-actions">${QUEST_ACTIONS.map((action) => `<label><input type="checkbox" class="quest-action" value="${action}"${quest.actions.includes(action) ? ' checked' : ''} /> <span class="action-${action.toLowerCase()}">${action}</span></label>`).join('')}</div></div>
+        <button class="icon-button find-quest-btn" data-quest-index="${questIndex}" aria-label="Show quest in quest search" title="Show in quest search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14Z"/></svg></button>
         <button class="icon-button duplicate-quest-btn" data-quest-index="${questIndex}" aria-label="Duplicate quest" title="Duplicate quest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z"/></svg></button>
         <button class="icon-button danger-icon remove-quest-btn" data-quest-index="${questIndex}" aria-label="Remove quest" title="Remove quest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button>
       </div>`).join('')}</div><div class="card-edit-actions"><button class="secondary-button add-quest-btn">Add quest</button><button class="save-dungeon-btn">Done</button></div></article>`;
@@ -412,7 +412,7 @@ function renderDungeonPool() {
   dungeonPool.innerHTML = filtered.map((dungeon) => {
     const isAdded = routeState.some((routeDungeon) => normalizeDungeon(routeDungeon).name === dungeon.name);
     const index = dungeonCatalog.indexOf(dungeon);
-    return `<article class="pool-item" draggable="${!isAdded}" data-pool-dungeon-index="${index}"><div><h3>${escapeHtml(dungeon.name)}</h3><p>Levels ${escapeHtml(dungeon.levelRange)} · ${dungeon.quests.length} quests</p></div><button class="secondary-button add-pool-dungeon-btn" data-index="${index}"${isAdded ? ' disabled' : ''}>${isAdded ? 'In route' : 'Add'}</button></article>`;
+    return `<article class="pool-item" data-pool-dungeon-index="${index}"><div><h3>${escapeHtml(dungeon.name)}</h3><p>Levels ${escapeHtml(dungeon.levelRange)} · ${dungeon.quests.length} quests</p></div><button class="secondary-button add-pool-dungeon-btn" data-index="${index}"${isAdded ? ' disabled' : ''}>${isAdded ? 'In route' : 'Add'}</button></article>`;
   }).join('') || '<p class="empty-state">No dungeons match that search.</p>';
 }
 
@@ -420,28 +420,31 @@ function questPoolCopyHtml(quest) {
   return `<div class="pool-item-copy"><h3>${linkedName(quest.name, questUrl(quest.questId))}</h3><p>#${quest.questId} · ${quest.zone || 'Zone unknown'} · Lvl ${quest.requiredLevel} req / ${quest.questLevel} quest · ${quest.xp.toLocaleString()} XP · ${quest.faction}</p>${questLocationDetails(quest)}</div>`;
 }
 
+function matchesQuestQuery(quest, query) {
+  const exactId = query.match(/^#\s*(\d+)$/);
+  if (exactId) return quest.questId === Number(exactId[1]);
+  return !query || `${quest.name} ${quest.questId} ${quest.zone || ''}`.toLocaleLowerCase().includes(query);
+}
+
 function renderModalQuestPool() {
   const query = modalQuestSearch.value.trim().toLocaleLowerCase();
-  const filtered = questsForFaction(questCatalog).filter((quest) =>
-    !query || `${quest.name} ${quest.questId} ${quest.zone || ''}`.toLocaleLowerCase().includes(query));
-  const inDungeon = new Set(routeState[editingIndex]?.quests.map((quest) => quest.questId));
+  const filtered = questsForFaction(questCatalog).filter((quest) => matchesQuestQuery(quest, query));
   const visible = filtered.slice(0, 80);
   $('#modal-quest-count').textContent = `(${filtered.length.toLocaleString()})`;
-  modalQuestPool.innerHTML = visible.map((quest) => `<article class="pool-item quest-pool-item">
+  modalQuestPool.innerHTML = visible.map((quest) => `<article class="pool-item quest-pool-item" data-pool-quest-id="${quest.questId}">
     ${questPoolCopyHtml(quest)}
-    <button type="button" class="secondary-button add-modal-quest-btn" data-quest-id="${quest.questId}"${inDungeon.has(quest.questId) ? ' disabled' : ''}>${inDungeon.has(quest.questId) ? 'Added' : 'Add'}</button>
+    <button type="button" class="secondary-button add-modal-quest-btn" data-quest-id="${quest.questId}">Add</button>
   </article>`).join('') || '<p class="empty-state">No quests match that search.</p>';
   if (filtered.length > visible.length) modalQuestPool.insertAdjacentHTML('beforeend', `<p class="pool-limit-note">Showing ${visible.length} of ${filtered.length.toLocaleString()}. Refine your search to see more.</p>`);
 }
 
 function renderQuestPool() {
   const query = questSearch.value.trim().toLocaleLowerCase();
-  const filtered = questsForFaction(questCatalog).filter((quest) =>
-    !query || `${quest.name} ${quest.questId} ${quest.zone || ''}`.toLocaleLowerCase().includes(query));
+  const filtered = questsForFaction(questCatalog).filter((quest) => matchesQuestQuery(quest, query));
   const visible = filtered.slice(0, 80);
   $('#quest-pool-count').textContent = `(${filtered.length.toLocaleString()})`;
   const remaining = filtered.length - visible.length;
-  questPool.innerHTML = visible.map((quest) => `<article class="pool-item quest-pool-item" draggable="true" data-pool-quest-id="${quest.questId}">
+  questPool.innerHTML = visible.map((quest) => `<article class="pool-item quest-pool-item" data-pool-quest-id="${quest.questId}">
     ${questPoolCopyHtml(quest)}
     <button class="secondary-button add-pool-quest-btn" data-quest-id="${quest.questId}"${questTarget.value ? '' : ' disabled'}>Add</button>
   </article>`).join('') || '<p class="empty-state">No quests match that search.</p>';
@@ -472,7 +475,6 @@ function addQuestFromPool(questId, dungeonName = questTarget.value) {
     return;
   }
   const dungeon = normalizeDungeon(routeState[dungeonIndex]);
-  if (dungeon.quests.some((item) => item.questId === quest.questId)) return;
   setRouteExpanded(true);
   dungeon.quests.push(normalizeQuest(structuredClone(quest)));
   routeState[dungeonIndex] = dungeon;
@@ -607,6 +609,16 @@ function saveAndClose() {
   runPlanner();
 }
 
+function addQuestToEditing(questId, insertAt) {
+  const quest = questCatalogById.get(questId);
+  if (!quest || editingIndex === null) return;
+  syncEditingDungeon();
+  const quests = routeState[editingIndex].quests;
+  quests.splice(insertAt ?? quests.length, 0, normalizeQuest(structuredClone(quest)));
+  renderEditor(); renderPools(); runPlanner();
+  if (insertAt === undefined) editForm.scrollTop = editForm.scrollHeight;
+}
+
 function cancelEdit(index) {
   if (isNewDungeon) routeState.splice(index, 1);
   else if (originalDungeon) routeState[index] = originalDungeon;
@@ -723,12 +735,7 @@ editModal.addEventListener('cancel', (event) => {
 modalQuestSearch.addEventListener('input', renderModalQuestPool);
 modalQuestPool.addEventListener('click', (event) => {
   const button = event.target.closest('.add-modal-quest-btn');
-  const quest = button && questCatalogById.get(Number(button.dataset.questId));
-  if (!quest || editingIndex === null) return;
-  syncEditingDungeon();
-  routeState[editingIndex].quests.push(normalizeQuest(structuredClone(quest)));
-  renderEditor(); renderPools(); runPlanner();
-  editForm.scrollTop = editForm.scrollHeight;
+  if (button) addQuestToEditing(Number(button.dataset.questId));
 });
 onEditorEvent('input', (event) => {
   if (event.target.matches('.dependency-search, .downstream-dependency-search')) {
@@ -770,44 +777,7 @@ questPool.addEventListener('click', (event) => {
 dungeonSearch.addEventListener('input', renderDungeonPool);
 questSearch.addEventListener('input', renderQuestPool);
 questTarget.addEventListener('change', renderQuestPool);
-dungeonPool.addEventListener('dragstart', (event) => {
-  const item = event.target.closest('.pool-item[draggable="true"]');
-  if (!item || event.target.closest('button, a, summary')) { event.preventDefault(); return; }
-  draggedPoolDungeonIndex = Number(item.dataset.poolDungeonIndex);
-  event.dataTransfer.effectAllowed = 'copy';
-  event.dataTransfer.setData('text/plain', `pool-dungeon:${draggedPoolDungeonIndex}`);
-});
-questPool.addEventListener('dragstart', (event) => {
-  const item = event.target.closest('.quest-pool-item');
-  if (!item || event.target.closest('button, a, summary')) { event.preventDefault(); return; }
-  draggedPoolQuest = Number(item.dataset.poolQuestId);
-  event.dataTransfer.effectAllowed = 'copy';
-  event.dataTransfer.setData('text/plain', `pool-quest:${draggedPoolQuest}`);
-});
-for (const pool of [dungeonPool, questPool]) pool.addEventListener('dragend', () => {
-  draggedPoolDungeonIndex = null;
-  draggedPoolQuest = null;
-  routeEditor.querySelectorAll('.dungeon-card.is-drop-target').forEach((card) => card.classList.remove('is-drop-target'));
-});
 onEditorEvent('dragstart', (event) => {
-  const editQuestRow = event.target.closest('.quest-row');
-  if (editQuestRow) {
-    const card = editQuestRow.closest('.dungeon-card.is-editing');
-    if (!card || editingIndex === null) {
-      event.preventDefault();
-      return;
-    }
-    syncEditingDungeon();
-    draggedQuest = {
-      dungeonIndex: Number(card.dataset.index),
-      questIndex: Number(editQuestRow.dataset.questIndex),
-      isEditing: true,
-    };
-    event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData('text/plain', `edit-quest:${draggedQuest.dungeonIndex}:${draggedQuest.questIndex}`);
-    editQuestRow.classList.add('is-quest-dragging');
-    return;
-  }
   const questItem = event.target.closest('.dungeon-card-quests li');
   if (questItem) {
     const card = questItem.closest('.dungeon-card:not(.is-editing)');
@@ -832,26 +802,6 @@ onEditorEvent('dragstart', (event) => {
   card.classList.add('is-dragging');
 });
 onEditorEvent('dragover', (event) => {
-  if (draggedPoolDungeonIndex !== null || draggedPoolQuest !== null) {
-    const card = event.target.closest('.dungeon-card:not(.is-editing)');
-    if (draggedPoolQuest !== null && !card) return;
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'copy';
-    routeEditor.querySelectorAll('.dungeon-card.is-drop-target').forEach((target) => target.classList.remove('is-drop-target'));
-    card?.classList.add('is-drop-target');
-    return;
-  }
-  if (draggedQuest?.isEditing) {
-    const row = event.target.closest('.quest-row');
-    const card = row?.closest('.dungeon-card.is-editing');
-    if (!row || Number(card.dataset.index) !== draggedQuest.dungeonIndex) return;
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
-    editForm.querySelectorAll('.quest-row.is-quest-drop-target')
-      .forEach((target) => target.classList.remove('is-quest-drop-target'));
-    row.classList.add('is-quest-drop-target');
-    return;
-  }
   const card = event.target.closest('.dungeon-card:not(.is-editing)');
   if (!card) return;
   if (draggedQuest) {
@@ -871,44 +821,6 @@ onEditorEvent('dragover', (event) => {
   card.classList.add('is-drop-target');
 });
 onEditorEvent('drop', (event) => {
-  if (draggedPoolDungeonIndex !== null) {
-    event.preventDefault();
-    const card = event.target.closest('.dungeon-card:not(.is-editing)');
-    const targetIndex = card ? Number(card.dataset.index) : routeState.length;
-    const sourceIndex = draggedPoolDungeonIndex;
-    draggedPoolDungeonIndex = null;
-    addDungeonFromPool(sourceIndex, targetIndex);
-    return;
-  }
-  if (draggedPoolQuest !== null) {
-    const card = event.target.closest('.dungeon-card:not(.is-editing)');
-    if (!card) return;
-    event.preventDefault();
-    const questId = draggedPoolQuest;
-    draggedPoolQuest = null;
-    addQuestFromPool(questId, routeState[Number(card.dataset.index)].name);
-    return;
-  }
-  if (draggedQuest?.isEditing) {
-    const targetRow = event.target.closest('.quest-row');
-    const card = targetRow?.closest('.dungeon-card.is-editing');
-    if (!targetRow || Number(card.dataset.index) !== draggedQuest.dungeonIndex) return;
-    event.preventDefault();
-    const sourceIndex = draggedQuest.dungeonIndex;
-    const sourceQuestIndex = draggedQuest.questIndex;
-    const targetQuestIndex = Number(targetRow.dataset.questIndex);
-    const targetRect = targetRow.getBoundingClientRect();
-    const insertAfter = event.clientY > targetRect.top + targetRect.height / 2;
-    let insertionIndex = targetQuestIndex + Number(insertAfter);
-    if (sourceQuestIndex < insertionIndex) insertionIndex -= 1;
-    const [quest] = routeState[sourceIndex].quests.splice(sourceQuestIndex, 1);
-    insertionIndex = Math.max(0, Math.min(insertionIndex, routeState[sourceIndex].quests.length));
-    routeState[sourceIndex].quests.splice(insertionIndex, 0, quest);
-    draggedQuest = null;
-    renderEditor();
-    runPlanner();
-    return;
-  }
   const card = event.target.closest('.dungeon-card:not(.is-editing)');
   if (!card || editingIndex !== null) return;
   if (draggedQuest) {
@@ -973,6 +885,11 @@ onEditorEvent('click', (event) => {
     renderEditor(); renderPools(); runPlanner();
   } else if (button.classList.contains('cancel-edit-btn')) {
     cancelEdit(index);
+  } else if (button.classList.contains('find-quest-btn')) {
+    const dungeonIndex = button.dataset.dungeonIndex === undefined ? editingIndex : Number(button.dataset.dungeonIndex);
+    if (editingIndex !== null) syncEditingDungeon();
+    const quest = routeState[dungeonIndex]?.quests[Number(button.dataset.questIndex)];
+    if (quest) showQuestInPool(quest);
   } else if (button.classList.contains('duplicate-quest-btn')) {
     syncEditingDungeon();
     const quests = routeState[editingIndex].quests;
@@ -1038,6 +955,189 @@ factionInput.addEventListener('change', () => {
 });
 startValueInput.addEventListener('input', runPlanner);
 startValueInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') $('#calculate-btn').click(); });
+
+// Pointer-based (not native) drag so the wheel and edge auto-scroll keep working while holding a quest.
+editForm.addEventListener('pointerdown', (event) => {
+  const handle = event.target.closest('.quest-drag-handle');
+  if (!handle || event.button !== 0 || editingIndex === null) return;
+  event.preventDefault();
+  syncEditingDungeon();
+  const row = handle.closest('.quest-row');
+  const sourceIndex = Number(row.dataset.questIndex);
+  let pointerY = event.clientY;
+  let targetRow = null;
+  let insertAfter = false;
+  handle.setPointerCapture?.(event.pointerId);
+  row.classList.add('is-quest-dragging');
+  const clearMarks = () => editForm.querySelectorAll('.is-quest-drop-target').forEach((el) => el.classList.remove('is-quest-drop-target'));
+  const updateTarget = () => {
+    clearMarks();
+    targetRow = [...editForm.querySelectorAll('.quest-row')].find((candidate) => {
+      const rect = candidate.getBoundingClientRect();
+      return pointerY >= rect.top && pointerY <= rect.bottom;
+    }) ?? null;
+    if (!targetRow) return;
+    const rect = targetRow.getBoundingClientRect();
+    insertAfter = pointerY > rect.top + rect.height / 2;
+    targetRow.classList.add('is-quest-drop-target');
+  };
+  const timer = setInterval(() => {
+    const rect = editForm.getBoundingClientRect();
+    if (pointerY < rect.top + 60) editForm.scrollTop -= 14;
+    else if (pointerY > rect.bottom - 60) editForm.scrollTop += 14;
+    updateTarget();
+  }, 16);
+  const onMove = (moveEvent) => { pointerY = moveEvent.clientY; };
+  const finish = (endEvent) => {
+    clearInterval(timer);
+    handle.removeEventListener('pointermove', onMove);
+    handle.removeEventListener('pointerup', finish);
+    handle.removeEventListener('pointercancel', finish);
+    pointerY = endEvent.clientY ?? pointerY;
+    if (endEvent.type === 'pointerup') updateTarget();
+    clearMarks();
+    row.classList.remove('is-quest-dragging');
+    if (endEvent.type !== 'pointerup' || !targetRow) return;
+    let insertionIndex = Number(targetRow.dataset.questIndex) + Number(insertAfter);
+    if (sourceIndex < insertionIndex) insertionIndex -= 1;
+    const quests = routeState[editingIndex].quests;
+    const [quest] = quests.splice(sourceIndex, 1);
+    quests.splice(Math.max(0, Math.min(insertionIndex, quests.length)), 0, quest);
+    renderEditor();
+    runPlanner();
+  };
+  handle.addEventListener('pointermove', onMove);
+  handle.addEventListener('pointerup', finish);
+  handle.addEventListener('pointercancel', finish);
+});
+
+// Browsers don't scroll containers while dragging, so nudge the nearest scrollable ancestor near its edge.
+function edgeScroll(startEl, clientY) {
+  const edge = 70;
+  const step = 18;
+  for (let el = startEl instanceof Element ? startEl : null; el && el !== document.documentElement; el = el.parentElement) {
+    if (!/(auto|scroll)/.test(getComputedStyle(el).overflowY) || el.scrollHeight <= el.clientHeight) continue;
+    const rect = el.getBoundingClientRect();
+    const delta = clientY < rect.top + edge ? -step : clientY > rect.bottom - edge ? step : 0;
+    const before = el.scrollTop;
+    el.scrollTop += delta;
+    if (delta && el.scrollTop !== before) return;
+  }
+  if (clientY < edge) window.scrollBy(0, -step);
+  else if (clientY > window.innerHeight - edge) window.scrollBy(0, step);
+}
+document.addEventListener('dragover', (event) => edgeScroll(event.target, event.clientY));
+
+// Pointer-based pool drag: native drags block the mousewheel, which is needed to reach far-away route cards.
+function enablePoolDrag(pool, itemSelector, zoneSelector, resolveDrop) {
+  pool.addEventListener('pointerdown', (event) => {
+    const item = event.target.closest(itemSelector);
+    if (!item || event.button !== 0 || event.pointerType === 'touch' || event.target.closest('button, a, summary, input, select')) return;
+    let pointerX = event.clientX;
+    let pointerY = event.clientY;
+    let ghost = null;
+    let timer = 0;
+    const pointAt = () => document.elementFromPoint?.(pointerX, pointerY) ?? null;
+    const clearMarks = () => document.querySelectorAll('.is-drop-target, .is-quest-drop-target').forEach((el) => el.classList.remove('is-drop-target', 'is-quest-drop-target'));
+    const currentDrop = () => {
+      const el = pointAt();
+      return el?.closest(zoneSelector) ? resolveDrop(item, el, pointerY) : null;
+    };
+    const markDrop = () => {
+      const drop = currentDrop();
+      drop?.card?.classList.add(drop.markClass ?? 'is-drop-target');
+    };
+    const begin = () => {
+      ghost = document.createElement('div');
+      ghost.className = 'drag-ghost';
+      ghost.textContent = item.querySelector('h3')?.textContent ?? '';
+      (editModal.open ? editModal : document.body).append(ghost);
+      document.body.classList.add('is-pool-dragging');
+      window.getSelection()?.removeAllRanges();
+      item.setPointerCapture?.(event.pointerId);
+      timer = setInterval(() => {
+        edgeScroll(pointAt(), pointerY);
+        clearMarks();
+        markDrop();
+      }, 16);
+    };
+    const onMove = (moveEvent) => {
+      pointerX = moveEvent.clientX;
+      pointerY = moveEvent.clientY;
+      if (!ghost && Math.hypot(pointerX - event.clientX, pointerY - event.clientY) > 5) begin();
+      if (ghost) ghost.style.transform = `translate(${pointerX + 14}px, ${pointerY + 14}px)`;
+    };
+    const finish = (endEvent) => {
+      item.removeEventListener('pointermove', onMove);
+      item.removeEventListener('pointerup', finish);
+      item.removeEventListener('pointercancel', finish);
+      if (!ghost) return;
+      clearInterval(timer);
+      pointerX = endEvent.clientX ?? pointerX;
+      pointerY = endEvent.clientY ?? pointerY;
+      const drop = endEvent.type === 'pointerup' ? currentDrop() : null;
+      clearMarks();
+      ghost.remove();
+      document.body.classList.remove('is-pool-dragging');
+      drop?.commit();
+    };
+    item.addEventListener('pointermove', onMove);
+    item.addEventListener('pointerup', finish);
+    item.addEventListener('pointercancel', finish);
+  });
+}
+enablePoolDrag(dungeonPool, '.pool-item', '#route-editor', (item, el) => {
+  if (item.querySelector('.add-pool-dungeon-btn')?.disabled) return null;
+  const card = el.closest('.dungeon-card:not(.is-editing)');
+  return { card, commit: () => addDungeonFromPool(Number(item.dataset.poolDungeonIndex), card ? Number(card.dataset.index) : routeState.length) };
+});
+enablePoolDrag(questPool, '.quest-pool-item', '#route-editor', (item, el) => {
+  const card = el.closest('.dungeon-card:not(.is-editing)');
+  return card && { card, commit: () => addQuestFromPool(Number(item.dataset.poolQuestId), routeState[Number(card.dataset.index)].name) };
+});
+enablePoolDrag(modalQuestPool, '.quest-pool-item', '#edit-modal-form', (item, el, pointerY) => {
+  const row = el.closest('.quest-row');
+  const questId = Number(item.dataset.poolQuestId);
+  if (!row) return { card: el.closest('.dungeon-card'), commit: () => addQuestToEditing(questId) };
+  const rect = row.getBoundingClientRect();
+  const insertAt = Number(row.dataset.questIndex) + Number(pointerY > rect.top + rect.height / 2);
+  return { card: row, markClass: 'is-quest-drop-target', commit: () => addQuestToEditing(questId, insertAt) };
+});
+
+// Native drags swallow normal wheel scrolling in some browsers, so forward it manually.
+let isDragging = false;
+document.addEventListener('dragstart', () => { isDragging = true; });
+document.addEventListener('dragend', () => { isDragging = false; });
+document.addEventListener('wheel', (event) => {
+  if (!isDragging) return;
+  event.preventDefault();
+  const delta = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaY;
+  for (let el = event.target instanceof Element ? event.target : null; el && el !== document.documentElement; el = el.parentElement) {
+    if (!/(auto|scroll)/.test(getComputedStyle(el).overflowY)) continue;
+    const canScroll = delta < 0 ? el.scrollTop > 0 : el.scrollTop < el.scrollHeight - el.clientHeight - 1;
+    if (!canScroll) continue;
+    el.scrollTop += delta;
+    return;
+  }
+  window.scrollBy(0, delta);
+}, { passive: false });
+
+function showQuestInPool(quest) {
+  const query = quest.questId ? `#${quest.questId}` : String(quest.name);
+  if (editingIndex !== null) {
+    modalQuestSearch.value = query;
+    renderModalQuestPool();
+    modalQuestPool.scrollTop = 0;
+    modalQuestSearch.focus();
+    return;
+  }
+  selectTab('planner');
+  setSourcePoolExpanded(questPoolPanel, questPoolContent, toggleQuestsButton, true, 'Quests');
+  questSearch.value = query;
+  renderQuestPool();
+  questPool.scrollTop = 0;
+  questPoolPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
 
 const defaultRoute = [];
 Promise.all([

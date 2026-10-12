@@ -285,3 +285,9 @@ button:hover { transform: translateY(-1px); box-shadow: 0 12px 22px rgba(221, 14
   .edit-modal[open] { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) 40%; }
   .edit-modal-pool { border-left: 0; border-top: 1px solid var(--border); }
 }
+.quest-item-actions { display: flex; flex: 0 0 auto; gap: 6px; }
+.quest-drag-handle { cursor: grab; touch-action: none; user-select: none; }
+.quest-drag-handle:active { cursor: grabbing; }
+.drag-ghost { position: fixed; top: 0; left: 0; z-index: 1000; max-width: 260px; padding: 8px 12px; border: 1px solid var(--primary); border-radius: 8px; background: var(--panel-alt); color: var(--text); font-size: 0.9rem; pointer-events: none; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); }
+body.is-pool-dragging { user-select: none; cursor: grabbing; }
+.pool-item { cursor: grab; }
