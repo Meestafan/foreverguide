@@ -10,6 +10,7 @@ let draggedQuest = null;
 let dungeonCatalog = [];
 let questCatalog = [];
 let questCatalogById = new Map();
+let questFollowups = new Map();
 
 const $ = (selector) => document.querySelector(selector);
 const startModeInput = $('#start-mode');
@@ -112,13 +113,15 @@ function questsForFaction(quests, faction = factionInput.value) {
   return quests.filter((quest) => quest.faction !== excludedFaction);
 }
 
-const QUEST_ACTIONS = ['Pickup', 'Do', 'Turnin'];
+const QUEST_ACTIONS = ['Pickup', 'Do', 'Side', 'Turnin'];
+const DEFAULT_ACTIONS = ['Pickup', 'Do', 'Turnin'];
+const ACTION_HINTS = { Side: 'Do this passively while focusing on the current main objective' };
 function actionsHtml(actions) {
-  return actions.map((action) => `<span class="action-${action.toLowerCase()}">${action}</span>`).join('/') || 'No actions';
+  return actions.map((action) => `<span class="action-${action.toLowerCase()}"${ACTION_HINTS[action] ? ` title="${ACTION_HINTS[action]}"` : ''}>${action}</span>`).join('/') || 'No actions';
 }
 
 function normalizeActions(actions) {
-  if (!Array.isArray(actions)) return [...QUEST_ACTIONS];
+  if (!Array.isArray(actions)) return [...DEFAULT_ACTIONS];
   return QUEST_ACTIONS.filter((action) => actions.includes(action));
 }
 
@@ -212,15 +215,38 @@ function currentPrereqWarnings() {
     (id, name) => `${linkedName(name, questUrl(id))}${id ? ` (${id})` : ''}`);
 }
 
+// IDs that were any-of prerequisites stay any-of; everything else typed in the field is required.
+function prereqFieldToQuest(text, existing) {
+  const ids = ForeverguideQuestPrereqs.idList(text.split(/[\s,]+/));
+  const anyOf = ForeverguideQuestPrereqs.idList(existing?.preQuestSingle);
+  return {
+    requiresQuests: ids.filter((id) => !anyOf.includes(id)),
+    preQuestSingle: anyOf.filter((id) => ids.includes(id)),
+    preQuestGroup: [],
+  };
+}
+
+function prereqFieldValue(quest) {
+  const { all, any } = ForeverguideQuestPrereqs.requirements(quest);
+  return [...all, ...any].join(', ');
+}
+
+function questNavButtonsHtml(quest, attrs) {
+  const { all, any } = ForeverguideQuestPrereqs.requirements(quest);
+  const button = (className, label, path) => `<button class="icon-button ${className}" ${attrs} aria-label="${label}" title="${label}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"/></svg></button>`;
+  return (all.length + any.length ? button('show-prereq-btn', 'Show prerequisites in quest search', 'M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z') : '')
+    + (questFollowups.has(normalizeQuestId(quest.questId)) ? button('show-followup-btn', 'Show follow-ups in quest search', 'M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8Z') : '');
+}
+
 function questLocationDetails(quest) {
+  const objectiveText = Array.isArray(quest.objectiveText) ? quest.objectiveText.filter(Boolean) : [];
   const rows = [
+    ['Quest text', objectiveText.join(' ')],
     ['Start', formatLocations([...(quest.starters?.npcs || []), ...(quest.starters?.objects || [])])],
     ['Turn-in', formatLocations([...(quest.turnIns?.npcs || []), ...(quest.turnIns?.objects || [])])],
     ['Objectives', formatLocations(quest.objectiveLocations || [])],
     ['Completion', formatWaypoints(quest.completionWaypoints || [])],
   ].filter(([, value]) => value);
-  const objectiveText = Array.isArray(quest.objectiveText) ? quest.objectiveText.filter(Boolean) : [];
-  if (objectiveText.length) rows.push(['Quest text', objectiveText.join(' ')]);
   const { all, any } = ForeverguideQuestPrereqs.requirements(quest);
   const prereqName = (id) => questCatalogById.get(id)?.name || `Quest ${id}`;
   if (all.length) rows.push(['Requires', all.map(prereqName).join(', ')]);
@@ -262,7 +288,7 @@ function updateStartInput() {
 }
 
 function createQuest(name = 'New quest') {
-  return { name, questLevel: 1, xp: 0, faction: 'Both', questId: null, actions: [...QUEST_ACTIONS] };
+  return { name, questLevel: 1, xp: 0, faction: 'Both', questId: null, actions: [...DEFAULT_ACTIONS] };
 }
 
 function createDungeon(index = routeState.length) {
@@ -337,7 +363,7 @@ function renderEditor() {
           <div class="card-icon-actions"><button class="icon-button edit-dungeon-btn" data-index="${index}" aria-label="Edit ${escapeHtml(dungeon.name)}" title="Edit dungeon or step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5V20h3.5L18 9.5 14.5 6 4 16.5Zm16.7-10.8a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-1.7 1.7 3.4 3.4 1.7-1.7Z"/></svg></button>
           <button class="icon-button danger-icon delete-dungeon-btn" data-index="${index}" aria-label="Delete ${escapeHtml(dungeon.name)}" title="Delete dungeon or step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></div></div>
         ${dependencyDetails ? `<div class="dungeon-card-dependencies">${dependencyDetails}</div>` : ''}
-        <details class="card-quest-details"><summary>View quest details</summary><ul class="dungeon-card-quests">${dungeon.quests.map((quest, questIndex) => `<li data-quest-index="${questIndex}" data-quest-id="${quest.questId ?? ''}" draggable="${editingIndex === null}"><div>${linkedName(quest.name, questUrl(quest.questId))}${warningKeys.has(`${dungeon.name}|${quest.questId}`) ? ' <span class="prereq-flag" title="Missing prerequisite quests">⚠ missing prerequisite</span>' : ''} <span>${quest.faction} · Lvl ${quest.questLevel} · ${quest.xp.toLocaleString()} XP · ${actionsHtml(quest.actions)}</span>${questLocationDetails(quest)}</div><div class="quest-item-actions"><button class="icon-button find-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Show ${escapeHtml(quest.name)} in quest search" title="Show in quest search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14Z"/></svg></button><button class="icon-button danger-icon remove-route-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Remove ${escapeHtml(quest.name)} from route" title="Remove quest from route"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></div></li>`).join('')}</ul></details>
+        <details class="card-quest-details"><summary>View quest details</summary><ul class="dungeon-card-quests">${dungeon.quests.map((quest, questIndex) => `<li data-quest-index="${questIndex}" data-quest-id="${quest.questId ?? ''}" draggable="${editingIndex === null}"><div>${linkedName(quest.name, questUrl(quest.questId))}${warningKeys.has(`${dungeon.name}|${quest.questId}`) ? ' <span class="prereq-flag" title="Missing prerequisite quests">⚠ missing prerequisite</span>' : ''} <span>${quest.faction} · Lvl ${quest.questLevel} · ${quest.xp.toLocaleString()} XP · ${actionsHtml(quest.actions)}</span>${questLocationDetails(quest)}</div><div class="quest-item-actions"><button class="icon-button find-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Show ${escapeHtml(quest.name)} in quest search" title="Show in quest search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14Z"/></svg></button>${questNavButtonsHtml(quest, `data-dungeon-index="${index}" data-quest-index="${questIndex}"`)}<button class="icon-button danger-icon remove-route-quest-btn" data-dungeon-index="${index}" data-quest-index="${questIndex}" aria-label="Remove ${escapeHtml(quest.name)} from route" title="Remove quest from route"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button></div></li>`).join('')}</ul></details>
       </article>`;
     }
     return `<article class="dungeon-card is-editing" data-index="${index}" data-name="${escapeHtml(dungeon.name)}">
@@ -355,9 +381,10 @@ function renderEditor() {
         <div class="field-group quest-level-field"><label>Quest level</label><input class="quest-level" type="number" min="1" max="60" value="${quest.questLevel}" /></div>
         <div class="field-group quest-xp-field"><label>XP reward</label><input class="quest-xp" type="number" min="0" value="${quest.xp}" /></div>
         <div class="field-group quest-faction-field"><label>Faction</label><select class="quest-faction">${factionOptions(quest.faction)}</select></div>
-        <div class="field-group quest-requires-field"><label>Also requires quest IDs</label><input class="quest-requires" value="${quest.requiresQuests.join(', ')}" placeholder="e.g. 96392" /></div>
-        <div class="field-group quest-actions-field"><label>Actions</label><div class="quest-actions">${QUEST_ACTIONS.map((action) => `<label><input type="checkbox" class="quest-action" value="${action}"${quest.actions.includes(action) ? ' checked' : ''} /> <span class="action-${action.toLowerCase()}">${action}</span></label>`).join('')}</div></div>
+        <div class="field-group quest-requires-field"><label>Prerequisites</label><input class="quest-requires" value="${prereqFieldValue(quest)}" placeholder="Quest IDs, e.g. 96392" /></div>
+        <div class="field-group quest-actions-field"><label>Actions</label><div class="quest-actions">${QUEST_ACTIONS.map((action) => `<label${ACTION_HINTS[action] ? ` title="${ACTION_HINTS[action]}"` : ''}><input type="checkbox" class="quest-action" value="${action}"${quest.actions.includes(action) ? ' checked' : ''} /> <span class="action-${action.toLowerCase()}">${action}</span></label>`).join('')}</div></div>
         <button class="icon-button find-quest-btn" data-quest-index="${questIndex}" aria-label="Show quest in quest search" title="Show in quest search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14Z"/></svg></button>
+        ${questNavButtonsHtml(quest, `data-quest-index="${questIndex}"`)}
         <button class="icon-button duplicate-quest-btn" data-quest-index="${questIndex}" aria-label="Duplicate quest" title="Duplicate quest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z"/></svg></button>
         <button class="icon-button danger-icon remove-quest-btn" data-quest-index="${questIndex}" aria-label="Remove quest" title="Remove quest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4Z"/></svg></button>
       </div>`).join('')}</div><div class="card-edit-actions"><button class="secondary-button add-quest-btn">Add quest</button><button class="save-dungeon-btn">Done</button></div></article>`;
@@ -421,8 +448,8 @@ function questPoolCopyHtml(quest) {
 }
 
 function matchesQuestQuery(quest, query) {
-  const exactId = query.match(/^#\s*(\d+)$/);
-  if (exactId) return quest.questId === Number(exactId[1]);
+  const ids = [...query.matchAll(/#\s*(\d+)/g)].map((match) => Number(match[1]));
+  if (ids.length && !query.replace(/#\s*\d+|[\s,]+/g, '')) return ids.includes(quest.questId);
   return !query || `${quest.name} ${quest.questId} ${quest.zone || ''}`.toLocaleLowerCase().includes(query);
 }
 
@@ -502,7 +529,7 @@ function syncEditingDungeon() {
       xp: row.querySelector('.quest-xp').value,
       faction: row.querySelector('.quest-faction').value,
       actions: [...row.querySelectorAll('.quest-action:checked')].map((box) => box.value),
-      requiresQuests: row.querySelector('.quest-requires').value.split(/[\s,]+/).filter(Boolean),
+      ...prereqFieldToQuest(row.querySelector('.quest-requires').value, existingQuests[questIndex]),
     })),
   });
   runPlanner();
@@ -885,11 +912,11 @@ onEditorEvent('click', (event) => {
     renderEditor(); renderPools(); runPlanner();
   } else if (button.classList.contains('cancel-edit-btn')) {
     cancelEdit(index);
-  } else if (button.classList.contains('find-quest-btn')) {
+  } else if (button.matches('.find-quest-btn, .show-prereq-btn, .show-followup-btn')) {
     const dungeonIndex = button.dataset.dungeonIndex === undefined ? editingIndex : Number(button.dataset.dungeonIndex);
     if (editingIndex !== null) syncEditingDungeon();
     const quest = routeState[dungeonIndex]?.quests[Number(button.dataset.questIndex)];
-    if (quest) showQuestInPool(quest);
+    if (quest) showQuestInPool(quest, button.classList.contains('show-prereq-btn') ? 'prereq' : button.classList.contains('show-followup-btn') ? 'followup' : 'self');
   } else if (button.classList.contains('duplicate-quest-btn')) {
     syncEditingDungeon();
     const quests = routeState[editingIndex].quests;
@@ -1122,8 +1149,12 @@ document.addEventListener('wheel', (event) => {
   window.scrollBy(0, delta);
 }, { passive: false });
 
-function showQuestInPool(quest) {
-  const query = quest.questId ? `#${quest.questId}` : String(quest.name);
+function showQuestInPool(quest, mode = 'self') {
+  const { all, any } = ForeverguideQuestPrereqs.requirements(quest);
+  const ids = mode === 'prereq' ? [...all, ...any]
+    : mode === 'followup' ? questFollowups.get(normalizeQuestId(quest.questId)) ?? []
+      : [normalizeQuestId(quest.questId)].filter(Boolean);
+  const query = ids.length ? ids.map((id) => `#${id}`).join(' ') : String(quest.name);
   if (editingIndex !== null) {
     modalQuestSearch.value = query;
     renderModalQuestPool();
@@ -1153,6 +1184,11 @@ Promise.all([
   questCatalog = (Array.isArray(questData?.quests) ? questData.quests : []).map(normalizeQuest)
     .sort((left, right) => left.name.localeCompare(right.name));
   questCatalogById = new Map(questCatalog.map((quest) => [quest.questId, quest]));
+  questFollowups = new Map();
+  for (const quest of questCatalog) {
+    const { all, any } = ForeverguideQuestPrereqs.requirements(quest);
+    for (const id of [...all, ...any]) questFollowups.set(id, [...(questFollowups.get(id) ?? []), quest.questId]);
+  }
   defaultRoute.splice(0, defaultRoute.length, ...(Array.isArray(dungeonData) ? dungeonData.map(normalizeDungeon) : []));
   dungeonCatalog = structuredClone(defaultRoute);
   updateStartInput();
