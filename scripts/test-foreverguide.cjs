@@ -717,6 +717,79 @@ test('warns about missing prerequisites and orders the export by them', async ()
   assert.ok(target.classList.contains('is-prereq-target'));
 });
 
+test('exports "Do while doing other things" quests as side objectives', async () => {
+  const { window } = await loadPlanner('http://localhost/foreverguide/', false);
+  const quest = (actions) => ({ ...questCatalogData.quests.find((entry) => entry.questId === 7), actions });
+  const guideFor = (actions) => window.ForeverguideRXPExport.createAddonArchive(
+    [{ name: 'Custom dungeon', levelRange: '1-10', quests: [quest(actions)] }], 'Alliance', 10).guide;
+  const side = guideFor(['Pickup', 'Side', 'Turnin']);
+  assert.match(side, /step\n#completewith next\n\.goto [^\n]+\n>>[^\n]+\n\.complete 7,1/);
+  assert.ok(side.indexOf('.accept 7') < side.indexOf('#completewith next'));
+  assert.ok(side.indexOf('#completewith next') < side.indexOf('.turnin 7'));
+  assert.doesNotMatch(guideFor(['Pickup', 'Do', 'Turnin']), /#completewith/);
+});
+
+test('shows prerequisites and follow-ups from route quests and lists quest text first', async () => {
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const click = (element) => element.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
+  const withPrereq = questCatalogData.quests.find((entry) => (entry.preQuestSingle || []).length || (entry.preQuestGroup || []).length);
+  const prereqIds = [...(withPrereq.preQuestGroup || []), ...(withPrereq.preQuestSingle || [])];
+  window.importPoolJson(JSON.stringify({
+    startMode: 'level', startValue: 10, faction: 'Alliance',
+    route: [{ name: 'Custom dungeon', levelRange: '1-10', quests: [{ questId: withPrereq.questId }, { questId: prereqIds[0] }] }],
+  }));
+  const [first, second] = document.querySelectorAll('.dungeon-card-quests li');
+  assert.ok(first.querySelector('.show-prereq-btn'));
+  assert.ok(second.querySelector('.show-followup-btn'));
+  assert.equal(first.querySelector('.show-followup-btn') === null, !questCatalogData.quests.some((entry) => [...(entry.preQuestGroup || []), ...(entry.preQuestSingle || [])].includes(withPrereq.questId)));
+
+  click(first.querySelector('.show-prereq-btn'));
+  assert.equal(document.querySelector('#quest-search').value, prereqIds.map((id) => `#${id}`).join(' '));
+  const shown = [...document.querySelectorAll('#quest-pool .quest-pool-item')].map((item) => Number(item.dataset.poolQuestId));
+  assert.ok(shown.length > 0 && shown.every((id) => prereqIds.includes(id)));
+
+  click(second.querySelector('.show-followup-btn'));
+  assert.match(document.querySelector('#quest-search').value, new RegExp(`#${withPrereq.questId}\\b`));
+
+  const details = document.querySelector('.quest-location-details');
+  const text = details.textContent;
+  if (text.includes('Quest text:')) assert.ok(text.indexOf('Quest text:') < (text.includes('Start:') ? text.indexOf('Start:') : Infinity));
+});
+
+test('labels the prerequisites field and fills it with catalog prerequisite IDs', async () => {
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const withGroup = questCatalogData.quests.find((entry) => (entry.preQuestGroup || []).length);
+  window.importPoolJson(JSON.stringify({
+    startMode: 'level', startValue: 10, faction: 'Alliance',
+    route: [{ name: 'Custom dungeon', levelRange: '1-10', quests: [{ questId: withGroup.questId, requiresQuests: [900001] }] }],
+  }));
+  document.querySelector('.edit-dungeon-btn[data-index="0"]').click();
+  const field = document.querySelector('.quest-requires-field');
+  assert.equal(field.querySelector('label').textContent, 'Prerequisites');
+  const ids = field.querySelector('.quest-requires').value.split(', ').map(Number);
+  assert.ok(ids.includes(900001));
+  for (const id of withGroup.preQuestGroup) assert.ok(ids.includes(id));
+});
+
+test('prefills any-of prerequisites in the field and still accepts custom IDs', async () => {
+  const { window, document } = await loadPlanner('http://localhost/foreverguide/', false);
+  const quest = questCatalogData.quests.find((entry) => (entry.preQuestSingle || []).length && !(entry.preQuestGroup || []).length);
+  const [direct] = quest.preQuestSingle;
+  window.importPoolJson(JSON.stringify({
+    startMode: 'level', startValue: 10, faction: 'Alliance',
+    route: [{ name: 'Custom dungeon', levelRange: '1-10', quests: [{ questId: quest.questId }] }],
+  }));
+  document.querySelector('.edit-dungeon-btn[data-index="0"]').click();
+  assert.equal(document.querySelector('#edit-modal-form .field-hint'), null);
+  const input = document.querySelector('#edit-modal-form .quest-requires');
+  assert.ok(input.value.split(', ').map(Number).includes(direct));
+  input.value = `${input.value}, 900001`;
+  dispatch(window, input, 'input');
+  const saved = JSON.parse(window.exportPoolJson()).route[0].quests[0];
+  assert.ok(saved.preQuestSingle.includes(direct));
+  assert.deepEqual(saved.requiresQuests, [900001]);
+});
+
 test('discloses Questie and RestedXP attribution', () => {
   assert.match(html, /Quest names, requirements, and location data are sourced from/);
   assert.match(html, /restedxp\.com/);

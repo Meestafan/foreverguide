@@ -51,9 +51,10 @@
     }
 
     const objectives = Array.isArray(quest.objectiveSteps) ? quest.objectiveSteps : [];
-    if (action === 'Do') {
+    if (action === 'Do' || action === 'Side') {
       if (!hasId || !objectives.length) {
         lines.push('step');
+        if (action === 'Side') lines.push('#completewith next');
         lines.push(`>>${prefix}Complete the objectives of ${questName}.`);
         return lines;
       }
@@ -61,6 +62,7 @@
         const waypoint = firstWaypoint(objective.locations || []);
         const actor = locationName(objective.locations || []);
         lines.push('step');
+        if (action === 'Side') lines.push('#completewith next');
         if (waypoint) lines.push(`.goto ${waypoint.mapName},${waypoint.x},${waypoint.y}`);
         const description = guideText(objective.text) || actor || `${questName} objective ${objective.index}`;
         lines.push(`>>${actor ? `Go to ${guideText(actor)} and work on ${questName}.` : `Complete: ${description} (${questName}).`}`);
@@ -107,7 +109,7 @@
       }
       let dungeonLabelled = false;
       for (const layer of global.ForeverguideQuestPrereqs.layerQuests(availableQuests, turnedIn)) {
-        for (const action of ['Pickup', 'Do', 'Turnin']) {
+        for (const action of ['Pickup', 'Side', 'Do', 'Turnin']) {
           for (const quest of layer) {
             if (!(quest.actions || ['Pickup', 'Do', 'Turnin']).includes(action)) continue;
             lines.push(...questSteps(quest, dungeonLabelled ? '' : dungeon.name, action));
