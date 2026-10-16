@@ -553,6 +553,7 @@ test('shows a route quest in the quest search from the card and the edit modal',
   const cardQuest = document.querySelector('.dungeon-card[data-index="0"] .dungeon-card-quests li');
   click(cardQuest.querySelector('.find-quest-btn'));
   assert.equal(document.querySelector('#quest-search').value, `#${cardQuest.dataset.questId}`);
+  assert.equal(document.querySelector('#quest-pool .quest-location-details').open, true);
   assert.equal(document.querySelectorAll('#quest-pool .quest-pool-item').length, 1);
   assert.match(document.querySelector('#quest-pool').textContent, new RegExp(`#${cardQuest.dataset.questId}\\b`));
 
