@@ -1155,9 +1155,11 @@ function showQuestInPool(quest, mode = 'self') {
     : mode === 'followup' ? questFollowups.get(normalizeQuestId(quest.questId)) ?? []
       : [normalizeQuestId(quest.questId)].filter(Boolean);
   const query = ids.length ? ids.map((id) => `#${id}`).join(' ') : String(quest.name);
+  const expandDetails = (pool) => pool.querySelectorAll('.quest-location-details').forEach((details) => { details.open = true; });
   if (editingIndex !== null) {
     modalQuestSearch.value = query;
     renderModalQuestPool();
+    expandDetails(modalQuestPool);
     modalQuestPool.scrollTop = 0;
     modalQuestSearch.focus();
     return;
@@ -1166,6 +1168,7 @@ function showQuestInPool(quest, mode = 'self') {
   setSourcePoolExpanded(questPoolPanel, questPoolContent, toggleQuestsButton, true, 'Quests');
   questSearch.value = query;
   renderQuestPool();
+  expandDetails(questPool);
   questPool.scrollTop = 0;
   questPoolPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
